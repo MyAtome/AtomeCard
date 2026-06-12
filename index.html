@@ -6,6 +6,8 @@
     <title>AtomA | Apply · Claim · Withdraw</title>
     <link rel="preload" as="image" href="photos/atomebg.png">
     <link rel="preload" as="image" href="photos/atomeA.jpg">
+    <!-- Google Fonts: elegant and modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,8 +16,8 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'SF Pro Text', Helvetica, Arial, sans-serif;
-            background-color: #0a0e17;
+            font-family: 'Inter', 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background-color: #0a0e1a;
             min-height: 100vh;
         }
 
@@ -34,174 +36,178 @@
             padding: 24px 16px;
         }
 
-        /* GLASS TRANSPARENT CARD - remastered frosted glass effect */
+        /* REMASTERED GLASS CONTAINER - premium frosted glass */
         .glass-card {
-            max-width: 500px;
+            max-width: 520px;
             width: 100%;
             margin: 0 auto;
-            background: rgba(15, 25, 35, 0.45);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-radius: 56px;
-            border: 1px solid rgba(255, 255, 245, 0.25);
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.1);
-            padding: 28px 24px 40px;
-            transition: all 0.2s ease;
+            background: rgba(20, 30, 45, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 64px;
+            border: 1px solid rgba(255, 255, 245, 0.2);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255,255,255,0.08);
+            padding: 32px 28px 44px;
+            transition: all 0.3s ease;
         }
 
-        /* PROMO HEADER (Win iPhone 17 & cashback) */
+        /* PROMO HEADER */
         .promo-header {
             text-align: center;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
         .promo-title {
-            font-size: 1.65rem;
+            font-size: 1.7rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #FFE55C, #CCFF00);
+            background: linear-gradient(135deg, #FFE566, #CCFF44, #B3FF00);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: -0.3px;
+            letter-spacing: -0.5px;
             line-height: 1.3;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            font-family: 'Space Grotesk', monospace;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         .promo-sub {
             font-size: 0.75rem;
-            color: rgba(255,250,210,0.9);
+            color: rgba(255,252,210,0.85);
             margin-top: 6px;
             font-weight: 500;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
+            font-family: 'Inter', sans-serif;
         }
 
-        /* STEPS + LOGO combined row (icon beside steps) */
-        .steps-with-icon {
+        /* STEPS (modern, elegant) */
+        .steps-container {
             display: flex;
+            justify-content: center;
             align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            background: rgba(0, 0, 0, 0.35);
+            gap: 0;
+            margin-bottom: 28px;
+            background: rgba(0, 0, 0, 0.25);
             backdrop-filter: blur(8px);
             border-radius: 100px;
-            padding: 8px 20px 8px 16px;
-            margin-bottom: 32px;
-            border: 1px solid rgba(255,240,160,0.3);
-        }
-        .steps-group {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex: 2;
-            gap: 8px;
+            padding: 8px 20px;
+            border: 1px solid rgba(255,240,140,0.25);
         }
         .step {
-            text-align: center;
             flex: 1;
+            text-align: center;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #ffffff;
-            text-shadow: 0 1px 1px black;
-            letter-spacing: 0.3px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            font-family: 'Space Grotesk', monospace;
+            letter-spacing: -0.2px;
             position: relative;
         }
         .step-number {
-            font-size: 0.65rem;
-            opacity: 0.8;
+            font-size: 0.6rem;
+            opacity: 0.75;
             font-weight: 500;
             display: block;
-            font-family: monospace;
+            font-family: 'Inter', monospace;
+            letter-spacing: 0.5px;
         }
         .step:not(:last-child):after {
             content: "→";
             position: absolute;
-            right: -12px;
+            right: -14px;
             top: 50%;
             transform: translateY(-50%);
-            color: #ccff00;
-            font-size: 0.9rem;
+            color: #ccff66;
+            font-size: 1rem;
             opacity: 0.9;
-            text-shadow: 0 0 2px black;
+            font-weight: 600;
         }
-        /* logo icon placed here (atomeA.jpg transparent) */
-        .icon-logo-sm {
-            width: 52px;
-            height: 52px;
-            flex-shrink: 0;
-            background: rgba(0,0,0,0.2);
+
+        /* ATOME LOGO positioned between steps and phone input (centered) */
+        .logo-divider {
+            display: flex;
+            justify-content: center;
+            margin: 12px 0 24px 0;
+        }
+        .logo-circle {
+            width: 70px;
+            height: 70px;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(8px);
             border-radius: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(2px);
-            border: 1px solid rgba(255,215,0,0.4);
+            border: 1.5px solid rgba(204,255,0,0.5);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: transform 0.2s ease;
         }
-        .icon-logo-sm img {
-            width: 44px;
-            height: 44px;
+        .logo-circle img {
+            width: 56px;
+            height: 56px;
             object-fit: contain;
             display: block;
             background: transparent;
         }
 
-        /* PHONE INPUT - glass transparent remaster */
-        .input-glass {
+        /* PHONE INPUT - REMASTERED (no background on +63) */
+        .input-field-wrapper {
+            margin-bottom: 28px;
+        }
+        .phone-input-group {
+            display: flex;
+            align-items: center;
             background: rgba(10, 20, 28, 0.55);
             backdrop-filter: blur(12px);
             border-radius: 80px;
             border: 1px solid rgba(255, 245, 180, 0.5);
-            padding: 6px 6px 6px 24px;
-            margin-bottom: 24px;
-            transition: all 0.2s;
+            transition: all 0.25s;
+            padding: 4px 4px 4px 24px;
         }
-        .input-glass:focus-within {
-            border-color: #ccff00;
-            box-shadow: 0 0 12px rgba(204,255,0,0.3);
-            background: rgba(10, 20, 28, 0.7);
-        }
-        .phone-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: nowrap;
+        .phone-input-group:focus-within {
+            border-color: #ccff44;
+            box-shadow: 0 0 16px rgba(204,255,68,0.25);
+            background: rgba(10, 20, 28, 0.75);
         }
         .country-code {
-            font-weight: 700;
+            font-weight: 600;
             font-size: 1.05rem;
-            color: #f0f0e0;
-            background: rgba(0,0,0,0.3);
-            padding: 12px 0;
-            letter-spacing: 0.5px;
+            color: #f5f0d7;
+            background: transparent;
+            padding: 14px 0;
+            letter-spacing: 0.3px;
+            font-family: 'Space Grotesk', monospace;
         }
-        .phone-row input {
+        .phone-input-group input {
             flex: 1;
             background: transparent;
             border: none;
-            padding: 16px 8px;
+            padding: 15px 12px;
             font-size: 1rem;
             font-weight: 500;
             color: white;
-            font-family: 'Inter', monospace;
+            font-family: 'Inter', sans-serif;
             outline: none;
         }
-        .phone-row input::placeholder {
-            color: rgba(230, 240, 200, 0.7);
+        .phone-input-group input::placeholder {
+            color: rgba(230, 235, 200, 0.65);
             font-weight: 400;
             font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
         }
         .error-message {
-            color: #FFB347;
+            color: #FFB85C;
             font-size: 0.7rem;
-            margin-top: 6px;
-            margin-left: 20px;
+            margin-top: 8px;
+            margin-left: 24px;
             font-weight: 500;
             display: none;
             text-shadow: 0 0 2px black;
-            letter-spacing: 0.3px;
+            font-family: 'Inter', monospace;
         }
         .error-message.show {
             display: block;
         }
 
-        /* SINGLE BUTTON: Black + Neon Yellow text */
+        /* LOGIN BUTTON - Black + Neon Yellow */
         .login-button {
             width: 100%;
             background: #000000;
@@ -211,14 +217,14 @@
             color: #ccff00;
             font-weight: 800;
             font-size: 1.2rem;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
             cursor: pointer;
             transition: all 0.2s ease;
-            margin-top: 8px;
+            margin-top: 6px;
             margin-bottom: 20px;
-            box-shadow: 0 10px 22px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
             text-transform: uppercase;
-            font-family: inherit;
+            font-family: 'Space Grotesk', monospace;
         }
         .login-button:active {
             transform: scale(0.97);
@@ -226,53 +232,57 @@
             border-color: #eaff96;
         }
 
-        /* Hint text (login first to claim) */
+        /* Hint message */
         .hint-message {
             text-align: center;
             font-size: 0.72rem;
             color: #e6e2c3;
             margin: 12px 0 12px;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0, 0, 0, 0.35);
             backdrop-filter: blur(8px);
-            padding: 8px 16px;
+            padding: 10px 18px;
             border-radius: 50px;
             width: 100%;
             font-weight: 500;
+            font-family: 'Inter', sans-serif;
         }
 
-        /* Terms & privacy glass style */
+        /* Terms & privacy */
         .terms-row {
             text-align: center;
             font-size: 0.68rem;
             color: #ddd9c6;
-            margin-top: 20px;
+            margin-top: 18px;
             line-height: 1.4;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(4px);
             padding: 10px 16px;
             border-radius: 80px;
+            font-family: 'Inter', sans-serif;
         }
         .terms-row a {
-            color: #ccff00;
+            color: #ccff66;
             font-weight: 600;
             text-decoration: none;
+            transition: 0.1s;
         }
         .terms-row a:hover {
             text-decoration: underline;
+            color: #eaffaa;
         }
 
-        /* Dashboard (Claim/Withdraw panel) */
+        /* Dashboard (Claim & Withdraw) - Elegant panel */
         .dashboard-area {
             margin-top: 28px;
-            border-top: 1px solid rgba(204,255,0,0.3);
+            border-top: 1px solid rgba(204,255,0,0.25);
             padding-top: 20px;
         }
         .reward-panel {
-            background: rgba(0, 0, 0, 0.55);
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(16px);
-            border-radius: 44px;
-            padding: 20px 18px;
-            border: 1px solid rgba(204,255,0,0.4);
+            border-radius: 48px;
+            padding: 22px 20px;
+            border: 1px solid rgba(204,255,0,0.35);
         }
         .claim-row, .withdraw-row {
             display: flex;
@@ -283,26 +293,28 @@
             gap: 12px;
         }
         .claim-btn-sm, .withdraw-btn-sm {
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.75);
             border: 1.5px solid #ccff00;
-            padding: 10px 20px;
+            padding: 10px 22px;
             border-radius: 60px;
             font-weight: 700;
             color: #ccff00;
             cursor: pointer;
             transition: 0.2s;
             font-size: 0.85rem;
-            font-family: inherit;
+            font-family: 'Space Grotesk', monospace;
+            letter-spacing: 0.3px;
         }
         .claim-btn-sm:active, .withdraw-btn-sm:active {
             transform: scale(0.96);
         }
         .balance-text {
             font-weight: 800;
-            font-size: 1.4rem;
-            color: #ccff00;
-            text-shadow: 0 0 3px black;
-            letter-spacing: -0.3px;
+            font-size: 1.5rem;
+            color: #ccff66;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+            letter-spacing: -0.5px;
+            font-family: 'Space Grotesk', monospace;
         }
         .hidden {
             display: none;
@@ -311,30 +323,36 @@
             font-size: 0.7rem;
             color: #e6e6b3;
             margin-top: 12px;
+            font-family: 'Inter', sans-serif;
         }
 
         /* responsive */
         @media (max-width: 480px) {
             .glass-card {
-                padding: 20px 18px 32px;
+                padding: 24px 20px 36px;
+                border-radius: 48px;
             }
             .step {
-                font-size: 0.7rem;
+                font-size: 0.75rem;
             }
             .step:not(:last-child):after {
                 right: -10px;
-                font-size: 0.75rem;
+                font-size: 0.8rem;
             }
             .promo-title {
-                font-size: 1.35rem;
+                font-size: 1.4rem;
             }
-            .icon-logo-sm {
-                width: 44px;
-                height: 44px;
+            .logo-circle {
+                width: 60px;
+                height: 60px;
             }
-            .icon-logo-sm img {
-                width: 38px;
-                height: 38px;
+            .logo-circle img {
+                width: 48px;
+                height: 48px;
+            }
+            .login-button {
+                font-size: 1rem;
+                padding: 14px;
             }
         }
     </style>
@@ -342,37 +360,39 @@
 <body>
 <div class="bg-theme">
     <div class="glass-card">
-        <!-- Win iPhone 17 & up to ₱7,500 cashback! Register for your chance to win -->
+        <!-- PROMO HEADER -->
         <div class="promo-header">
             <div class="promo-title">Win an iPhone 17 & up to ₱7,500 cashback!</div>
             <div class="promo-sub">Register for your chance to win</div>
         </div>
 
-        <!-- STEPS (01 Apply / 02 Claim / 03 Withdraw) + atomeA.jpg icon beside it -->
-        <div class="steps-with-icon">
-            <div class="steps-group">
-                <div class="step"><span class="step-number">01</span> Apply</div>
-                <div class="step"><span class="step-number">02</span> Claim</div>
-                <div class="step"><span class="step-number">03</span> Withdraw</div>
-            </div>
-            <div class="icon-logo-sm">
+        <!-- STEPS (Apply · Claim · Withdraw) -->
+        <div class="steps-container">
+            <div class="step"><span class="step-number">01</span> Apply</div>
+            <div class="step"><span class="step-number">02</span> Claim</div>
+            <div class="step"><span class="step-number">03</span> Withdraw</div>
+        </div>
+
+        <!-- ATOME LOGO positioned between steps and phone number form -->
+        <div class="logo-divider">
+            <div class="logo-circle">
                 <img src="photos/atomeA.jpg" alt="AtomA" style="background: transparent;">
             </div>
         </div>
 
-        <!-- Glass input number form -->
-        <div class="input-glass">
-            <div class="phone-row">
+        <!-- PHONE NUMBER INPUT (no background on +63) -->
+        <div class="input-field-wrapper">
+            <div class="phone-input-group">
                 <span class="country-code">+63</span>
                 <input type="tel" id="phoneInput" placeholder="Input phone number" autocomplete="off">
             </div>
             <div class="error-message" id="phoneError">Invalid phone number</div>
         </div>
 
-        <!-- Single Login Button (Black + Neon Yellow) -->
+        <!-- SINGLE LOGIN BUTTON (Black / Neon Yellow) -->
         <button class="login-button" id="mainLoginBtn">LOGIN</button>
 
-        <!-- Hint message (updated) -->
+        <!-- Hint text -->
         <div class="hint-message" id="registerHintMsg">
             Users need to login first to start claiming rewards
         </div>
@@ -384,7 +404,7 @@
             <a href="#" id="privacyLink">Privacy Policy</a>.
         </div>
 
-        <!-- Dashboard after login (claim / withdraw) -->
+        <!-- Dashboard after login: claim & withdraw -->
         <div id="dashboardPanel" class="dashboard-area hidden">
             <div class="reward-panel">
                 <div class="claim-row">
@@ -404,9 +424,8 @@
 
 <script>
     // ==================================================
-    // REMASTERED: Glass UI, steps + logo inline, promo text
-    // Only ONE login button. Apply/Claim/Withdraw as steps.
-    // Login required for claim & withdraw. 
+    // REMASTERED: Elegant fonts, logo between steps & form
+    // No background on +63, clean glass design
     // ==================================================
 
     let isLoggedIn = false;
@@ -424,7 +443,7 @@
     const claimedStatusMsg = document.getElementById('claimedStatusMsg');
     const hintMsg = document.getElementById('registerHintMsg');
 
-    // Philippine mobile validation (basic)
+    // Philippine mobile number validation (basic)
     function isValidPhone(phone) {
         let raw = phone.trim();
         if (raw === "") return false;
@@ -487,7 +506,7 @@
         alert(`✅ Login successful! +63${phoneValue.replace(/\D/g, '')} — you can now smash the egg.`);
     }
 
-    // CLAIM REWARD (simulates smash egg, cashback up to 7,500 as per promo)
+    // CLAIM REWARD (smash egg, random up to 7,500)
     function performClaim() {
         if (!isLoggedIn) {
             alert("Please login first to claim rewards.");
@@ -497,12 +516,11 @@
             alert(`You already claimed ₱${withdrawableCash}. Withdraw or wait for new event.`);
             return;
         }
-        // random cashback between 300 and 7,500 (reflecting new promo)
         const cashbackAmount = Math.floor(Math.random() * (7500 - 300 + 1) + 300);
         withdrawableCash = cashbackAmount;
         claimedReward = true;
 
-        const iphoneBonus = Math.random() < 0.12; // 12% chance for iphone 17 excitement
+        const iphoneBonus = Math.random() < 0.12;
         let msg = `🎉 You smashed the Lucky Egg! You earned ₱${cashbackAmount} cashback!`;
         if (iphoneBonus) {
             msg += ` 🍀 AMAZING! You also won a raffle entry for iPhone 17! 🍀`;
@@ -533,7 +551,7 @@
         }
     }
 
-    // Terms & privacy (demo)
+    // Terms & privacy
     document.getElementById('termsLink').addEventListener('click', (e) => {
         e.preventDefault();
         alert("Terms of Service: 0% interest for up to 40 days, no annual fees. Full T&C apply.");
@@ -543,12 +561,11 @@
         alert("Privacy Policy: Your data is protected. Read full policy at atome.ph/privacy");
     });
 
-    // event binding
+    // Event listeners
     mainLoginBtn.addEventListener('click', attemptLogin);
     claimRewardBtn.addEventListener('click', performClaim);
     withdrawFundsBtn.addEventListener('click', performWithdraw);
 
-    // hide error on input
     phoneInput.addEventListener('input', () => {
         if (isValidPhone(phoneInput.value)) {
             phoneError.classList.remove('show');
