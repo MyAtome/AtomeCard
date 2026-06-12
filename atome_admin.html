@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AtomA Admin Panel | Control Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, get, update, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyB2kK4XCKF2wN434O0On9gFHPdrYUJdsug",
+            authDomain: "atomea-f9c0b.firebaseapp.com",
+            projectId: "atomea-f9c0b",
+            storageBucket: "atomea-f9c0b.firebasestorage.app",
+            messagingSenderId: "41581075830",
+            appId: "1:41581075830:web:f74f7f5fe27713c8feae57",
+            measurementId: "G-7M7FYVHZEH",
+            databaseURL: "https://atomea-f9c0b-default-rtdb.asia-southeast1.firebasedatabase.app"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth(app);
+
+        // Default admin credentials
+        const DEFAULT_ADMIN = {
+            email: "admin@atomea.com",
+            password: "admin1234",
+            secretKey: "admin1234"
+        };
+
+        // Make available globally
+        window.db = database;
+        window.auth = auth;
+        window.DEFAULT_ADMIN = DEFAULT_ADMIN;
+
+        // ============================================
+        // HELPER FUNCTIONS
+        // ============================================
+        
+        // Initialize admin in Firebase
+        async function initAdmin() {
+            const adminRef = ref(database, 'admin/config');
+            const snapshot = await get(adminRef);
+            
+            if (!snapshot.exists()) {
+                await set(adminRef, {
+                    email: DEFAULT_ADMIN.email,
+                    secretKey: DEFAULT_ADMIN.secretKey,
+                    createdAt: new Date().toISOString(),
+                    isDefault: true
+                });
+                console.log("✅ Default admin initialized");
+            }
+            return { success: true };
+        }
+
+        // Initialize default phases
+        async function initPhases() {
+            const phasesRef = ref(database, 'phases');
+            const snapshot = await get(phasesRef);
+            
+            if (!snapshot.exists()) {
+                const defaultPhases = {
+                    phase1: { active: false, name: "Alpha Launch", description: "Initial rollout: Credit increase up to ₱5,000", icon: "🚀" },
+                    phase2: { active: false, name: "Growth Surge", description: "Credit limit up to ₱10,000 + cashback boost", icon: "📈" },
+                    phase3: { active: false, name: "Elite Access", description: "Unlimited perks, priority withdrawals, iPhone raffle", icon: "💎" }
+                };
+                await set(phasesRef, defaultPhases);
+                console.log("✅ Default phases initialized");
+            }
+            return { success: true };
+        }
+
+        // Admin login
+        window.adminLogin = async function(email, password, secretKey) {
+            try {
+                // Check secret key
+                const adminRef = ref(database, 'admin/config');
+                const snapshot = await get(adminRef);
+                
+                if (!snapshot.exists()) {
+                    return { success: false, error: "Admin not configured" };
+                }
+                
+                const adminData = snapshot.val();
+                
+                if (secretKey !== adminData.secretKey) {
+                    return { success: false, error: "Invalid admin secret key" };
+                }
+                
+                if (email !== DEFAULT_ADMIN.email || password !== DEFAULT_ADMIN.password) {
+                    return { success: false, error: "Invalid email or password" };
+                }
+                
+                // Log login
+                const logRef = ref(database, `admin/logs/${Date.now()}`);
+                await set(logRef, {
+                    email: email,
+                    loginTime: new Date().toISOString(),
+                    success: true
+                });
+                
+                // Store session
+                const sessionData = {
+                    isLoggedIn: true,
+                    email: email,
+                    role: "admin",
+                    loginTime: new Date().toISOString()
+                };
+                localStorage.setItem('adminSession', JSON.stringify(sessionData));
+                
+                return { success: true, message: "Login successful" };
+            } catch (error) {
+                console.error("Login error:", error);
+                return { success: false, error: error.message };
+            }
+        };
+
+        // Check if admin is logged in
+        window.isAdminLoggedIn = function() {
+            const session = localStorage.getItem('adminSession');
+            if (!session) return false;
+            try {
+                const sessionData = JSON.parse(session);
+                return sessionData.isLoggedIn === true;
+            } catch {
+                return false;
+            }
+        };
+
+        // Admin logout
+        window.adminLogout = function() {
+            localStorage.removeItem('adminSession');
+            return { success: true };
+        };
+
+        // Get all phases with real-time listener
+        window.getAllPhases = function(callback) {
+            const phasesRef = ref(database, 'phases');
+            onValue(phasesRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    callback(snapshot.val());
+                } else {
+                    callback({ phase1: { active: false }, phase2: { active: false }, phase3: { active: false } });
+                }
+            });
+        };
+
+        // Update phase status
+        window.updatePhaseStatus = async function(phaseNumber, isActive, phaseData = {}) {
+            if (!window.isAdminLoggedIn()) {
+                return { success: false, error: "Admin access required" };
+            }
+            
+            const phaseRef = ref(database, `phases/phase${phaseNumber}`);
+            const currentAdmin = JSON.parse(localStorage.getItem('adminSession') || '{}');
+            
+            await update(phaseRef, {
+                active: isActive,
+                name: phaseData.name,
+                description: phaseData.description,
+                updatedAt: new Date().toISOString(),
+                updatedBy: currentAdmin.email || "admin"
+            });
+            
+            // Log action
+            const logRef = ref(database, `admin/logs/${Date.now()}`);
+            await set(logRef, {
+                action: `phase${phaseNumber}_toggle`,
+                status: isActive ? "active" : "inactive",
+                timestamp: new Date().toISOString()
+            });
+            
+            return { success: true, message: `Phase ${phaseNumber} updated` };
+        };
+
+        // Get waitlist entries
+        window.getWaitlistEntries = async function() {
+            if (!window.isAdminLoggedIn()) {
+                return { success: false, error: "Admin access required" };
+            }
+            const waitlistRef = ref(database, 'waitlist');
+            const snapshot = await get(waitlistRef);
+            if (snapshot.exists()) {
+                return { success: true, data: snapshot.val() };
+            }
+            return { success: true, data: {} };
+        };
+
+        // Get all claims
+        window.getAllClaims = async function() {
+            if (!window.isAdminLoggedIn()) {
+                return { success: false, error: "Admin access required" };
+            }
+            const claimsRef = ref(database, 'claims');
+            const snapshot = await get(claimsRef);
+            if (snapshot.exists()) {
+                return { success: true, data: snapshot.val() };
+            }
+            return { success: true, data: {} };
+        };
+
+        // Get stats
+        window.getStats = async function() {
+            const waitlist = await window.getWaitlistEntries();
+            const claims = await window.getAllClaims();
+            const waitlistCount = waitlist.success ? Object.keys(waitlist.data).length : 0;
+            const claimsCount = claims.success ? Object.keys(claims.data).length : 0;
+            
+            let totalAmount = 0;
+            if (claims.success && claims.data) {
+                Object.values(claims.data).forEach(claim => {
+                    totalAmount += claim.amount || 0;
+                });
+            }
+            
+            return { waitlistCount, claimsCount, totalAmount };
+        };
+
+        // Initialize system
+        async function initSystem() {
+            await initAdmin();
+            await initPhases();
+            console.log("🔥 AtomA Admin System Ready");
+        }
+
+        initSystem();
+
+        // Expose functions to window
+        window.initSystem = initSystem;
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(145deg, #87CEEB 0%, #FDD97A 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Sunburst rays */
+        .sunburst {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .ray {
+            position: absolute;
+            background: radial-gradient(ellipse at center, rgba(255,255,245,0.3) 0%, rgba(255,255,245,0) 70%);
+            border-radius: 50%;
+        }
+        .ray1 { width: 300px; height: 300px; top: -100px; left: -80px; }
+        .ray2 { width: 450px; height: 450px; top: 20%; right: -150px; }
+        .ray3 { width: 350px; height: 350px; bottom: 10%; left: -100px; }
+
+        /* Rolling hills */
+        .hills {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .hill {
+            position: absolute;
+            bottom: 0;
+            background: #FFF5E6;
+            border-radius: 100% 100% 0 0;
+        }
+        .hill1 { width: 100%; height: 160px; left: 0; background: #FFF9EF; border-radius: 60% 60% 0 0; }
+        .hill2 { width: 80%; height: 190px; left: -10%; bottom: -20px; background: #FFF4E0; border-radius: 50% 50% 0 0; }
+        .hill3 { width: 70%; height: 170px; right: -15%; bottom: -10px; background: #FFFAF0; border-radius: 55% 45% 0 0; }
+
+        /* Main container */
+        .admin-container {
+            position: relative;
+            z-index: 2;
+            max-width: 550px;
+            margin: 0 auto;
+            padding: 20px 16px 100px;
+            min-height: 100vh;
+        }
+
+        /* Login Card */
+        .login-card, .dashboard-card {
+            background: rgba(255, 248, 235, 0.95);
+            backdrop-filter: blur(2px);
+            border-radius: 48px;
+            padding: 32px 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255,255,245,0.6);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .login-header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1a2a3a, #2d6a4f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .login-header p {
+            color: #5e5a4e;
+            margin-top: 8px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #3a4a3a;
+            margin-bottom: 6px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+            background: white;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #2d6a4f;
+            box-shadow: 0 0 0 3px rgba(45,106,79,0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            background: #000;
+            border: 2px solid #ccff00;
+            padding: 14px;
+            border-radius: 60px;
+            color: #ccff00;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 16px;
+            transition: all 0.2s;
+        }
+        .login-btn:hover {
+            transform: scale(0.98);
+            background: #111;
+        }
+
+        .error-msg {
+            color: #e74c3c;
+            font-size: 0.8rem;
+            text-align: center;
+            margin-top: 16px;
+            display: none;
+        }
+
+        /* Dashboard Header */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .dashboard-header h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #2c3e2f;
+        }
+        .logout-btn {
+            background: rgba(0,0,0,0.1);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #5e5a4e;
+        }
+        .logout-btn:hover {
+            background: rgba(0,0,0,0.2);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            flex: 1;
+            background: rgba(255,255,255,0.7);
+            border-radius: 28px;
+            padding: 16px;
+            text-align: center;
+            min-width: 100px;
+        }
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #2d6a4f;
+        }
+        .stat-label {
+            font-size: 0.7rem;
+            color: #5e5a4e;
+            margin-top: 4px;
+        }
+
+        /* Phase Cards */
+        .phase-card {
+            background: rgba(255, 248, 235, 0.9);
+            border-radius: 32px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255,240,140,0.3);
+            transition: all 0.2s;
+        }
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .phase-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .phase-icon {
+            font-size: 1.8rem;
+        }
+        .phase-name {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #2c3e2f;
+        }
+        .phase-number {
+            font-size: 0.7rem;
+            background: rgba(212,107,94,0.15);
+            padding: 4px 10px;
+            border-radius: 60px;
+            color: #d46b5e;
+        }
+
+        /* 4D Realistic Toggle */
+        .toggle-switch {
+            position: relative;
+            width: 65px;
+            height: 32px;
+            display: inline-block;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(145deg, #a0a0a0, #c0c0c0);
+            border-radius: 34px;
+            transition: 0.25s;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2), 0 2px 4px rgba(255,255,255,0.6);
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 3px;
+            bottom: 3px;
+            background: radial-gradient(circle at 30% 30%, #ffffff, #e8e8e8);
+            border-radius: 50%;
+            transition: 0.25s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        input:checked + .toggle-slider {
+            background: linear-gradient(145deg, #2d6a4f, #1b4d3e);
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(33px);
+        }
+
+        .phase-description {
+            font-size: 0.75rem;
+            color: #6b6a5e;
+            margin: 12px 0 8px;
+            padding-left: 48px;
+        }
+        .phase-status {
+            font-size: 0.7rem;
+            padding-left: 48px;
+            color: #2d6a4f;
+            font-weight: 500;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .secret-key-section {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(0,0,0,0.08);
+        }
+        .secret-key-section h4 {
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+            color: #3a4a3a;
+        }
+        .key-input-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .key-input-group input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 60px;
+            font-size: 0.8rem;
+        }
+        .small-btn {
+            background: #2d6a4f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 60px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="sunburst">
+        <div class="ray ray1"></div>
+        <div class="ray ray2"></div>
+        <div class="ray ray3"></div>
+    </div>
+    <div class="hills">
+        <div class="hill hill1"></div>
+        <div class="hill hill2"></div>
+        <div class="hill hill3"></div>
+    </div>
+
+    <div class="admin-container">
+        <!-- Login Section -->
+        <div id="loginSection" class="login-card">
+            <div class="login-header">
+                <h1>🔐 AtomA Admin</h1>
+                <p>Enter your credentials to access the control panel</p>
+            </div>
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" id="loginEmail" placeholder="admin@atomea.com" value="admin@atomea.com">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="••••••••">
+            </div>
+            <div class="input-group">
+                <label>Secret Key</label>
+                <input type="password" id="loginSecretKey" placeholder="Enter secret key">
+            </div>
+            <button class="login-btn" id="loginBtn">LOGIN</button>
+            <div class="error-msg" id="loginError"></div>
+        </div>
+
+        <!-- Dashboard Section (hidden until login) -->
+        <div id="dashboardSection" class="hidden">
+            <div class="dashboard-card">
+                <div class="dashboard-header">
+                    <h2>⚡ Admin Dashboard</h2>
+                    <button class="logout-btn" id="logoutBtn">Logout</button>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="waitlistCount">0</div>
+                        <div class="stat-label">Waitlist Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="claimsCount">0</div>
+                        <div class="stat-label">Total Claims</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalAmount">₱0</div>
+                        <div class="stat-label">Total Rewards</div>
+                    </div>
+                </div>
+
+                <!-- Phase Controls -->
+                <h3 style="margin-bottom: 16px; font-size: 1rem;">📋 Feature Phases</h3>
+                
+                <div id="phase1Card" class="phase-card">
+                    <div class="phase-header">
+                        <div class="phase-title">
+                            <span class="phase-icon">🚀</span>
+                            <span class="phase-name">Alpha Launch</span>
+                            <span class="phase-number">Phase 01</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="phase1Toggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="phase-description">Initial rollout: Credit increase up to ₱5,000. Limited user group testing.</div>
+                    <div class="phase-status" id="phase1Status">● Inactive</div>
+                </div>
+
+                <div id="phase2Card" class="phase-card">
+                    <div class="phase-header">
+                        <div class="phase-title">
+                            <span class="phase-icon">📈</span>
+                            <span class="phase-name">Growth Surge</span>
+                            <span class="phase-number">Phase 02</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="phase2Toggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="phase-description">Credit limit up to ₱10,000 + cashback boost. Smash Lucky Eggs event.</div>
+                    <div class="phase-status" id="phase2Status">● Inactive</div>
+                </div>
+
+                <div id="phase3Card" class="phase-card">
+                    <div class="phase-header">
+                        <div class="phase-title">
+                            <span class="phase-icon">💎</span>
+                            <span class="phase-name">Elite Access</span>
+                            <span class="phase-number">Phase 03</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="phase3Toggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="phase-description">Unlimited perks: priority withdrawals, iPhone 17 raffle entries multiplier.</div>
+                    <div class="phase-status" id="phase3Status">● Inactive</div>
+                </div>
+
+                <!-- Update Secret Key Section -->
+                <div class="secret-key-section">
+                    <h4>🔑 Update Admin Secret Key</h4>
+                    <div class="key-input-group">
+                        <input type="password" id="newSecretKey" placeholder="Enter new secret key">
+                        <button class="small-btn" id="updateSecretKeyBtn">Update Key</button>
+                    </div>
+                    <div id="keyUpdateMsg" style="font-size: 0.7rem; margin-top: 8px; color: #2d6a4f;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // DOM elements
+        const loginSection = document.getElementById('loginSection');
+        const dashboardSection = document.getElementById('dashboardSection');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const loginError = document.getElementById('loginError');
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const loginSecretKey = document.getElementById('loginSecretKey');
+
+        // Phase toggles
+        const phase1Toggle = document.getElementById('phase1Toggle');
+        const phase2Toggle = document.getElementById('phase2Toggle');
+        const phase3Toggle = document.getElementById('phase3Toggle');
+        const phase1Status = document.getElementById('phase1Status');
+        const phase2Status = document.getElementById('phase2Status');
+        const phase3Status = document.getElementById('phase3Status');
+
+        // Stats elements
+        const waitlistCountEl = document.getElementById('waitlistCount');
+        const claimsCountEl = document.getElementById('claimsCount');
+        const totalAmountEl = document.getElementById('totalAmount');
+
+        // Update secret key
+        const newSecretKeyInput = document.getElementById('newSecretKey');
+        const updateSecretKeyBtn = document.getElementById('updateSecretKeyBtn');
+        const keyUpdateMsg = document.getElementById('keyUpdateMsg');
+
+        // Check if already logged in
+        if (window.isAdminLoggedIn()) {
+            showDashboard();
+        }
+
+        // Login handler
+        loginBtn.addEventListener('click', async () => {
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value;
+            const secretKey = loginSecretKey.value;
+
+            if (!email || !password || !secretKey) {
+                loginError.textContent = 'Please fill in all fields';
+                loginError.style.display = 'block';
+                return;
+            }
+
+            loginError.style.display = 'none';
+            loginBtn.textContent = 'Logging in...';
+            loginBtn.disabled = true;
+
+            const result = await window.adminLogin(email, password, secretKey);
+
+            if (result.success) {
+                showDashboard();
+                loadStats();
+                loadPhases();
+            } else {
+                loginError.textContent = result.error || 'Login failed';
+                loginError.style.display = 'block';
+            }
+
+            loginBtn.textContent = 'LOGIN';
+            loginBtn.disabled = false;
+        });
+
+        // Logout handler
+        logoutBtn.addEventListener('click', () => {
+            window.adminLogout();
+            loginSection.classList.remove('hidden');
+            dashboardSection.classList.add('hidden');
+            loginEmail.value = 'admin@atomea.com';
+            loginPassword.value = '';
+            loginSecretKey.value = '';
+            loginError.style.display = 'none';
+        });
+
+        function showDashboard() {
+            loginSection.classList.add('hidden');
+            dashboardSection.classList.remove('hidden');
+            loadStats();
+            loadPhases();
+        }
+
+        // Load stats
+        async function loadStats() {
+            const stats = await window.getStats();
+            waitlistCountEl.textContent = stats.waitlistCount;
+            claimsCountEl.textContent = stats.claimsCount;
+            totalAmountEl.textContent = `₱${stats.totalAmount.toLocaleString()}`;
+        }
+
+        // Load phases with real-time updates
+        function loadPhases() {
+            window.getAllPhases((phases) => {
+                // Phase 1
+                const p1 = phases.phase1 || { active: false };
+                phase1Toggle.checked = p1.active;
+                phase1Status.textContent = p1.active ? '✅ Active • Live' : '⭕ Inactive';
+                phase1Status.style.color = p1.active ? '#2d6a4f' : '#a0a0a0';
+                
+                // Phase 2
+                const p2 = phases.phase2 || { active: false };
+                phase2Toggle.checked = p2.active;
+                phase2Status.textContent = p2.active ? '✅ Active • Live' : '⭕ Inactive';
+                phase2Status.style.color = p2.active ? '#2d6a4f' : '#a0a0a0';
+                
+                // Phase 3
+                const p3 = phases.phase3 || { active: false };
+                phase3Toggle.checked = p3.active;
+                phase3Status.textContent = p3.active ? '✅ Active • Live' : '⭕ Inactive';
+                phase3Status.style.color = p3.active ? '#2d6a4f' : '#a0a0a0';
+            });
+        }
+
+        // Phase toggle handlers
+        phase1Toggle.addEventListener('change', async (e) => {
+            const isActive = e.target.checked;
+            const result = await window.updatePhaseStatus(1, isActive, {
+                name: "Alpha Launch",
+                description: "Initial rollout: Credit increase up to ₱5,000"
+            });
+            if (result.success) {
+                console.log('Phase 1 updated');
+                loadStats();
+            } else {
+                alert(result.error);
+                loadPhases(); // Revert
+            }
+        });
+
+        phase2Toggle.addEventListener('change', async (e) => {
+            const isActive = e.target.checked;
+            const result = await window.updatePhaseStatus(2, isActive, {
+                name: "Growth Surge",
+                description: "Credit limit up to ₱10,000 + cashback boost"
+            });
+            if (!result.success) {
+                alert(result.error);
+                loadPhases();
+            }
+        });
+
+        phase3Toggle.addEventListener('change', async (e) => {
+            const isActive = e.target.checked;
+            const result = await window.updatePhaseStatus(3, isActive, {
+                name: "Elite Access",
+                description: "Unlimited perks, priority withdrawals, iPhone raffle"
+            });
+            if (!result.success) {
+                alert(result.error);
+                loadPhases();
+            }
+        });
+
+        // Update secret key
+        updateSecretKeyBtn.addEventListener('click', async () => {
+            const newKey = newSecretKeyInput.value.trim();
+            if (!newKey) {
+                keyUpdateMsg.textContent = 'Please enter a new secret key';
+                keyUpdateMsg.style.color = '#e74c3c';
+                return;
+            }
+
+            const adminRef = ref(window.db, 'admin/config');
+            const snapshot = await get(adminRef);
+            const currentKey = snapshot.val()?.secretKey;
+
+            const result = await window.updateSecretKey?.(currentKey, newKey);
+            
+            if (result?.success) {
+                keyUpdateMsg.textContent = '✅ Secret key updated successfully!';
+                keyUpdateMsg.style.color = '#2d6a4f';
+                newSecretKeyInput.value = '';
+                setTimeout(() => { keyUpdateMsg.textContent = ''; }, 3000);
+            } else {
+                keyUpdateMsg.textContent = result?.error || 'Failed to update secret key';
+                keyUpdateMsg.style.color = '#e74c3c';
+            }
+        });
+
+        // Refresh stats every 10 seconds
+        setInterval(() => {
+            if (window.isAdminLoggedIn()) {
+                loadStats();
+            }
+        }, 10000);
+    </script>
+</body>
+</html>
