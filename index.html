@@ -22,110 +22,23 @@
         }
 
         /* ============================================
-           SOFT PASTEL GRADIENT BACKGROUND
-           Sky Blue to Buttery Yellow
+           MAIN BACKGROUND - atomebg.png
+           No gradient, just the image background
         ============================================ */
         .bg-theme {
-            background: linear-gradient(165deg, #7EC8E0 0%, #B8E1F0 30%, #FDE08B 70%, #FDD97A 100%);
+            background-image: url('photos/atomebg.png');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             min-height: 100vh;
             width: 100%;
             position: relative;
-            overflow: hidden;
         }
 
         /* ============================================
-           SUNBURST RAYS - Translucent White
-        ============================================ */
-        .sunburst {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-        .ray {
-            position: absolute;
-            background: radial-gradient(ellipse at center, rgba(255,255,250,0.35) 0%, rgba(255,255,245,0.1) 40%, rgba(255,255,255,0) 70%);
-            border-radius: 50%;
-            filter: blur(3px);
-            animation: slowPulse 8s ease-in-out infinite;
-        }
-        .ray1 { width: 350px; height: 350px; top: -120px; left: -100px; animation-delay: 0s; }
-        .ray2 { width: 500px; height: 500px; top: 15%; right: -180px; animation-delay: 2s; }
-        .ray3 { width: 400px; height: 400px; bottom: 5%; left: -80px; animation-delay: 4s; }
-        .ray4 { width: 280px; height: 280px; top: 45%; left: 25%; animation-delay: 1s; }
-        .ray5 { width: 320px; height: 320px; bottom: 25%; right: 10%; animation-delay: 3s; }
-        .ray6 { width: 200px; height: 200px; top: 70%; left: 60%; animation-delay: 5s; }
-
-        @keyframes slowPulse {
-            0%, 100% { opacity: 0.4; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.08); }
-        }
-
-        /* ============================================
-           CREAM-COLORED ROLLING HILLS
-        ============================================ */
-        .hills {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 260px;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .hill {
-            position: absolute;
-            bottom: 0;
-            border-radius: 100% 100% 0 0;
-            box-shadow: 0 -8px 20px rgba(0,0,0,0.03);
-        }
-        .hill1 {
-            width: 110%;
-            height: 180px;
-            left: -5%;
-            background: #FFF9EF;
-            border-radius: 55% 55% 0 0;
-            bottom: -20px;
-        }
-        .hill2 {
-            width: 85%;
-            height: 210px;
-            left: -10%;
-            bottom: -30px;
-            background: #FFF5E6;
-            border-radius: 50% 52% 0 0;
-        }
-        .hill3 {
-            width: 75%;
-            height: 195px;
-            right: -12%;
-            bottom: -25px;
-            background: #FFF8EC;
-            border-radius: 48% 52% 0 0;
-        }
-        .hill4 {
-            width: 55%;
-            height: 170px;
-            left: 15%;
-            bottom: -35px;
-            background: #FFF2DD;
-            border-radius: 60% 40% 0 0;
-        }
-        .hill5 {
-            width: 45%;
-            height: 150px;
-            right: 5%;
-            bottom: -40px;
-            background: #FFFAF0;
-            border-radius: 45% 55% 0 0;
-        }
-
-        /* ============================================
-           MAIN CONTAINER
+           TRANSPARENT CONTAINER - No background, no blur
+           Kita ang atomebg.png sa likod
         ============================================ */
         .main-container {
             position: relative;
@@ -140,15 +53,16 @@
         }
 
         /* ============================================
-           GLASS CARD - Transparent with soft lighting
+           TRANSPARENT GLASS CARD - Semi-transparent
+           Nakikita pa rin ang background image
         ============================================ */
         .glass-card {
-            background: rgba(255, 250, 240, 0.92);
-            backdrop-filter: blur(8px);
+            background: rgba(255, 250, 240, 0.88);
+            backdrop-filter: blur(12px);
             border-radius: 52px;
             padding: 32px 28px 44px;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(255,255,200,0.3);
-            border: 1px solid rgba(255, 248, 225, 0.7);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(255,255,200,0.2);
+            border: 1px solid rgba(255, 248, 225, 0.5);
             transition: all 0.3s ease;
         }
 
@@ -196,7 +110,7 @@
             align-items: center;
             gap: 0;
             margin-bottom: 28px;
-            background: rgba(255, 245, 235, 0.6);
+            background: rgba(255, 245, 235, 0.7);
             border-radius: 100px;
             padding: 12px 20px;
             border: 1px solid rgba(255, 215, 180, 0.5);
@@ -346,9 +260,9 @@
         .hint-message {
             text-align: center;
             font-size: 0.72rem;
-            color: #b89a6e;
+            color: #5e4a3a;
             margin: 12px 0 12px;
-            background: rgba(255, 245, 235, 0.7);
+            background: rgba(255, 245, 235, 0.8);
             padding: 10px 18px;
             border-radius: 50px;
             width: 100%;
@@ -362,10 +276,10 @@
         .terms-row {
             text-align: center;
             font-size: 0.68rem;
-            color: #b89a6e;
+            color: #5e4a3a;
             margin-top: 18px;
             line-height: 1.4;
-            background: rgba(255, 248, 240, 0.6);
+            background: rgba(255, 248, 240, 0.7);
             padding: 10px 16px;
             border-radius: 80px;
             font-family: 'Inter', sans-serif;
@@ -390,7 +304,7 @@
             padding-top: 20px;
         }
         .reward-panel {
-            background: rgba(255, 250, 240, 0.8);
+            background: rgba(255, 250, 240, 0.85);
             border-radius: 48px;
             padding: 22px 20px;
             border: 1px solid rgba(255, 215, 180, 0.5);
@@ -471,25 +385,6 @@
 </head>
 <body>
 <div class="bg-theme">
-    <!-- Sunburst Rays -->
-    <div class="sunburst">
-        <div class="ray ray1"></div>
-        <div class="ray ray2"></div>
-        <div class="ray ray3"></div>
-        <div class="ray ray4"></div>
-        <div class="ray ray5"></div>
-        <div class="ray ray6"></div>
-    </div>
-
-    <!-- Cream-colored Rolling Hills -->
-    <div class="hills">
-        <div class="hill hill1"></div>
-        <div class="hill hill2"></div>
-        <div class="hill hill3"></div>
-        <div class="hill hill4"></div>
-        <div class="hill hill5"></div>
-    </div>
-
     <div class="main-container">
         <div class="glass-card">
             <!-- PROMO HEADER -->
