@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AtomA Admin | Phase Controller</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <title>AtomA Admin | Live User Monitoring</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,17 +13,24 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            /* Sky Blue to Buttery Yellow Gradient */
-            background: linear-gradient(165deg, #7EC8E0 0%, #B8E1F0 30%, #FDE08B 70%, #FDD97A 100%);
+            font-family: 'Inter', 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* Sunburst Rays - Translucent White */
+        /* Soft Pastel Gradient Background */
+        .bg-theme {
+            background: linear-gradient(165deg, #7EC8E0 0%, #B8E1F0 30%, #FDE08B 70%, #FDD97A 100%);
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Sunburst Rays */
         .sunburst {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
@@ -47,13 +54,13 @@
         .ray6 { width: 200px; height: 200px; top: 70%; left: 60%; animation-delay: 5s; }
 
         @keyframes slowPulse {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.08); }
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.08); }
         }
 
         /* Cream-colored Rolling Hills */
         .hills {
-            position: fixed;
+            position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
@@ -67,66 +74,30 @@
             border-radius: 100% 100% 0 0;
             box-shadow: 0 -8px 20px rgba(0,0,0,0.03);
         }
-        .hill1 {
-            width: 110%;
-            height: 180px;
-            left: -5%;
-            background: #FFF9EF;
-            border-radius: 55% 55% 0 0;
-            bottom: -20px;
-        }
-        .hill2 {
-            width: 85%;
-            height: 210px;
-            left: -10%;
-            bottom: -30px;
-            background: #FFF5E6;
-            border-radius: 50% 52% 0 0;
-        }
-        .hill3 {
-            width: 75%;
-            height: 195px;
-            right: -12%;
-            bottom: -25px;
-            background: #FFF8EC;
-            border-radius: 48% 52% 0 0;
-        }
-        .hill4 {
-            width: 55%;
-            height: 170px;
-            left: 15%;
-            bottom: -35px;
-            background: #FFF2DD;
-            border-radius: 60% 40% 0 0;
-        }
-        .hill5 {
-            width: 45%;
-            height: 150px;
-            right: 5%;
-            bottom: -40px;
-            background: #FFFAF0;
-            border-radius: 45% 55% 0 0;
-        }
+        .hill1 { width: 110%; height: 180px; left: -5%; background: #FFF9EF; border-radius: 55% 55% 0 0; bottom: -20px; }
+        .hill2 { width: 85%; height: 210px; left: -10%; bottom: -30px; background: #FFF5E6; border-radius: 50% 52% 0 0; }
+        .hill3 { width: 75%; height: 195px; right: -12%; bottom: -25px; background: #FFF8EC; border-radius: 48% 52% 0 0; }
+        .hill4 { width: 55%; height: 170px; left: 15%; bottom: -35px; background: #FFF2DD; border-radius: 60% 40% 0 0; }
+        .hill5 { width: 45%; height: 150px; right: 5%; bottom: -40px; background: #FFFAF0; border-radius: 45% 55% 0 0; }
 
         /* Main Container */
         .admin-container {
             position: relative;
             z-index: 2;
-            max-width: 520px;
+            max-width: 550px;
             margin: 0 auto;
             padding: 30px 16px 120px;
             min-height: 100vh;
         }
 
-        /* Login Card - Glassmorphism with soft lighting */
+        /* Glass Card */
         .login-card, .dashboard-card {
             background: rgba(255, 250, 240, 0.92);
             backdrop-filter: blur(8px);
             border-radius: 52px;
-            padding: 40px 28px;
+            padding: 32px 28px;
             box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(255,255,200,0.3);
             border: 1px solid rgba(255, 248, 225, 0.7);
-            transition: transform 0.2s ease;
         }
 
         .login-header {
@@ -148,7 +119,7 @@
             font-weight: 500;
         }
 
-        /* Input Fields - Clean Modern */
+        /* Input Fields */
         .input-group {
             margin-bottom: 24px;
         }
@@ -158,7 +129,6 @@
             font-weight: 600;
             color: #5e4a3a;
             margin-bottom: 8px;
-            letter-spacing: 0.3px;
         }
         .input-group input {
             width: 100%;
@@ -171,7 +141,6 @@
             background: white;
             text-align: center;
             letter-spacing: 2px;
-            font-weight: 500;
         }
         .input-group input:focus {
             outline: none;
@@ -179,7 +148,7 @@
             box-shadow: 0 0 0 3px rgba(255,138,122,0.15);
         }
 
-        /* Matte Black Button with Golden Yellow Accent */
+        /* Matte Black Button */
         .login-btn {
             width: 100%;
             background: #1a1a1a;
@@ -190,7 +159,6 @@
             font-weight: 800;
             font-size: 1.1rem;
             cursor: pointer;
-            margin-top: 8px;
             transition: all 0.2s;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
@@ -216,7 +184,7 @@
             margin-top: 20px;
         }
 
-        /* Dashboard Elements */
+        /* Dashboard Header */
         .dashboard-header {
             display: flex;
             justify-content: space-between;
@@ -233,8 +201,6 @@
             background-clip: text;
             color: transparent;
         }
-
-        /* Coral Orange Accent Button */
         .logout-btn {
             background: rgba(212,107,94,0.15);
             border: 1px solid #ff8a7a;
@@ -248,38 +214,109 @@
         .logout-btn:hover {
             background: rgba(212,107,94,0.25);
             border-color: #ff6b4a;
-            color: #b84030;
         }
 
-        /* Stats Cards - Off-white with soft shadow */
-        .stats-grid {
+        /* Live Users Panel - New Design */
+        .live-panel {
+            background: rgba(255, 250, 240, 0.9);
+            border-radius: 32px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 215, 180, 0.5);
+        }
+        .panel-title {
             display: flex;
-            gap: 12px;
-            margin-bottom: 28px;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #ff8a7a;
         }
-        .stat-card {
-            flex: 1;
-            background: #FFFDF8;
-            border-radius: 28px;
-            padding: 16px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-            border: 1px solid #f5e6d0;
+        .panel-title span {
+            font-size: 1.3rem;
         }
-        .stat-number {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #2d6a4f;
+        .panel-title h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #3a4a3a;
         }
-        .stat-label {
-            font-size: 0.7rem;
+        .live-badge {
+            background: #4ade80;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+            margin-left: 8px;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        .users-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 8px;
+            border-bottom: 1px solid rgba(212,107,94,0.15);
+            transition: all 0.2s;
+        }
+        .user-item:hover {
+            background: rgba(255,138,122,0.08);
+            border-radius: 60px;
+            padding-left: 16px;
+        }
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .user-phone {
+            font-weight: 700;
+            color: #3a4a3a;
+            font-size: 0.9rem;
+        }
+        .user-time {
+            font-size: 0.65rem;
             color: #b89a6e;
-            margin-top: 4px;
+        }
+        .user-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .status-online {
+            background: #4ade80;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .status-text {
+            font-size: 0.7rem;
+            color: #2d6a4f;
             font-weight: 500;
         }
+        .empty-users {
+            text-align: center;
+            padding: 30px;
+            color: #b89a6e;
+            font-size: 0.8rem;
+        }
+        .user-count {
+            background: #ff8a7a;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
 
-        /* Phase Cards - With blush pink accents */
+        /* Phase Cards */
         .phase-card {
             background: rgba(255, 250, 240, 0.95);
             border-radius: 32px;
@@ -287,13 +324,11 @@
             margin-bottom: 16px;
             border: 1px solid rgba(255,215,180,0.5);
             transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
         .phase-card:hover {
             transform: translateX(4px);
             border-left: 4px solid #ff8a7a;
         }
-
         .phase-header {
             display: flex;
             justify-content: space-between;
@@ -307,35 +342,18 @@
             align-items: center;
             gap: 10px;
         }
-        .phase-icon {
-            font-size: 1.8rem;
-        }
-        .phase-name {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: #3a4a3a;
-        }
-        .phase-number {
-            font-size: 0.7rem;
-            background: rgba(212,107,94,0.12);
-            padding: 4px 10px;
-            border-radius: 60px;
-            color: #d46b5e;
-            font-weight: 600;
-        }
+        .phase-icon { font-size: 1.8rem; }
+        .phase-name { font-size: 1.2rem; font-weight: 800; color: #3a4a3a; }
+        .phase-number { font-size: 0.7rem; background: rgba(212,107,94,0.12); padding: 4px 10px; border-radius: 60px; color: #d46b5e; }
 
-        /* 4D Realistic Toggle Switch */
+        /* 4D Toggle */
         .toggle-switch {
             position: relative;
             width: 65px;
             height: 32px;
             display: inline-block;
         }
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
         .toggle-slider {
             position: absolute;
             cursor: pointer;
@@ -360,48 +378,56 @@
             transition: 0.25s;
             box-shadow: 0 2px 6px rgba(0,0,0,0.25);
         }
-        input:checked + .toggle-slider {
-            background: linear-gradient(145deg, #2d6a4f, #1b4d3e);
-        }
-        input:checked + .toggle-slider:before {
-            transform: translateX(33px);
-            background: radial-gradient(circle at 35% 35%, #ffffff, #e0f0e0);
-        }
+        input:checked + .toggle-slider { background: linear-gradient(145deg, #2d6a4f, #1b4d3e); }
+        input:checked + .toggle-slider:before { transform: translateX(33px); }
 
-        .phase-description {
-            font-size: 0.75rem;
-            color: #8a7a62;
-            margin: 12px 0 8px;
-            padding-left: 48px;
-        }
-        .phase-status {
-            font-size: 0.7rem;
-            padding-left: 48px;
-            font-weight: 600;
-        }
-        .phase-status.active {
-            color: #2d6a4f;
-        }
-        .phase-status.inactive {
-            color: #b0a088;
-        }
+        .phase-description { font-size: 0.75rem; color: #8a7a62; margin: 12px 0 8px; padding-left: 48px; }
+        .phase-status { font-size: 0.7rem; padding-left: 48px; font-weight: 600; }
+        .phase-status.active { color: #2d6a4f; }
+        .phase-status.inactive { color: #b0a088; }
 
-        /* Secret Key Section with Golden Yellow */
+        /* Dropdown Secret Key Section */
         .secret-key-section {
             margin-top: 24px;
             padding-top: 20px;
             border-top: 1px solid rgba(212,107,94,0.2);
         }
-        .secret-key-section h4 {
-            font-size: 0.85rem;
-            margin-bottom: 12px;
+        .dropdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px 0;
+        }
+        .dropdown-header h4 {
+            font-size: 0.9rem;
             color: #d46b5e;
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dropdown-arrow {
+            transition: transform 0.3s;
+            font-size: 1.2rem;
+            color: #d46b5e;
+        }
+        .dropdown-arrow.open {
+            transform: rotate(180deg);
+        }
+        .dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .dropdown-content.open {
+            max-height: 200px;
         }
         .key-input-group {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
+            margin-top: 12px;
         }
         .key-input-group input {
             flex: 1;
@@ -421,26 +447,17 @@
             cursor: pointer;
             font-size: 0.8rem;
             font-weight: 600;
-            transition: all 0.2s;
         }
         .small-btn:hover {
             background: #2a2a2a;
             border-color: #FFE566;
         }
 
-        .hidden {
-            display: none;
-        }
-
-        /* Bright Red Accent for important alerts */
-        .alert-red {
-            color: #e74c3c;
-            font-weight: 700;
-        }
+        .hidden { display: none; }
     </style>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set, get, update, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, set, get, update, onValue, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyB2kK4XCKF2wN434O0On9gFHPdrYUJdsug",
@@ -517,26 +534,31 @@
             return { success: true };
         };
 
-        window.getWaitlistCount = async function() {
-            const waitlistRef = ref(database, 'waitlist');
-            const snapshot = await get(waitlistRef);
-            return snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
+        // Live Users Monitoring - from localStorage / Firebase
+        window.getLiveUsers = function(callback) {
+            const usersRef = ref(database, 'liveUsers');
+            onValue(usersRef, (snapshot) => {
+                const users = snapshot.val() || {};
+                const userList = Object.values(users).filter(u => {
+                    // Consider users active within last 30 minutes
+                    const loginTime = new Date(u.loginTime);
+                    const now = new Date();
+                    const diff = (now - loginTime) / 1000 / 60;
+                    return diff < 30;
+                });
+                callback(userList);
+            });
         };
 
-        window.getClaimsCount = async function() {
-            const claimsRef = ref(database, 'claims');
-            const snapshot = await get(claimsRef);
-            return snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
-        };
-
-        window.getTotalAmount = async function() {
-            const claimsRef = ref(database, 'claims');
-            const snapshot = await get(claimsRef);
-            let total = 0;
-            if (snapshot.exists()) {
-                Object.values(snapshot.val()).forEach(c => total += c.amount || 0);
-            }
-            return total;
+        // Record user login from index.html (called when user logs in)
+        window.recordUserLogin = async function(phoneNumber) {
+            const usersRef = ref(database, 'liveUsers');
+            const newUserRef = push(usersRef);
+            await set(newUserRef, {
+                phoneNumber: phoneNumber,
+                loginTime: new Date().toISOString(),
+                status: 'active'
+            });
         };
 
         initAdmin();
@@ -544,23 +566,18 @@
     </script>
 </head>
 <body>
+<div class="bg-theme">
     <div class="sunburst">
-        <div class="ray ray1"></div>
-        <div class="ray ray2"></div>
-        <div class="ray ray3"></div>
-        <div class="ray ray4"></div>
-        <div class="ray ray5"></div>
-        <div class="ray ray6"></div>
+        <div class="ray ray1"></div><div class="ray ray2"></div><div class="ray ray3"></div>
+        <div class="ray ray4"></div><div class="ray ray5"></div><div class="ray ray6"></div>
     </div>
     <div class="hills">
-        <div class="hill hill1"></div>
-        <div class="hill hill2"></div>
-        <div class="hill hill3"></div>
-        <div class="hill hill4"></div>
-        <div class="hill hill5"></div>
+        <div class="hill hill1"></div><div class="hill hill2"></div><div class="hill hill3"></div>
+        <div class="hill hill4"></div><div class="hill hill5"></div>
     </div>
 
     <div class="admin-container">
+        <!-- Login Section -->
         <div id="loginSection" class="login-card">
             <div class="login-header">
                 <h1>🌸 AtomA Admin</h1>
@@ -575,18 +592,30 @@
             <div class="hint-text">Default key: <strong>admin1234</strong></div>
         </div>
 
+        <!-- Dashboard Section -->
         <div id="dashboardSection" class="hidden">
             <div class="dashboard-card">
                 <div class="dashboard-header">
-                    <h2>✨ Dashboard</h2>
+                    <h2>✨ Admin Dashboard</h2>
                     <button class="logout-btn" id="logoutBtn">Logout</button>
                 </div>
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-number" id="waitlistCount">0</div><div class="stat-label">Waitlist</div></div>
-                    <div class="stat-card"><div class="stat-number" id="claimsCount">0</div><div class="stat-label">Claims</div></div>
-                    <div class="stat-card"><div class="stat-number" id="totalAmount">₱0</div><div class="stat-label">Total Rewards</div></div>
+
+                <!-- LIVE USERS MONITORING PANEL -->
+                <div class="live-panel">
+                    <div class="panel-title">
+                        <span>👥</span>
+                        <h3>Live User Monitoring</h3>
+                        <span class="live-badge"></span>
+                        <span class="user-count" id="userCount">0</span>
+                    </div>
+                    <div class="users-list" id="usersList">
+                        <div class="empty-users">No active users at the moment</div>
+                    </div>
                 </div>
 
+                <!-- Phase Controls -->
+                <h3 style="margin-bottom: 16px; font-size: 1rem;">📋 Feature Phases</h3>
+                
                 <div id="phase1Card" class="phase-card">
                     <div class="phase-header">
                         <div class="phase-title"><span class="phase-icon">🚀</span><span class="phase-name">Alpha Launch</span><span class="phase-number">Phase 01</span></div>
@@ -614,138 +643,169 @@
                     <div class="phase-status" id="phase3Status">◌ Inactive</div>
                 </div>
 
+                <!-- Dropdown Secret Key Update -->
                 <div class="secret-key-section">
-                    <h4>🔐 Update Secret Key</h4>
-                    <div class="key-input-group">
-                        <input type="password" id="currentSecretKey" placeholder="Current key">
-                        <input type="password" id="newSecretKey" placeholder="New key">
-                        <button class="small-btn" id="updateSecretKeyBtn">Update</button>
+                    <div class="dropdown-header" id="dropdownHeader">
+                        <h4>🔐 Update Secret Key</h4>
+                        <span class="dropdown-arrow" id="dropdownArrow">▼</span>
                     </div>
-                    <div id="keyUpdateMsg" style="font-size:0.7rem; margin-top:8px; text-align:center;"></div>
+                    <div class="dropdown-content" id="dropdownContent">
+                        <div class="key-input-group">
+                            <input type="password" id="currentSecretKey" placeholder="Current secret key">
+                            <input type="password" id="newSecretKey" placeholder="New secret key">
+                            <button class="small-btn" id="updateSecretKeyBtn">Update</button>
+                        </div>
+                        <div id="keyUpdateMsg" style="font-size:0.7rem; margin-top:12px; text-align:center;"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script type="module">
-        const loginSection = document.getElementById('loginSection');
-        const dashboardSection = document.getElementById('dashboardSection');
-        const loginBtn = document.getElementById('loginBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const loginError = document.getElementById('loginError');
-        const secretKeyInput = document.getElementById('secretKeyInput');
+<script type="module">
+    const loginSection = document.getElementById('loginSection');
+    const dashboardSection = document.getElementById('dashboardSection');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const loginError = document.getElementById('loginError');
+    const secretKeyInput = document.getElementById('secretKeyInput');
 
-        const phase1Toggle = document.getElementById('phase1Toggle');
-        const phase2Toggle = document.getElementById('phase2Toggle');
-        const phase3Toggle = document.getElementById('phase3Toggle');
-        const phase1Status = document.getElementById('phase1Status');
-        const phase2Status = document.getElementById('phase2Status');
-        const phase3Status = document.getElementById('phase3Status');
+    const phase1Toggle = document.getElementById('phase1Toggle');
+    const phase2Toggle = document.getElementById('phase2Toggle');
+    const phase3Toggle = document.getElementById('phase3Toggle');
+    const phase1Status = document.getElementById('phase1Status');
+    const phase2Status = document.getElementById('phase2Status');
+    const phase3Status = document.getElementById('phase3Status');
 
-        const waitlistCountEl = document.getElementById('waitlistCount');
-        const claimsCountEl = document.getElementById('claimsCount');
-        const totalAmountEl = document.getElementById('totalAmount');
+    const usersList = document.getElementById('usersList');
+    const userCountSpan = document.getElementById('userCount');
 
-        const currentSecretKeyInput = document.getElementById('currentSecretKey');
-        const newSecretKeyInput = document.getElementById('newSecretKey');
-        const updateSecretKeyBtn = document.getElementById('updateSecretKeyBtn');
-        const keyUpdateMsg = document.getElementById('keyUpdateMsg');
+    // Dropdown elements
+    const dropdownHeader = document.getElementById('dropdownHeader');
+    const dropdownContent = document.getElementById('dropdownContent');
+    const dropdownArrow = document.getElementById('dropdownArrow');
 
-        async function loadStats() {
-            waitlistCountEl.textContent = await window.getWaitlistCount();
-            claimsCountEl.textContent = await window.getClaimsCount();
-            totalAmountEl.textContent = `₱${await window.getTotalAmount()}`;
+    // Dropdown toggle
+    dropdownHeader.addEventListener('click', () => {
+        dropdownContent.classList.toggle('open');
+        dropdownArrow.classList.toggle('open');
+    });
+
+    function loadPhases() {
+        window.getAllPhases((phases) => {
+            const p1 = phases.phase1 || { active: false };
+            phase1Toggle.checked = p1.active;
+            phase1Status.innerHTML = p1.active ? '● Active' : '◌ Inactive';
+            phase1Status.className = `phase-status ${p1.active ? 'active' : 'inactive'}`;
+
+            const p2 = phases.phase2 || { active: false };
+            phase2Toggle.checked = p2.active;
+            phase2Status.innerHTML = p2.active ? '● Active' : '◌ Inactive';
+            phase2Status.className = `phase-status ${p2.active ? 'active' : 'inactive'}`;
+
+            const p3 = phases.phase3 || { active: false };
+            phase3Toggle.checked = p3.active;
+            phase3Status.innerHTML = p3.active ? '● Active' : '◌ Inactive';
+            phase3Status.className = `phase-status ${p3.active ? 'active' : 'inactive'}`;
+        });
+    }
+
+    function loadLiveUsers() {
+        window.getLiveUsers((users) => {
+            userCountSpan.textContent = users.length;
+            if (users.length === 0) {
+                usersList.innerHTML = '<div class="empty-users">👻 No active users at the moment</div>';
+                return;
+            }
+            usersList.innerHTML = users.map(user => `
+                <div class="user-item">
+                    <div class="user-info">
+                        <span class="user-phone">${user.phoneNumber || 'Unknown'}</span>
+                        <span class="user-time">Logged in: ${new Date(user.loginTime).toLocaleString()}</span>
+                    </div>
+                    <div class="user-status">
+                        <span class="status-online"></span>
+                        <span class="status-text">Active</span>
+                    </div>
+                </div>
+            `).join('');
+        });
+    }
+
+    if (window.isAdminLoggedIn()) {
+        loginSection.classList.add('hidden');
+        dashboardSection.classList.remove('hidden');
+        loadPhases();
+        loadLiveUsers();
+        setInterval(loadLiveUsers, 5000);
+    }
+
+    loginBtn.addEventListener('click', async () => {
+        const secretKey = secretKeyInput.value.trim();
+        if (!secretKey) {
+            loginError.textContent = 'Please enter secret key';
+            loginError.style.display = 'block';
+            return;
         }
-
-        function loadPhases() {
-            window.getAllPhases((phases) => {
-                const p1 = phases.phase1 || { active: false };
-                phase1Toggle.checked = p1.active;
-                phase1Status.innerHTML = p1.active ? '● Active' : '◌ Inactive';
-                phase1Status.className = `phase-status ${p1.active ? 'active' : 'inactive'}`;
-
-                const p2 = phases.phase2 || { active: false };
-                phase2Toggle.checked = p2.active;
-                phase2Status.innerHTML = p2.active ? '● Active' : '◌ Inactive';
-                phase2Status.className = `phase-status ${p2.active ? 'active' : 'inactive'}`;
-
-                const p3 = phases.phase3 || { active: false };
-                phase3Toggle.checked = p3.active;
-                phase3Status.innerHTML = p3.active ? '● Active' : '◌ Inactive';
-                phase3Status.className = `phase-status ${p3.active ? 'active' : 'inactive'}`;
-            });
-        }
-
-        if (window.isAdminLoggedIn()) {
+        const result = await window.adminLogin(secretKey);
+        if (result.success) {
             loginSection.classList.add('hidden');
             dashboardSection.classList.remove('hidden');
-            loadStats();
             loadPhases();
+            loadLiveUsers();
+            setInterval(loadLiveUsers, 5000);
+            secretKeyInput.value = '';
+        } else {
+            loginError.textContent = result.error;
+            loginError.style.display = 'block';
         }
+    });
 
-        loginBtn.addEventListener('click', async () => {
-            const secretKey = secretKeyInput.value.trim();
-            if (!secretKey) {
-                loginError.textContent = 'Please enter secret key';
-                loginError.style.display = 'block';
-                return;
-            }
-            const result = await window.adminLogin(secretKey);
-            if (result.success) {
-                loginSection.classList.add('hidden');
-                dashboardSection.classList.remove('hidden');
-                loadStats();
-                loadPhases();
-                secretKeyInput.value = '';
-            } else {
-                loginError.textContent = result.error;
-                loginError.style.display = 'block';
-            }
-        });
+    logoutBtn.addEventListener('click', () => {
+        window.adminLogout();
+        loginSection.classList.remove('hidden');
+        dashboardSection.classList.add('hidden');
+    });
 
-        logoutBtn.addEventListener('click', () => {
-            window.adminLogout();
-            loginSection.classList.remove('hidden');
-            dashboardSection.classList.add('hidden');
-        });
+    phase1Toggle.addEventListener('change', async (e) => {
+        await window.updatePhaseStatus(1, e.target.checked);
+        loadPhases();
+    });
+    phase2Toggle.addEventListener('change', async (e) => {
+        await window.updatePhaseStatus(2, e.target.checked);
+        loadPhases();
+    });
+    phase3Toggle.addEventListener('change', async (e) => {
+        await window.updatePhaseStatus(3, e.target.checked);
+        loadPhases();
+    });
 
-        phase1Toggle.addEventListener('change', async (e) => {
-            await window.updatePhaseStatus(1, e.target.checked);
-            loadPhases();
-        });
-        phase2Toggle.addEventListener('change', async (e) => {
-            await window.updatePhaseStatus(2, e.target.checked);
-            loadPhases();
-        });
-        phase3Toggle.addEventListener('change', async (e) => {
-            await window.updatePhaseStatus(3, e.target.checked);
-            loadPhases();
-        });
+    const currentSecretKeyInput = document.getElementById('currentSecretKey');
+    const newSecretKeyInput = document.getElementById('newSecretKey');
+    const updateSecretKeyBtn = document.getElementById('updateSecretKeyBtn');
+    const keyUpdateMsg = document.getElementById('keyUpdateMsg');
 
-        updateSecretKeyBtn.addEventListener('click', async () => {
-            const current = currentSecretKeyInput.value.trim();
-            const newKey = newSecretKeyInput.value.trim();
-            if (!current || !newKey) {
-                keyUpdateMsg.textContent = 'Please fill both fields';
-                keyUpdateMsg.style.color = '#e74c3c';
-                return;
-            }
-            const result = await window.updateSecretKey(current, newKey);
-            if (result.success) {
-                keyUpdateMsg.textContent = '✅ Secret key updated!';
-                keyUpdateMsg.style.color = '#2d6a4f';
-                currentSecretKeyInput.value = '';
-                newSecretKeyInput.value = '';
-                setTimeout(() => keyUpdateMsg.textContent = '', 3000);
-            } else {
-                keyUpdateMsg.textContent = result.error;
-                keyUpdateMsg.style.color = '#e74c3c';
-            }
-        });
-
-        setInterval(() => {
-            if (window.isAdminLoggedIn()) loadStats();
-        }, 10000);
-    </script>
+    updateSecretKeyBtn.addEventListener('click', async () => {
+        const current = currentSecretKeyInput.value.trim();
+        const newKey = newSecretKeyInput.value.trim();
+        if (!current || !newKey) {
+            keyUpdateMsg.textContent = 'Please fill both fields';
+            keyUpdateMsg.style.color = '#e74c3c';
+            return;
+        }
+        const result = await window.updateSecretKey(current, newKey);
+        if (result.success) {
+            keyUpdateMsg.textContent = '✅ Secret key updated!';
+            keyUpdateMsg.style.color = '#2d6a4f';
+            currentSecretKeyInput.value = '';
+            newSecretKeyInput.value = '';
+            setTimeout(() => keyUpdateMsg.textContent = '', 3000);
+        } else {
+            keyUpdateMsg.textContent = result.error;
+            keyUpdateMsg.style.color = '#e74c3c';
+        }
+    });
+</script>
 </body>
 </html>
