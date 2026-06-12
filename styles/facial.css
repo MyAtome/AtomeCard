@@ -1,12 +1,16 @@
-/* Additional styles for facial popup - soft pastel theme */
+/* ============================================
+   FACIAL RECOGNITION POPUP STYLES
+   Soft Pastel Gradient Theme
+   ============================================ */
+
 .facial-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(12px);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
     z-index: 1000;
     display: flex;
     align-items: center;
@@ -21,45 +25,62 @@
     opacity: 1;
 }
 
+/* Popup Container - Soft Pastel Gradient */
 .facial-popup {
-    background: linear-gradient(165deg, rgba(126,200,224,0.95), rgba(253,225,139,0.95));
+    background: linear-gradient(165deg, rgba(126,200,224,0.96), rgba(253,225,139,0.96));
     backdrop-filter: blur(8px);
     border-radius: 60px;
     width: 90%;
-    max-width: 400px;
-    padding: 28px 24px;
+    max-width: 420px;
+    padding: 28px 24px 32px;
     text-align: center;
-    box-shadow: 0 30px 50px rgba(0,0,0,0.25);
-    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    animation: popupFadeIn 0.3s ease-out;
 }
 
+@keyframes popupFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Header */
 .facial-header h3 {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-weight: 800;
     color: #1a2a3a;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    font-family: 'Space Grotesk', monospace;
 }
 
 .facial-header p {
     font-size: 0.75rem;
     color: #d46b5e;
+    font-weight: 600;
     margin-bottom: 20px;
 }
 
+/* Camera Container */
 .facial-camera-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .facial-camera-frame {
     position: relative;
-    width: 240px;
-    height: 240px;
+    width: 260px;
+    height: 260px;
     border-radius: 50%;
     overflow: hidden;
     border: 4px solid #FFD700;
-    box-shadow: 0 0 0 3px rgba(255,215,0,0.3), 0 10px 25px rgba(0,0,0,0.2);
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.25);
     background: #000;
 }
 
@@ -70,6 +91,7 @@
     transform: scaleX(-1);
 }
 
+/* Guide Circle - Green Edge Effect */
 .facial-guide-circle {
     position: absolute;
     top: 0;
@@ -77,43 +99,72 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    box-shadow: inset 0 0 20px 8px rgba(0,255,0,0.3);
+    box-shadow: inset 0 0 20px 5px rgba(0, 255, 0, 0.3);
     pointer-events: none;
+    transition: box-shadow 0.3s ease;
 }
 
+.facial-guide-circle.active {
+    box-shadow: inset 0 0 30px 8px rgba(0, 255, 0, 0.8), 0 0 20px 5px rgba(0, 255, 0, 0.5);
+    animation: pulseGreen 0.6s ease-out;
+}
+
+@keyframes pulseGreen {
+    0% {
+        box-shadow: inset 0 0 0 0 rgba(0, 255, 0, 0.8);
+    }
+    100% {
+        box-shadow: inset 0 0 30px 8px rgba(0, 255, 0, 0.8), 0 0 20px 5px rgba(0, 255, 0, 0.5);
+    }
+}
+
+/* Scanning Line Animation */
 .facial-scan-line {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 3px;
-    background: linear-gradient(90deg, transparent, #00ff00, #00ff00, transparent);
-    animation: scanMove 2s linear infinite;
+    background: linear-gradient(90deg, transparent, #00ff00, #00ff00, #00ff00, transparent);
+    border-radius: 2px;
     pointer-events: none;
     display: none;
+    animation: scanMove 2s linear infinite;
+    z-index: 10;
+}
+
+.facial-scan-line.active {
+    display: block;
 }
 
 @keyframes scanMove {
-    0% { top: 0; }
-    100% { top: 100%; }
+    0% {
+        top: 0;
+    }
+    100% {
+        top: 100%;
+    }
 }
 
+/* Buttons */
 .facial-buttons {
     display: flex;
     gap: 12px;
-    margin: 16px 0 12px;
+    margin: 16px 0 14px;
 }
 
 .facial-btn {
     flex: 1;
     background: #1a1a1a;
     border: 1.5px solid #FDD97A;
-    padding: 12px;
+    padding: 14px;
     border-radius: 60px;
     color: #FDD97A;
     font-weight: 700;
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
 }
 
 .facial-btn:active {
@@ -121,17 +172,102 @@
 }
 
 .facial-btn.cancel {
-    background: rgba(212,107,94,0.25);
+    background: rgba(212, 107, 94, 0.25);
     border-color: #d46b5e;
     color: #d46b5e;
 }
 
+.facial-btn.cancel:active {
+    background: rgba(212, 107, 94, 0.4);
+}
+
+/* Status Text */
 .facial-status {
     font-size: 0.75rem;
     color: #2d6a4f;
-    background: rgba(255,245,235,0.9);
-    padding: 10px;
+    background: rgba(255, 245, 235, 0.95);
+    padding: 10px 16px;
     border-radius: 60px;
     font-weight: 600;
     margin-top: 8px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Loading State */
+.facial-status.loading {
+    background: rgba(255, 245, 235, 0.95);
+    color: #d46b5e;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* Success State */
+.facial-status.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+/* Error State */
+.facial-status.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .facial-popup {
+        padding: 22px 18px 26px;
+        border-radius: 48px;
+        max-width: 360px;
+    }
+    
+    .facial-camera-frame {
+        width: 220px;
+        height: 220px;
+    }
+    
+    .facial-header h3 {
+        font-size: 1.3rem;
+    }
+    
+    .facial-btn {
+        padding: 12px;
+        font-size: 0.8rem;
+    }
+    
+    .facial-status {
+        font-size: 0.7rem;
+        padding: 8px 12px;
+    }
+}
+
+/* Landscape Mode */
+@media (max-width: 800px) and (orientation: landscape) {
+    .facial-popup {
+        max-width: 380px;
+        padding: 15px 20px;
+    }
+    
+    .facial-camera-frame {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .facial-header h3 {
+        font-size: 1.1rem;
+        margin-bottom: 4px;
+    }
+    
+    .facial-header p {
+        font-size: 0.65rem;
+        margin-bottom: 10px;
+    }
+    
+    .facial-buttons {
+        margin: 10px 0 8px;
+    }
 }
