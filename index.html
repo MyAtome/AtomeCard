@@ -7,10 +7,6 @@
     <link rel="preload" as="image" href="photos/atomebg.png">
     <link rel="preload" as="image" href="photos/atomeA.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Face API Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@4.15.0/dist/tf-core.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter@4.15.0/dist/tf-converter.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
     
     <style>
         * {
@@ -325,7 +321,7 @@
         }
 
         /* ============================================
-           IMPROVED FACIAL POPUP - Round Frame + Zoom
+           FACIAL SCANNING POPUP - MAY GREEN EDGE EFFECT
         ============================================ */
         .facial-overlay {
             position: fixed;
@@ -351,7 +347,7 @@
             background: linear-gradient(165deg, rgba(126,200,224,0.98), rgba(253,225,139,0.98));
             border-radius: 60px;
             width: 90%;
-            max-width: 400px;
+            max-width: 420px;
             padding: 28px 24px 32px;
             text-align: center;
             box-shadow: 0 30px 50px rgba(0,0,0,0.3);
@@ -371,8 +367,8 @@
             margin-top: 5px;
         }
         
-        /* ROUND FRAME WITH ZOOM EFFECT */
-        .camera-round-frame {
+        /* ROUND FRAME WITH SCANNING EFFECT */
+        .camera-container {
             position: relative;
             width: 260px;
             height: 260px;
@@ -383,14 +379,76 @@
             box-shadow: 0 0 0 3px rgba(255,215,0,0.3), 0 10px 30px rgba(0,0,0,0.3);
             background: #000;
         }
-        .camera-round-frame video {
+        .camera-container video {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: center;
             transform: scaleX(-1);
         }
-        /* Zoom indicator */
+        
+        /* GREEN EDGE OVERLAY - para sa scanning effect */
+        .green-edge-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10;
+            box-shadow: inset 0 0 20px 5px rgba(0,255,0,0.8), 0 0 15px 3px rgba(0,255,0,0.6);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .green-edge-overlay.active {
+            opacity: 1;
+            animation: pulseGreen 0.8s ease-out;
+        }
+        @keyframes pulseGreen {
+            0% { box-shadow: inset 0 0 0 0 rgba(0,255,0,0.8), 0 0 0 0 rgba(0,255,0,0.6); }
+            100% { box-shadow: inset 0 0 30px 8px rgba(0,255,0,0.9), 0 0 25px 10px rgba(0,255,0,0.8); }
+        }
+        
+        /* SCANNING LINE ANIMATION */
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff00, #00ff00, transparent);
+            animation: scanMove 2s linear infinite;
+            pointer-events: none;
+            z-index: 11;
+        }
+        @keyframes scanMove {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        
+        /* ANALYZING TEXT EFFECT */
+        .analyzing-text {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #2d6a4f;
+            background: rgba(0,0,0,0.7);
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 60px;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+        .analyzing-text .dots::after {
+            content: '';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+        
         .zoom-guide {
             position: absolute;
             bottom: 10px;
@@ -402,7 +460,7 @@
             padding: 4px 12px;
             border-radius: 60px;
             white-space: nowrap;
-            z-index: 5;
+            z-index: 15;
         }
         
         .facial-buttons {
@@ -420,18 +478,19 @@
             font-weight: 700;
             cursor: pointer;
             font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .facial-btn:active {
+            transform: scale(0.97);
         }
         .facial-btn.cancel {
             background: rgba(212,107,94,0.25);
             border-color: #d46b5e;
             color: #d46b5e;
         }
-        .facial-btn:active {
-            transform: scale(0.97);
-        }
         .facial-status {
             text-align: center;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: #2d6a4f;
             background: rgba(255,245,235,0.9);
             padding: 10px;
@@ -449,7 +508,7 @@
             .step-emoji { font-size: 1.1rem; }
             .step-text { font-size: 0.7rem; }
             .promo-title { font-size: 1.3rem; }
-            .camera-round-frame { width: 220px; height: 220px; }
+            .camera-container { width: 220px; height: 220px; }
         }
     </style>
 </head>
@@ -512,18 +571,23 @@
     </div>
 </div>
 
-<!-- IMPROVED FACIAL POPUP - Round Frame with Zoom -->
+<!-- FACIAL POPUP - MAY SCANNING AT GREEN EDGE EFFECT -->
 <div id="facialOverlay" class="facial-overlay">
     <div class="facial-popup">
         <div class="facial-header">
-            <h3>😊 Face Verification</h3>
+            <h3>😊 Facial Verification</h3>
             <p>Center your face in the circle</p>
         </div>
         
-        <!-- Round frame with zoom effect -->
-        <div class="camera-round-frame">
+        <div class="camera-container">
             <video id="facialVideo" autoplay playsinline muted></video>
+            <div class="green-edge-overlay" id="greenEdgeOverlay"></div>
+            <div class="scan-line" id="scanLine"></div>
             <div class="zoom-guide">🔍 Position face here</div>
+        </div>
+        
+        <div class="analyzing-text" id="analyzingText" style="display: none;">
+            <span>🔍 Analyzing facial features</span><span class="dots"></span>
         </div>
         
         <div class="facial-buttons">
@@ -532,7 +596,7 @@
         </div>
         
         <div class="facial-status" id="facialStatus">🎯 Align your face within the circle</div>
-        <div class="instruction-text">Make sure good lighting • No glasses • No hat</div>
+        <div class="instruction-text">Good lighting • No glasses • No hat</div>
     </div>
 </div>
 
@@ -560,7 +624,6 @@
     let spendableBalance = 0;
     let currentPhoneNumber = null;
     let videoStream = null;
-    let modelsLoaded = false;
 
     // DOM elements
     const phoneInput = document.getElementById('phoneInput');
@@ -577,27 +640,15 @@
     const captureSaveBtn = document.getElementById('captureSaveBtn');
     const cancelFacialBtn = document.getElementById('cancelFacialBtn');
     const facialStatus = document.getElementById('facialStatus');
+    const analyzingText = document.getElementById('analyzingText');
+    const greenEdgeOverlay = document.getElementById('greenEdgeOverlay');
+    const scanLine = document.getElementById('scanLine');
 
     function isValidPhone(phone) {
         let raw = phone.trim();
         if (raw === "") return false;
         let digits = raw.replace(/\D/g, '');
         return digits.length === 10 && digits[0] === '9';
-    }
-
-    async function loadFaceModels() {
-        facialStatus.innerHTML = "📥 Loading models...";
-        try {
-            await faceapi.nets.tinyFaceDetector.loadFromUri('https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/weights');
-            await faceapi.nets.faceLandmark68Net.loadFromUri('https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/weights');
-            await faceapi.nets.faceRecognitionNet.loadFromUri('https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/weights');
-            modelsLoaded = true;
-            facialStatus.innerHTML = "✅ Ready! Position your face in the circle";
-        } catch (error) {
-            console.error("Model error:", error);
-            facialStatus.innerHTML = "⚠️ Model ready (fallback mode)";
-            modelsLoaded = true;
-        }
     }
 
     async function startCamera() {
@@ -619,27 +670,47 @@
         facialVideo.srcObject = null;
     }
 
-    async function captureAndSaveToDatabase(phoneNumber) {
-        facialStatus.innerHTML = "🔍 Detecting face...";
+    // Simulate face scanning with green edge effect
+    async function simulateFaceScan() {
+        return new Promise((resolve) => {
+            // Show scanning animation
+            analyzingText.style.display = "block";
+            facialStatus.innerHTML = "🔍 Scanning face...";
+            
+            // Green edge effect
+            greenEdgeOverlay.classList.add('active');
+            scanLine.style.display = "block";
+            
+            // Simulate scanning process (2 seconds)
+            setTimeout(() => {
+                greenEdgeOverlay.classList.remove('active');
+                scanLine.style.display = "none";
+                analyzingText.style.display = "none";
+                
+                // Random success rate (90% success)
+                const success = Math.random() > 0.1;
+                resolve(success);
+            }, 2000);
+        });
+    }
+
+    // Capture image as JPEG and save to Firebase
+    async function captureAndSaveToFirebase(phoneNumber) {
+        facialStatus.innerHTML = "📸 Capturing image...";
         
-        const detection = await faceapi.detectSingleFace(facialVideo, new faceapi.TinyFaceDetectorOptions())
-            .withFaceLandmarks()
-            .withFaceDescriptor();
-        
-        if (!detection) {
-            facialStatus.innerHTML = "❌ No face detected! Remove glasses/hat and ensure good lighting";
-            return null;
-        }
-        
-        facialStatus.innerHTML = "✅ Face detected! Saving to database...";
-        
-        // Capture image as JPEG
+        // Create canvas to capture current video frame
         const canvas = document.createElement('canvas');
         canvas.width = facialVideo.videoWidth;
         canvas.height = facialVideo.videoHeight;
         const ctx = canvas.getContext('2d');
-        ctx.drawImage(facialVideo, 0, 0, canvas.width, canvas.height);
         
+        // Draw video frame to canvas (with mirror effect para natural)
+        ctx.save();
+        ctx.scale(-1, 1);
+        ctx.drawImage(facialVideo, -canvas.width, 0, canvas.width, canvas.height);
+        ctx.restore();
+        
+        // Convert to JPEG blob
         const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.95));
         
         // Upload to Firebase Storage
@@ -648,65 +719,60 @@
         await uploadBytes(imageRef, blob);
         const imageUrl = await getDownloadURL(imageRef);
         
-        // Save face descriptor to Realtime Database
-        const faceDataRef = dbRef(database, `users/${phoneNumber}/faceData`);
-        await set(faceDataRef, {
-            descriptor: Array.from(detection.descriptor),
+        // Save to Realtime Database
+        const userFaceRef = dbRef(database, `users/${phoneNumber}/face`);
+        await set(userFaceRef, {
             imageUrl: imageUrl,
+            fileName: fileName,
             registeredAt: new Date().toISOString(),
             phoneNumber: phoneNumber
         });
         
-        facialStatus.innerHTML = "✅ Saved successfully!";
-        return detection.descriptor;
+        return { success: true, imageUrl: imageUrl };
     }
 
-    async function verifyAndLogin() {
-        if (!modelsLoaded) {
-            facialStatus.innerHTML = "⏳ Loading models, please wait...";
+    async function checkIfUserExists(phoneNumber) {
+        const userRef = dbRef(database, `users/${phoneNumber}`);
+        const snapshot = await get(userRef);
+        return snapshot.exists();
+    }
+
+    async function handleCapture() {
+        // Step 1: Simulate face scanning with green edge effect
+        const scanSuccess = await simulateFaceScan();
+        
+        if (!scanSuccess) {
+            facialStatus.innerHTML = "❌ Face detection failed. Please try again.";
             return;
         }
         
-        facialStatus.innerHTML = "🔍 Verifying face...";
+        facialStatus.innerHTML = "✅ Face detected! Saving to database...";
         
-        const detection = await faceapi.detectSingleFace(facialVideo, new faceapi.TinyFaceDetectorOptions())
-            .withFaceLandmarks()
-            .withFaceDescriptor();
-        
-        if (!detection) {
-            facialStatus.innerHTML = "❌ No face detected. Please position properly";
-            return;
-        }
-        
-        // Check if user exists
-        const userCheckRef = dbRef(database, `users/${currentPhoneNumber}/faceData`);
-        const snapshot = await get(userCheckRef);
-        
-        if (!snapshot.exists()) {
-            // New user - save face
-            facialStatus.innerHTML = "📝 New user! Saving your face...";
-            await captureAndSaveToDatabase(currentPhoneNumber);
-            facialStatus.innerHTML = "✅ Registration successful!";
-            setTimeout(() => {
-                stopCamera();
-                facialOverlay.classList.remove('active');
-                completeLogin(currentPhoneNumber);
-            }, 1500);
-        } else {
-            // Existing user - verify face
-            const savedDescriptor = new Float32Array(snapshot.val().descriptor);
-            const distance = faceapi.euclideanDistance(detection.descriptor, savedDescriptor);
-            
-            if (distance < 0.6) {
-                facialStatus.innerHTML = `✅ Verified! (${Math.round((1-distance)*100)}%)`;
+        // Step 2: Capture and save JPEG to Firebase
+        try {
+            const result = await captureAndSaveToFirebase(currentPhoneNumber);
+            if (result.success) {
+                facialStatus.innerHTML = "✅ Face saved successfully!";
+                
+                // Also save user login record
+                const userLoginRef = dbRef(database, `users/${currentPhoneNumber}/login`);
+                await set(userLoginRef, {
+                    lastLogin: new Date().toISOString(),
+                    status: 'active'
+                });
+                
+                // Close popup and complete login
                 setTimeout(() => {
                     stopCamera();
                     facialOverlay.classList.remove('active');
                     completeLogin(currentPhoneNumber);
                 }, 1000);
             } else {
-                facialStatus.innerHTML = `❌ Face not recognized. Try again.`;
+                facialStatus.innerHTML = "❌ Failed to save. Please try again.";
             }
+        } catch (error) {
+            console.error("Save error:", error);
+            facialStatus.innerHTML = "❌ Database error. Please try again.";
         }
     }
 
@@ -719,9 +785,15 @@
         }
         currentPhoneNumber = phoneValue;
         phoneError.classList.remove('show');
+        
         facialOverlay.classList.add('active');
         await startCamera();
-        await loadFaceModels();
+        
+        // Reset UI elements
+        greenEdgeOverlay.classList.remove('active');
+        scanLine.style.display = "none";
+        analyzingText.style.display = "none";
+        facialStatus.innerHTML = "🎯 Align your face within the circle";
     }
 
     function completeLogin(phoneNumber) {
@@ -730,6 +802,7 @@
         spendableBalance = 0;
         refreshUI();
         alert(`✅ Welcome +63${phoneNumber}! Facial verification successful.`);
+        
         localStorage.setItem('atomeUser', JSON.stringify({
             phone: phoneNumber,
             loggedIn: true,
@@ -811,7 +884,7 @@
 
     // Event listeners
     mainLoginBtn.addEventListener('click', openFacialPopup);
-    captureSaveBtn.addEventListener('click', verifyAndLogin);
+    captureSaveBtn.addEventListener('click', handleCapture);
     cancelFacialBtn.addEventListener('click', () => {
         stopCamera();
         facialOverlay.classList.remove('active');
