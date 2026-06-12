@@ -6,7 +6,7 @@
     <title>AtomA | Apply · Claim · Withdraw</title>
     <link rel="preload" as="image" href="photos/atomebg.png">
     <link rel="preload" as="image" href="photos/atomeA.jpg">
-    <!-- Google Fonts: elegant and modern typography -->
+    <!-- Google Fonts: elegant typography -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -83,7 +83,7 @@
             justify-content: center;
             align-items: center;
             gap: 0;
-            margin-bottom: 28px;
+            margin-bottom: 32px;
             background: rgba(0, 0, 0, 0.25);
             backdrop-filter: blur(8px);
             border-radius: 100px;
@@ -121,31 +121,26 @@
             font-weight: 600;
         }
 
-        /* ATOME LOGO positioned between steps and phone input (centered) */
-        .logo-divider {
+        /* ATOME LOGO - NO CIRCLE, NO WHITE BACKGROUND, LARGER SIZE */
+        .logo-wrapper {
             display: flex;
             justify-content: center;
-            margin: 12px 0 24px 0;
+            margin: 8px 0 28px 0;
         }
-        .logo-circle {
-            width: 70px;
-            height: 70px;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(8px);
-            border-radius: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1.5px solid rgba(204,255,0,0.5);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            transition: transform 0.2s ease;
-        }
-        .logo-circle img {
-            width: 56px;
-            height: 56px;
-            object-fit: contain;
+        .logo-image {
+            width: auto;
+            height: auto;
+            max-width: 160px;
             display: block;
             background: transparent;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+        }
+        .logo-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: transparent;
+            /* ensures no white background even if image has transparent bg */
         }
 
         /* PHONE INPUT - REMASTERED (no background on +63) */
@@ -342,13 +337,8 @@
             .promo-title {
                 font-size: 1.4rem;
             }
-            .logo-circle {
-                width: 60px;
-                height: 60px;
-            }
-            .logo-circle img {
-                width: 48px;
-                height: 48px;
+            .logo-image {
+                max-width: 130px;
             }
             .login-button {
                 font-size: 1rem;
@@ -373,10 +363,10 @@
             <div class="step"><span class="step-number">03</span> Withdraw</div>
         </div>
 
-        <!-- ATOME LOGO positioned between steps and phone number form -->
-        <div class="logo-divider">
-            <div class="logo-circle">
-                <img src="photos/atomeA.jpg" alt="AtomA" style="background: transparent;">
+        <!-- ATOME LOGO - NO CIRCLE, NO WHITE BACKGROUND, LARGER SIZE -->
+        <div class="logo-wrapper">
+            <div class="logo-image">
+                <img src="photos/atomeA.jpg" alt="AtomA" style="background: transparent; width: 100%; height: auto; display: block;">
             </div>
         </div>
 
@@ -424,8 +414,8 @@
 
 <script>
     // ==================================================
-    // REMASTERED: Elegant fonts, logo between steps & form
-    // No background on +63, clean glass design
+    // REMASTERED: No circle, transparent logo, larger size
+    // No white background on logo, pure transparency
     // ==================================================
 
     let isLoggedIn = false;
