@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AtomA | Apply · Claim · Withdraw</title>
-    <!-- preload theme background & atomA logo image with transparency -->
     <link rel="preload" as="image" href="photos/atomebg.png">
     <link rel="preload" as="image" href="photos/atomeA.jpg">
     <style>
@@ -15,12 +14,12 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #0a0f1a;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'SF Pro Text', Helvetica, Arial, sans-serif;
+            background-color: #0a0e17;
             min-height: 100vh;
         }
 
-        /* wrapper with uploaded background photo (atomebg.png) */
+        /* background image wrapper */
         .bg-theme {
             background-image: url('photos/atomebg.png');
             background-size: cover;
@@ -35,121 +34,174 @@
             padding: 24px 16px;
         }
 
-        /* CONTAINER - FULLY TRANSPARENT BACKGROUND per request */
-        .form-card {
-            max-width: 480px;
+        /* GLASS TRANSPARENT CARD - remastered frosted glass effect */
+        .glass-card {
+            max-width: 500px;
             width: 100%;
             margin: 0 auto;
-            background: transparent;
-            border-radius: 48px;
+            background: rgba(15, 25, 35, 0.45);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: 56px;
+            border: 1px solid rgba(255, 255, 245, 0.25);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.1);
             padding: 28px 24px 40px;
             transition: all 0.2s ease;
         }
 
-        /* atomeA logo image - white text on transparent background */
-        .logo-area {
+        /* PROMO HEADER (Win iPhone 17 & cashback) */
+        .promo-header {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
-        .logo-img {
-            max-width: 180px;
-            width: 100%;
-            height: auto;
-            display: inline-block;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        .promo-title {
+            font-size: 1.65rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFE55C, #CCFF00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        .promo-sub {
+            font-size: 0.75rem;
+            color: rgba(255,250,210,0.9);
+            margin-top: 6px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
         }
 
-        /* STEPS: apply · claim · withdraw (not buttons, just visual steps) */
-        .steps-container {
+        /* STEPS + LOGO combined row (icon beside steps) */
+        .steps-with-icon {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 40px;
-            background: rgba(0,0,0,0.3);
+            justify-content: space-between;
+            gap: 16px;
+            background: rgba(0, 0, 0, 0.35);
             backdrop-filter: blur(8px);
             border-radius: 100px;
-            padding: 8px 20px;
-            border: 1px solid rgba(255,255,200,0.15);
+            padding: 8px 20px 8px 16px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(255,240,160,0.3);
         }
-        .step-item {
-            flex: 1;
+        .steps-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex: 2;
+            gap: 8px;
+        }
+        .step {
             text-align: center;
+            flex: 1;
             font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
+            font-size: 0.85rem;
             color: #ffffff;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            text-shadow: 0 1px 1px black;
+            letter-spacing: 0.3px;
             position: relative;
         }
-        .step-item:not(:last-child):after {
+        .step-number {
+            font-size: 0.65rem;
+            opacity: 0.8;
+            font-weight: 500;
+            display: block;
+            font-family: monospace;
+        }
+        .step:not(:last-child):after {
             content: "→";
             position: absolute;
             right: -12px;
             top: 50%;
             transform: translateY(-50%);
-            color: #e5ffb3;
-            font-size: 1rem;
-            opacity: 0.8;
+            color: #ccff00;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            text-shadow: 0 0 2px black;
         }
-        .step-number {
-            font-size: 0.7rem;
-            opacity: 0.8;
-            display: block;
-            font-weight: 400;
-        }
-
-        /* Phone form group - inside transparent container */
-        .form-group {
-            margin-bottom: 28px;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(10px);
+        /* logo icon placed here (atomeA.jpg transparent) */
+        .icon-logo-sm {
+            width: 52px;
+            height: 52px;
+            flex-shrink: 0;
+            background: rgba(0,0,0,0.2);
             border-radius: 60px;
-            padding: 4px 4px 4px 20px;
-            border: 1px solid rgba(255,255,210,0.25);
-        }
-        .phone-input-wrapper {
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255,215,0,0.4);
+        }
+        .icon-logo-sm img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            display: block;
+            background: transparent;
+        }
+
+        /* PHONE INPUT - glass transparent remaster */
+        .input-glass {
+            background: rgba(10, 20, 28, 0.55);
+            backdrop-filter: blur(12px);
+            border-radius: 80px;
+            border: 1px solid rgba(255, 245, 180, 0.5);
+            padding: 6px 6px 6px 24px;
+            margin-bottom: 24px;
+            transition: all 0.2s;
+        }
+        .input-glass:focus-within {
+            border-color: #ccff00;
+            box-shadow: 0 0 12px rgba(204,255,0,0.3);
+            background: rgba(10, 20, 28, 0.7);
+        }
+        .phone-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             flex-wrap: nowrap;
         }
-        .prefix {
+        .country-code {
             font-weight: 700;
-            color: white;
-            font-size: 1rem;
+            font-size: 1.05rem;
+            color: #f0f0e0;
             background: rgba(0,0,0,0.3);
             padding: 12px 0;
             letter-spacing: 0.5px;
         }
-        .phone-input-wrapper input {
+        .phone-row input {
             flex: 1;
-            border: none;
-            padding: 14px 8px;
-            font-size: 1rem;
             background: transparent;
-            outline: none;
+            border: none;
+            padding: 16px 8px;
+            font-size: 1rem;
             font-weight: 500;
             color: white;
+            font-family: 'Inter', monospace;
+            outline: none;
         }
-        .phone-input-wrapper input::placeholder {
-            color: rgba(255,255,220,0.7);
+        .phone-row input::placeholder {
+            color: rgba(230, 240, 200, 0.7);
             font-weight: 400;
+            font-size: 0.95rem;
         }
         .error-message {
-            color: #ffb347;
+            color: #FFB347;
             font-size: 0.7rem;
-            margin-top: 8px;
-            margin-left: 16px;
+            margin-top: 6px;
+            margin-left: 20px;
             font-weight: 500;
             display: none;
             text-shadow: 0 0 2px black;
+            letter-spacing: 0.3px;
         }
         .error-message.show {
             display: block;
         }
 
-        /* SINGLE BUTTON: Login - Black background + Neon Yellow text */
+        /* SINGLE BUTTON: Black + Neon Yellow text */
         .login-button {
             width: 100%;
             background: #000000;
@@ -161,11 +213,12 @@
             font-size: 1.2rem;
             letter-spacing: 1px;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             margin-top: 8px;
             margin-bottom: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 22px rgba(0,0,0,0.5);
             text-transform: uppercase;
+            font-family: inherit;
         }
         .login-button:active {
             transform: scale(0.97);
@@ -173,32 +226,31 @@
             border-color: #eaff96;
         }
 
-        /* hint text: login first to claim rewards */
-        .register-note {
+        /* Hint text (login first to claim) */
+        .hint-message {
             text-align: center;
-            font-size: 0.75rem;
-            color: #f0f0e0;
-            margin: 16px 0 12px;
+            font-size: 0.72rem;
+            color: #e6e2c3;
+            margin: 12px 0 12px;
             background: rgba(0,0,0,0.4);
-            display: inline-block;
+            backdrop-filter: blur(8px);
+            padding: 8px 16px;
+            border-radius: 50px;
             width: 100%;
-            padding: 8px 12px;
-            border-radius: 60px;
-            backdrop-filter: blur(4px);
             font-weight: 500;
         }
 
-        /* terms & privacy - white text subtle */
+        /* Terms & privacy glass style */
         .terms-row {
             text-align: center;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: #ddd9c6;
-            margin-top: 16px;
+            margin-top: 20px;
             line-height: 1.4;
             background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(4px);
             padding: 10px 16px;
             border-radius: 80px;
-            backdrop-filter: blur(4px);
         }
         .terms-row a {
             color: #ccff00;
@@ -209,20 +261,18 @@
             text-decoration: underline;
         }
 
-        /* dashboard area (claim/withdraw after login) */
+        /* Dashboard (Claim/Withdraw panel) */
         .dashboard-area {
             margin-top: 28px;
-            border-top: 1px solid rgba(255,240,150,0.3);
+            border-top: 1px solid rgba(204,255,0,0.3);
             padding-top: 20px;
-            transition: all 0.3s;
         }
         .reward-panel {
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(12px);
-            border-radius: 42px;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(16px);
+            border-radius: 44px;
             padding: 20px 18px;
-            text-align: center;
-            border: 1px solid rgba(204,255,0,0.3);
+            border: 1px solid rgba(204,255,0,0.4);
         }
         .claim-row, .withdraw-row {
             display: flex;
@@ -242,20 +292,17 @@
             cursor: pointer;
             transition: 0.2s;
             font-size: 0.85rem;
+            font-family: inherit;
         }
         .claim-btn-sm:active, .withdraw-btn-sm:active {
             transform: scale(0.96);
         }
-        .claim-btn-sm.claim-active {
-            background: #1f3b2c;
-            color: #ccff00;
-            border-color: #ccff00;
-        }
         .balance-text {
             font-weight: 800;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             color: #ccff00;
             text-shadow: 0 0 3px black;
+            letter-spacing: -0.3px;
         }
         .hidden {
             display: none;
@@ -263,69 +310,81 @@
         .status-sub {
             font-size: 0.7rem;
             color: #e6e6b3;
+            margin-top: 12px;
         }
 
         /* responsive */
         @media (max-width: 480px) {
-            .form-card {
-                padding: 16px 16px 32px;
+            .glass-card {
+                padding: 20px 18px 32px;
             }
-            .step-item {
+            .step {
+                font-size: 0.7rem;
+            }
+            .step:not(:last-child):after {
+                right: -10px;
                 font-size: 0.75rem;
             }
-            .step-item:not(:last-child):after {
-                right: -10px;
-                font-size: 0.8rem;
+            .promo-title {
+                font-size: 1.35rem;
+            }
+            .icon-logo-sm {
+                width: 44px;
+                height: 44px;
+            }
+            .icon-logo-sm img {
+                width: 38px;
+                height: 38px;
             }
         }
     </style>
 </head>
 <body>
 <div class="bg-theme">
-    <div class="form-card">
-        <!-- logo: changed atoma into photo/atomeA.jpg (transparent background white text) -->
-        <div class="logo-area">
-            <img src="photos/atomeA.jpg" alt="AtomA" class="logo-img" style="background: transparent;">
+    <div class="glass-card">
+        <!-- Win iPhone 17 & up to ₱7,500 cashback! Register for your chance to win -->
+        <div class="promo-header">
+            <div class="promo-title">Win an iPhone 17 & up to ₱7,500 cashback!</div>
+            <div class="promo-sub">Register for your chance to win</div>
         </div>
 
-        <!-- STEPS: Apply · Claim · Withdraw (not buttons, just visual steps) -->
-        <div class="steps-container">
-            <div class="step-item">
-                <span class="step-number">01</span> Apply
+        <!-- STEPS (01 Apply / 02 Claim / 03 Withdraw) + atomeA.jpg icon beside it -->
+        <div class="steps-with-icon">
+            <div class="steps-group">
+                <div class="step"><span class="step-number">01</span> Apply</div>
+                <div class="step"><span class="step-number">02</span> Claim</div>
+                <div class="step"><span class="step-number">03</span> Withdraw</div>
             </div>
-            <div class="step-item">
-                <span class="step-number">02</span> Claim
-            </div>
-            <div class="step-item">
-                <span class="step-number">03</span> Withdraw
+            <div class="icon-logo-sm">
+                <img src="photos/atomeA.jpg" alt="AtomA" style="background: transparent;">
             </div>
         </div>
 
-        <!-- phone number form (transparent container) -->
-        <div class="form-group">
-            <div class="phone-input-wrapper">
-                <span class="prefix">+63</span>
+        <!-- Glass input number form -->
+        <div class="input-glass">
+            <div class="phone-row">
+                <span class="country-code">+63</span>
                 <input type="tel" id="phoneInput" placeholder="Input phone number" autocomplete="off">
             </div>
             <div class="error-message" id="phoneError">Invalid phone number</div>
         </div>
 
-        <!-- SINGLE BUTTON: Login (Black bg, Neon Yellow text) -->
+        <!-- Single Login Button (Black + Neon Yellow) -->
         <button class="login-button" id="mainLoginBtn">LOGIN</button>
 
-        <!-- hint changed: Users need to login first to start claiming rewards -->
-        <div class="register-note" id="registerHintMsg">
+        <!-- Hint message (updated) -->
+        <div class="hint-message" id="registerHintMsg">
             Users need to login first to start claiming rewards
         </div>
 
-        <!-- Terms & Privacy Policy (exactly until Privacy Policy) -->
+        <!-- Terms & Privacy (until Privacy Policy) -->
         <div class="terms-row">
             By continuing you agree to the 
             <a href="#" id="termsLink">Terms of Service</a> and 
             <a href="#" id="privacyLink">Privacy Policy</a>.
         </div>
 
-        <!-- dashboard after login: claim & withdraw controls -->
+        <!-- Dashboard after login (claim / withdraw) -->
         <div id="dashboardPanel" class="dashboard-area hidden">
             <div class="reward-panel">
                 <div class="claim-row">
@@ -344,16 +403,15 @@
 </div>
 
 <script>
-    // ==============================================
-    // FLOW: Login → Claim → Withdraw
-    // Only one main button (Login). Steps (Apply/Claim/Withdraw) are visual.
-    // Container background transparent, atomeA.jpg logo, black button w/ neon yellow.
-    // ==============================================
+    // ==================================================
+    // REMASTERED: Glass UI, steps + logo inline, promo text
+    // Only ONE login button. Apply/Claim/Withdraw as steps.
+    // Login required for claim & withdraw. 
+    // ==================================================
 
-    // state
     let isLoggedIn = false;
     let claimedReward = false;
-    let withdrawableCash = 0;       // cashback from egg smash
+    let withdrawableCash = 0;
 
     // DOM elements
     const phoneInput = document.getElementById('phoneInput');
@@ -364,9 +422,9 @@
     const withdrawFundsBtn = document.getElementById('withdrawFundsBtn');
     const balanceDisplay = document.getElementById('balanceDisplay');
     const claimedStatusMsg = document.getElementById('claimedStatusMsg');
-    const registerHintMsg = document.getElementById('registerHintMsg');
+    const hintMsg = document.getElementById('registerHintMsg');
 
-    // validate PH mobile number (basic: minimum 10 digits)
+    // Philippine mobile validation (basic)
     function isValidPhone(phone) {
         let raw = phone.trim();
         if (raw === "") return false;
@@ -374,14 +432,13 @@
         return digits.length >= 10 && digits.length <= 13;
     }
 
-    // update UI based on logged-in & claim status
     function refreshUI() {
         if (isLoggedIn) {
             dashboardPanel.classList.remove('hidden');
-            mainLoginBtn.innerText = "✅ LOGGED IN";
+            mainLoginBtn.innerText = "✓ LOGGED IN";
             mainLoginBtn.disabled = true;
-            mainLoginBtn.style.opacity = "0.8";
-            registerHintMsg.innerText = "🎉 You're logged in! Smash the egg to claim rewards.";
+            mainLoginBtn.style.opacity = "0.85";
+            hintMsg.innerText = "🎉 You're logged in! Smash the lucky egg to claim rewards.";
 
             if (claimedReward) {
                 claimRewardBtn.innerText = "✓ Claimed";
@@ -389,18 +446,13 @@
                 claimRewardBtn.style.opacity = "0.7";
                 claimedStatusMsg.innerText = `✨ You claimed ₱${withdrawableCash} cashback! Withdraw anytime.`;
                 balanceDisplay.innerText = `₱${withdrawableCash}`;
-                if (withdrawableCash > 0) {
-                    withdrawFundsBtn.disabled = false;
-                    withdrawFundsBtn.style.opacity = "1";
-                } else {
-                    withdrawFundsBtn.disabled = true;
-                    withdrawFundsBtn.style.opacity = "0.5";
-                }
+                withdrawFundsBtn.disabled = (withdrawableCash <= 0);
+                withdrawFundsBtn.style.opacity = (withdrawableCash > 0) ? "1" : "0.5";
             } else {
                 claimRewardBtn.innerText = "🥚 Smash & Claim";
                 claimRewardBtn.disabled = false;
                 claimRewardBtn.style.opacity = "1";
-                claimedStatusMsg.innerText = "Tap 'Claim Rewards' to win up to ₱5,000 + iPhone chance!";
+                claimedStatusMsg.innerText = "Tap 'Claim Rewards' to win up to ₱7,500 + iPhone 17 raffle!";
                 balanceDisplay.innerText = `₱0`;
                 withdrawFundsBtn.disabled = true;
                 withdrawFundsBtn.style.opacity = "0.5";
@@ -410,15 +462,15 @@
             mainLoginBtn.innerText = "LOGIN";
             mainLoginBtn.disabled = false;
             mainLoginBtn.style.opacity = "1";
-            registerHintMsg.innerText = "Users need to login first to start claiming rewards";
+            hintMsg.innerText = "Users need to login first to start claiming rewards";
             phoneError.classList.remove('show');
         }
     }
 
-    // LOGIN function (phone validation)
+    // LOGIN function
     function attemptLogin() {
         if (isLoggedIn) {
-            alert("Already logged in. Go ahead and claim your rewards!");
+            alert("Already logged in. Proceed to claim your rewards!");
             return;
         }
         const phoneValue = phoneInput.value;
@@ -428,40 +480,38 @@
             return;
         }
         phoneError.classList.remove('show');
-        // successful login
         isLoggedIn = true;
         claimedReward = false;
         withdrawableCash = 0;
         refreshUI();
-        alert(`✅ Login successful! Welcome +63${phoneValue.replace(/\D/g, '')}. Now you can claim rewards.`);
+        alert(`✅ Login successful! +63${phoneValue.replace(/\D/g, '')} — you can now smash the egg.`);
     }
 
-    // CLAIM reward: simulates smashing lucky egg, random cashback (150 - 5000)
+    // CLAIM REWARD (simulates smash egg, cashback up to 7,500 as per promo)
     function performClaim() {
         if (!isLoggedIn) {
             alert("Please login first to claim rewards.");
             return;
         }
         if (claimedReward) {
-            alert(`You already claimed ₱${withdrawableCash}. Withdraw it or wait for next event.`);
+            alert(`You already claimed ₱${withdrawableCash}. Withdraw or wait for new event.`);
             return;
         }
-        // random cashback between ₱150 and ₱5,000
-        const cashback = Math.floor(Math.random() * (5000 - 150 + 1) + 150);
-        withdrawableCash = cashback;
+        // random cashback between 300 and 7,500 (reflecting new promo)
+        const cashbackAmount = Math.floor(Math.random() * (7500 - 300 + 1) + 300);
+        withdrawableCash = cashbackAmount;
         claimedReward = true;
 
-        // fun iphone surprise (10% chance)
-        const iphoneBonus = Math.random() < 0.1;
-        let msg = `🎉 You smashed the Lucky Egg! You earned ₱${cashback} cashback!`;
+        const iphoneBonus = Math.random() < 0.12; // 12% chance for iphone 17 excitement
+        let msg = `🎉 You smashed the Lucky Egg! You earned ₱${cashbackAmount} cashback!`;
         if (iphoneBonus) {
-            msg += ` 🍀 LUCKY YOU! You also won an entry for iPhone 17 giveaway! 🍀`;
+            msg += ` 🍀 AMAZING! You also won a raffle entry for iPhone 17! 🍀`;
         }
         alert(msg);
         refreshUI();
     }
 
-    // WITHDRAW funds
+    // WITHDRAW
     function performWithdraw() {
         if (!isLoggedIn) {
             alert("Please login to withdraw funds.");
@@ -475,7 +525,7 @@
             alert("No withdrawable balance. Please claim a reward first.");
             return;
         }
-        const confirmWd = confirm(`Withdraw ₱${withdrawableCash} to your registered account? (simulated)`);
+        const confirmWd = confirm(`Withdraw ₱${withdrawableCash} to your registered account? (simulated transaction)`);
         if (confirmWd) {
             alert(`✅ Withdrawal of ₱${withdrawableCash} successfully processed! Funds will be sent to your linked wallet.`);
             withdrawableCash = 0;
@@ -483,35 +533,29 @@
         }
     }
 
-    // Terms & Privacy (demo, but preserves full policy context)
-    const termsLink = document.getElementById('termsLink');
-    const privacyLink = document.getElementById('privacyLink');
-    termsLink.addEventListener('click', (e) => {
+    // Terms & privacy (demo)
+    document.getElementById('termsLink').addEventListener('click', (e) => {
         e.preventDefault();
-        alert("Terms of Service: 0% interest for up to 40 days, no annual fees. Full T&C on Atome website.");
+        alert("Terms of Service: 0% interest for up to 40 days, no annual fees. Full T&C apply.");
     });
-    privacyLink.addEventListener('click', (e) => {
+    document.getElementById('privacyLink').addEventListener('click', (e) => {
         e.preventDefault();
-        alert("Privacy Policy: We value your data security. Read full policy at atome.ph/privacy");
+        alert("Privacy Policy: Your data is protected. Read full policy at atome.ph/privacy");
     });
 
-    // EVENT BINDINGS
+    // event binding
     mainLoginBtn.addEventListener('click', attemptLogin);
     claimRewardBtn.addEventListener('click', performClaim);
     withdrawFundsBtn.addEventListener('click', performWithdraw);
 
-    // realtime error hide while typing
+    // hide error on input
     phoneInput.addEventListener('input', () => {
         if (isValidPhone(phoneInput.value)) {
             phoneError.classList.remove('show');
         }
     });
 
-    // initial render
     refreshUI();
-
-    // additional: steps are purely visual, no action needed, but we can add subtle tooltip
-    console.log("Mobile design: transparent container, logo from atomeA.jpg, single neon button, steps: Apply Claim Withdraw.");
 </script>
 </body>
 </html>
