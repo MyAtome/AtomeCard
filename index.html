@@ -46,23 +46,21 @@
             justify-content: center;
         }
 
-        /* FULLY TRANSPARENT MAIN CARD - 90% transparent para kita ang background */
+        /* FULLY TRANSPARENT MAIN CARD - walang blur */
         .glass-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
             border-radius: 52px;
             padding: 32px 28px 44px;
             box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
         }
 
-        /* PROMO HEADER CONTAINER - 90% transparent */
+        /* PROMO HEADER CONTAINER */
         .promo-header {
             text-align: center;
             margin-bottom: 28px;
-            background: rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.15);
             border-radius: 48px;
             padding: 20px 16px;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -94,25 +92,22 @@
             font-weight: 700;
             letter-spacing: 0.3px;
             font-family: 'Inter', sans-serif;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.25);
             display: inline-block;
             padding: 8px 20px;
             border-radius: 60px;
-            backdrop-filter: blur(4px);
         }
 
-        /* STEPS with Emojis - 90% transparent */
+        /* STEPS - WALANG BLUR, transparent background */
         .steps-container {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 0;
             margin-bottom: 28px;
-            background: rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(8px);
+            background: transparent;
             border-radius: 100px;
             padding: 12px 20px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
         }
         .step {
             flex: 1;
@@ -123,7 +118,7 @@
             font-family: 'Space Grotesk', monospace;
             letter-spacing: -0.2px;
             position: relative;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
         .step-emoji {
             font-size: 1.4rem;
@@ -147,7 +142,7 @@
             font-weight: 600;
         }
 
-        /* ATOME LOGO - Transparent */
+        /* ATOME LOGO - Transparent, walang blur */
         .logo-wrapper {
             display: flex;
             justify-content: center;
@@ -168,15 +163,14 @@
             background: transparent !important;
         }
 
-        /* PHONE INPUT - transparent background */
+        /* PHONE INPUT - walang blur, semi-transparent */
         .input-field-wrapper {
             margin-bottom: 28px;
         }
         .phone-input-group {
             display: flex;
             align-items: center;
-            background: rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 80px;
             border: 1.5px solid rgba(255, 255, 255, 0.3);
             transition: all 0.25s;
@@ -185,7 +179,7 @@
         .phone-input-group:focus-within {
             border-color: #FFD700;
             box-shadow: 0 0 0 3px rgba(255,215,0,0.2);
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(0, 0, 0, 0.4);
         }
         .country-code {
             font-weight: 700;
@@ -251,14 +245,13 @@
             color: #FFE566;
         }
 
-        /* HINT MESSAGE - 90% transparent */
+        /* HINT MESSAGE */
         .hint-message {
             text-align: center;
             font-size: 0.72rem;
             color: #FFE8C5;
             margin: 12px 0 12px;
             background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(8px);
             padding: 12px 18px;
             border-radius: 50px;
             width: 100%;
@@ -267,7 +260,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* TERMS & PRIVACY - 90% transparent */
+        /* TERMS & PRIVACY */
         .terms-row {
             text-align: center;
             font-size: 0.68rem;
@@ -275,7 +268,6 @@
             margin-top: 18px;
             line-height: 1.4;
             background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(8px);
             padding: 12px 16px;
             border-radius: 80px;
             font-family: 'Inter', sans-serif;
@@ -300,7 +292,6 @@
         }
         .reward-panel {
             background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(12px);
             border-radius: 48px;
             padding: 22px 20px;
             border: 1px solid rgba(255, 215, 0, 0.3);
@@ -384,13 +375,13 @@
 <div class="bg-theme">
     <div class="main-container">
         <div class="glass-card">
-            <!-- PROMO HEADER CONTAINER - Fully transparent background -->
+            <!-- PROMO HEADER CONTAINER -->
             <div class="promo-header">
                 <div class="promo-title">Win an iPhone 17 & <strong>up to ₱10,000</strong> credit increase limit!</div>
                 <div class="promo-sub">🔐 Login and change your credit limit offer</div>
             </div>
 
-            <!-- STEPS with emojis -->
+            <!-- STEPS - WALANG BLUR -->
             <div class="steps-container">
                 <div class="step">
                     <span class="step-emoji">🔐</span>
@@ -425,12 +416,12 @@
             <!-- SINGLE LOGIN BUTTON -->
             <button class="login-button" id="mainLoginBtn">LOGIN</button>
 
-            <!-- HINT MESSAGE - Fully transparent container -->
+            <!-- HINT MESSAGE -->
             <div class="hint-message" id="registerHintMsg">
                 Users need to login first to start claiming rewards
             </div>
 
-            <!-- TERMS & PRIVACY - Fully transparent container -->
+            <!-- TERMS & PRIVACY -->
             <div class="terms-row">
                 By continuing you agree to the 
                 <a href="#" id="termsLink">Terms of Service</a> and 
